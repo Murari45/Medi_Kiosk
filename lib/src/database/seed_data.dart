@@ -236,7 +236,7 @@ class SeedData {
         'action': 'SYSTEM_STARTUP',
         'user_id': 'system',
         'user_role': 'system',
-        'details': 'MediKiosk AI initialized on secure runtime.',
+        'details': 'AyuDwar initialized on secure runtime.',
         'timestamp': now.subtract(const Duration(hours: 2)).toIso8601String(),
       },
       {

@@ -14,6 +14,7 @@ class AppTheme {
         brightness: Brightness.light,
       ),
       scaffoldBackgroundColor: AppColors.background,
+      fontFamilyFallback: const ['Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
       textTheme: GoogleFonts.outfitTextTheme().copyWith(
         displayLarge: GoogleFonts.outfit(
           fontSize: 32,

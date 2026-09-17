@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../app/di.dart';
 import '../../../../shared/constants/app_colors.dart';
 import '../../../../shared/constants/app_strings.dart';
-import '../../../../voice/services/tts_service.dart';
 import '../../../../voice/widgets/audio_waveform_visualizer.dart';
 import '../../../../voice/widgets/voice_pointer_overlay.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
@@ -35,6 +33,15 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
     });
   }
 
+  @override
+  void didUpdateWidget(ClinicalIntakeScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.mode != widget.mode) {
+      final lang = ref.read(authProvider).currentLanguage;
+      ref.read(clinicalIntakeProvider.notifier).initMode(widget.mode, lang);
+    }
+  }
+
   void _speakCurrentAgain() {
     final lang = ref.read(authProvider).currentLanguage;
     ref.read(clinicalIntakeProvider.notifier).speakCurrentQuestion(lang);
@@ -63,48 +70,52 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
       return TokenConfirmationScreen(triageResult: intake.finalTriageResult!);
     }
 
-    final isAllopathy = intake.mode == 'allopathy';
-    final qIndex = intake.currentQuestionIndex;
-    final totalQ = intake.totalQuestions;
+    final effectiveMode = widget.mode.isNotEmpty ? widget.mode : intake.mode;
+    final isAllopathy = effectiveMode == 'allopathy';
+    final totalQ = isAllopathy
+        ? SocratesAlgorithm.questions.length
+        : DashavidhaAlgorithm.parameters.length;
+    final qIndex = intake.currentQuestionIndex.clamp(0, totalQ > 0 ? totalQ - 1 : 0);
+    final progress = totalQ > 0 ? ((qIndex + 1) / totalQ).clamp(0.0, 1.0) : 0.0;
 
     String qTitle = '';
     String qSub = '';
     List<String> options = [];
 
     if (isAllopathy) {
-      if (qIndex < SocratesAlgorithm.questions.length) {
-        final q = SocratesAlgorithm.questions[qIndex];
-        qTitle = AppStrings.tr(q.titleKey, lang: lang);
-        qSub = q.description;
-        options = q.quickOptions;
-      }
+      final safeI = qIndex.clamp(0, SocratesAlgorithm.questions.length - 1);
+      final q = SocratesAlgorithm.questions[safeI];
+      qTitle = AppStrings.tr(q.titleKey, lang: lang);
+      qSub = AppStrings.getQuestionSubtitle(q.key, lang: lang, defaultSub: q.description);
+      options = AppStrings.getQuestionOptions(q.key, lang: lang, defaultOptions: q.quickOptions);
     } else {
-      if (qIndex < DashavidhaAlgorithm.parameters.length) {
-        final q = DashavidhaAlgorithm.parameters[qIndex];
-        qTitle = AppStrings.tr(q.titleKey, lang: lang);
-        qSub = '${q.sanskritTerm} — ${q.englishMeaning}';
-        options = q.options;
-      }
+      final safeI = qIndex.clamp(0, DashavidhaAlgorithm.parameters.length - 1);
+      final q = DashavidhaAlgorithm.parameters[safeI];
+      qTitle = AppStrings.tr(q.titleKey, lang: lang);
+      qSub = AppStrings.getQuestionSubtitle(q.key, lang: lang, defaultSub: '${q.sanskritTerm} — ${q.englishMeaning}');
+      options = AppStrings.getQuestionOptions(q.key, lang: lang, defaultOptions: q.options);
+    }
+
+    void handleClose() {
+      ref.read(clinicalIntakeProvider.notifier).reset();
+      context.go('/patient-dashboard');
     }
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(
-          isAllopathy ? 'Allopathy (SOCRATES Triage)' : 'AYUSH (Dashavidha Pariksha)',
+          isAllopathy ? AppStrings.tr('allopathy_header', lang: lang) : AppStrings.tr('ayush_header', lang: lang),
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.close_rounded),
-          onPressed: () {
-            ref.read(clinicalIntakeProvider.notifier).stopVoiceListening();
-            getIt<TTSService>().stop();
-            context.pop();
-          },
+          icon: const Icon(Icons.close_rounded, color: AppColors.textPrimary, size: 26),
+          tooltip: AppStrings.tr('btn_close', lang: lang),
+          onPressed: handleClose,
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: const EdgeInsets.only(right: 8.0),
             child: Center(
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -113,7 +124,7 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  'Step ${qIndex + 1} of $totalQ',
+                  AppStrings.tr('step_x_of_y', lang: lang, args: ['${qIndex + 1}', '$totalQ']),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 13,
@@ -121,6 +132,41 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
                   ),
                 ),
               ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 6.0),
+            child: TextButton.icon(
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.textSecondary,
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              ),
+              icon: const Icon(Icons.close_rounded, size: 18),
+              label: Text(
+                AppStrings.tr('btn_close', lang: lang),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              ),
+              onPressed: handleClose,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: FilledButton.tonalIcon(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.priorityP1Container,
+                foregroundColor: AppColors.priorityP1,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              ),
+              icon: const Icon(Icons.logout_rounded, size: 16),
+              label: Text(
+                AppStrings.tr('sign_out', lang: lang),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              ),
+              onPressed: () async {
+                ref.read(clinicalIntakeProvider.notifier).reset();
+                await ref.read(authProvider.notifier).logout();
+                if (context.mounted) context.go('/auth');
+              },
             ),
           ),
         ],
@@ -136,11 +182,11 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // Linear Progress Bar
+                      // Linear Progress Bar (guaranteed within [0.0, 1.0])
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: LinearProgressIndicator(
-                          value: (qIndex + 1) / totalQ,
+                          value: progress,
                           backgroundColor: AppColors.border,
                           valueColor: AlwaysStoppedAnimation<Color>(
                             isAllopathy ? AppColors.primary : AppColors.ayushGreen,
@@ -185,7 +231,7 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Question ${qIndex + 1}',
+                                        AppStrings.tr('question_x', lang: lang, args: ['${qIndex + 1}']),
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
@@ -201,7 +247,7 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
                                 ),
                                 IconButton.filledTonal(
                                   icon: const Icon(Icons.volume_up_rounded),
-                                  tooltip: 'Hear question again',
+                                  tooltip: AppStrings.tr('hear_question_again', lang: lang),
                                   onPressed: _speakCurrentAgain,
                                 ),
                               ],
@@ -242,10 +288,10 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
                             const SizedBox(height: 12),
                             Text(
                               intake.isListening
-                                  ? AppStrings.tr('listening', lang: lang)
+                                  ? AppStrings.tr('mic_prompt_listening', lang: lang)
                                   : intake.currentTranscript.isNotEmpty
-                                      ? 'Recorded: "${intake.currentTranscript}"'
-                                      : 'Tap microphone or speak your answer naturally...',
+                                      ? '${AppStrings.tr('mic_recorded_prefix', lang: lang)}"${intake.currentTranscript}"'
+                                      : AppStrings.tr('mic_prompt_idle', lang: lang),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14,
@@ -260,9 +306,9 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
 
                       // Quick Accessible Touch Options
                       if (options.isNotEmpty) ...[
-                        const Text(
-                          'Or tap an answer below:',
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.textSecondary),
+                        Text(
+                          AppStrings.tr('or_tap_answer', lang: lang),
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.textSecondary),
                         ),
                         const SizedBox(height: 10),
                         Wrap(
@@ -291,7 +337,9 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
                             child: ElevatedButton.icon(
                               onPressed: _toggleMic,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: intake.isListening ? AppColors.micActive : AppColors.primary,
+                                backgroundColor: intake.isListening
+                                    ? AppColors.micActive
+                                    : (isAllopathy ? AppColors.primary : AppColors.ayushGreen),
                                 padding: const EdgeInsets.symmetric(vertical: 16),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                               ),
@@ -300,7 +348,7 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
                                 color: Colors.white,
                               ),
                               label: Text(
-                                intake.isListening ? 'Done Speaking (Submit Voice)' : AppStrings.tr('btn_speak', lang: lang),
+                                intake.isListening ? AppStrings.tr('done_speaking', lang: lang) : AppStrings.tr('btn_speak', lang: lang),
                                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                             ),
@@ -308,13 +356,13 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
                           const SizedBox(width: 12),
                           OutlinedButton(
                             onPressed: () {
-                              ref.read(clinicalIntakeProvider.notifier).selectOptionManually('Not Sure / Not Applicable', lang);
+                              ref.read(clinicalIntakeProvider.notifier).selectOptionManually(AppStrings.tr('not_sure_skip', lang: lang), lang);
                             },
                             style: OutlinedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                             ),
-                            child: const Text('Not Sure / Skip', style: TextStyle(fontWeight: FontWeight.w600)),
+                            child: Text(AppStrings.tr('not_sure_skip', lang: lang), style: const TextStyle(fontWeight: FontWeight.w600)),
                           ),
                         ],
                       ),
@@ -327,7 +375,7 @@ class _ClinicalIntakeScreenState extends ConsumerState<ClinicalIntakeScreen> {
             // Pointer Overlay on Voice/Option
             VoicePointerOverlay(
               isVisible: !intake.isListening && qIndex == 0,
-              label: 'Tap Mic or Option to respond 🎙️',
+              label: AppStrings.tr('tap_mic_to_respond', lang: lang),
               targetAlignment: const Alignment(0, 0.75),
             ),
           ],

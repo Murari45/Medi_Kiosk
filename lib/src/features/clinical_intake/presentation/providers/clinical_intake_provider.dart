@@ -89,7 +89,15 @@ class ClinicalIntakeNotifier extends StateNotifier<ClinicalIntakeState> {
 
   ClinicalIntakeNotifier(this._ref) : super(ClinicalIntakeState());
 
+  void reset() {
+    stopVoiceListening();
+    _tts.stop();
+    state = ClinicalIntakeState();
+  }
+
   void initMode(String mode, String lang) {
+    stopVoiceListening();
+    _tts.stop();
     state = ClinicalIntakeState(mode: mode);
     _stt.setLocale(lang);
     speakCurrentQuestion(lang);
@@ -100,10 +108,12 @@ class ClinicalIntakeNotifier extends StateNotifier<ClinicalIntakeState> {
 
     String questionText = '';
     if (state.mode == 'allopathy') {
-      final q = SocratesAlgorithm.questions[state.currentQuestionIndex];
+      final safeIndex = state.currentQuestionIndex.clamp(0, SocratesAlgorithm.questions.length - 1);
+      final q = SocratesAlgorithm.questions[safeIndex];
       questionText = AppStrings.tr(q.titleKey, lang: lang);
     } else {
-      final q = DashavidhaAlgorithm.parameters[state.currentQuestionIndex];
+      final safeIndex = state.currentQuestionIndex.clamp(0, DashavidhaAlgorithm.parameters.length - 1);
+      final q = DashavidhaAlgorithm.parameters[safeIndex];
       questionText = '${AppStrings.tr(q.titleKey, lang: lang)} (${q.sanskritTerm})';
     }
 
@@ -149,6 +159,16 @@ class ClinicalIntakeNotifier extends StateNotifier<ClinicalIntakeState> {
       return;
     }
 
+    // Auto-detect the spoken language from the patient's voice response
+    final detectedLang = STTService.detectSpokenLanguage(transcript, lang);
+    var activeLang = lang;
+    if (detectedLang != lang) {
+      activeLang = detectedLang;
+      _ref.read(authProvider.notifier).setLanguage(detectedLang);
+      _stt.setLocale(detectedLang);
+      NotificationService.showSuccess('Voice recognized in ${_getLanguageName(detectedLang)}! Switched language.');
+    }
+
     final confidence = STTService.assessConfidence(transcript);
     final currentKey = _getCurrentQuestionKey();
 
@@ -168,8 +188,23 @@ class ClinicalIntakeNotifier extends StateNotifier<ClinicalIntakeState> {
       NotificationService.showInfo('Response recorded (Marked as Not Sure for Doctor review)');
     }
 
-    // Advance or Submit
-    _advanceNextQuestion(lang);
+    // Advance or Submit using the active spoken language
+    _advanceNextQuestion(activeLang);
+  }
+
+  String _getLanguageName(String code) {
+    switch (code) {
+      case 'hi':
+        return 'Hindi (हिंदी)';
+      case 'ta':
+        return 'Tamil (தமிழ்)';
+      case 'te':
+        return 'Telugu (తెలుగు)';
+      case 'bn':
+        return 'Bengali (বাংলা)';
+      default:
+        return 'English';
+    }
   }
 
   void _handleUnclearResponse(String lang) async {
@@ -233,9 +268,11 @@ class ClinicalIntakeNotifier extends StateNotifier<ClinicalIntakeState> {
 
   String _getCurrentQuestionKey() {
     if (state.mode == 'allopathy') {
-      return SocratesAlgorithm.questions[state.currentQuestionIndex].key;
+      final safeIndex = state.currentQuestionIndex.clamp(0, SocratesAlgorithm.questions.length - 1);
+      return SocratesAlgorithm.questions[safeIndex].key;
     } else {
-      return DashavidhaAlgorithm.parameters[state.currentQuestionIndex].key;
+      final safeIndex = state.currentQuestionIndex.clamp(0, DashavidhaAlgorithm.parameters.length - 1);
+      return DashavidhaAlgorithm.parameters[safeIndex].key;
     }
   }
 

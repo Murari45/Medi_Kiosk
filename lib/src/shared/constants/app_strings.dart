@@ -16,11 +16,11 @@ class AppStrings {
 
   static const Map<String, Map<String, String>> _localizedValues = {
     en: {
-      'app_name': 'MediKiosk AI',
+      'app_name': 'AyuDwar',
       'tagline': 'Voice-Enabled Smart Clinical Pre-Intake Platform',
       'welcome_title': 'Select Your Language',
       'welcome_subtitle': 'Please tap your preferred language to begin. Tap the speaker to hear.',
-      'welcome_voice': 'Hello! Welcome to MediKiosk AI. Please choose your preferred language to continue.',
+      'welcome_voice': 'Hello! Welcome to AyuDwar. Please choose your preferred language to continue.',
       'btn_listen': 'Listen',
       'btn_continue': 'Continue',
       'btn_speak': 'Tap to Speak',
@@ -28,6 +28,9 @@ class AppStrings {
       'speak_now': 'Please speak now...',
       'not_understood': 'I didn\'t quite catch that, could you please repeat?',
       'hesitation_detected': 'Response marked as uncertain. Please clarify with your doctor.',
+      'btn_close': 'Close',
+      'back': 'Back',
+      'loading': 'Loading...',
       
       // Roles & Auth
       'role_patient': 'Patient Portal',
@@ -47,9 +50,33 @@ class AppStrings {
       'allergies': 'Known Allergies',
       'save_profile': 'Save Profile',
       'profile_updated': 'Patient Profile updated successfully!',
+      'patient_sign_in_title': 'Patient Sign In (ABHA)',
+      'doctor_sign_in_title': 'Doctor Clinical Sign In',
+      'admin_sign_in_title': 'Administrator Access',
+      'enter_abha_or_mobile': 'Enter your ABHA ID or Mobile Number',
+      'enter_credentials': 'Enter your credentials to continue',
+      'username_email': 'Username / Email ID',
+      'enter_id_error': 'Please enter your ID',
+      'enter_password_error': 'Please enter password',
+      'quick_login_title': '1-Click Quick Portal Login',
+      'demo_patient_label': 'Patient: Ramesh (P1)',
+      'demo_doctor_label': 'Doctor: Dr. Rajesh',
+      'demo_admin_label': 'Admin Kiosk',
+      'tap_sign_in_hint': 'Tap Sign In 👉',
+      
+      // Portal Switcher Bar
+      'live_demo_sync': 'LIVE DEMO SYNC',
+      'switch_portal': 'Switch Portal:',
+      'portal_patient': 'Patient Portal',
+      'portal_doctor': 'Doctor OPD Queue',
+      'portal_admin': 'Admin Panel',
+      'multi_portal_demo': 'Multi-Portal Demo Mode',
       
       // Patient Dashboard
       'patient_dashboard': 'Patient Dashboard',
+      'greeting': 'Namaste',
+      'dashboard_welcome_sub': 'Select a clinical mode below for voice-guided pre-intake triage. You will receive an instant OPD queue token.',
+      'start_clinical_intake': 'Start Clinical Intake',
       'allopathy_title': 'Allopathy Intake (Modern Medicine)',
       'allopathy_desc': 'SOCRATES protocol clinical triage for acute & general symptoms.',
       'ayush_title': 'AYUSH Intake (Ayurvedic)',
@@ -58,6 +85,36 @@ class AppStrings {
       'upload_new_doc': 'Upload / Scan Document',
       'upcoming_appointments': 'Upcoming Appointments',
       'view_summaries': 'View Previous Summaries',
+      'view_status': 'View Status',
+      'view_rx_pdf': 'View Rx PDF',
+      'doctor_consultation_completed': 'Doctor Consultation Completed',
+      'diagnosis_label': 'Diagnosis',
+      'medications_prescribed': 'Medications Prescribed',
+      'menu_dashboard': 'Dashboard',
+      'menu_profile': 'My Health Profile',
+      'menu_summaries': 'Previous Summaries',
+      'menu_upload': 'Upload / Scan Docs',
+      'menu_visits': 'Upcoming Visits',
+      'desc_dashboard': 'Go to Main Triage Intake & Quick Actions',
+      'desc_profile': 'View & edit blood group, allergies, vitals',
+      'desc_summaries': 'View past clinical triage results & tokens',
+      'desc_upload': 'Scan prescriptions & lab reports via OCR',
+      'desc_visits': 'View doctor appointments & schedule',
+      
+      // Clinical Intake UI
+      'allopathy_header': 'Allopathy (SOCRATES Triage)',
+      'ayush_header': 'AYUSH (Dashavidha Pariksha)',
+      'step_x_of_y': 'Step {0} of {1}',
+      'question_x': 'Question {0}',
+      'mic_prompt_idle': 'Tap microphone or speak your answer naturally...',
+      'mic_prompt_listening': 'Listening to your voice...',
+      'mic_recorded_prefix': 'Recorded: ',
+      'or_tap_answer': 'Or tap an answer below:',
+      'done_speaking': 'Done Speaking (Submit Voice)',
+      'not_sure_skip': 'Not Sure / Skip',
+      'hear_question_again': 'Hear question again',
+      'tap_mic_to_respond': 'Tap Mic or Option to respond 🎙️',
+      'exit_intake': 'Exit to Dashboard',
       
       // SOCRATES Allopathy Questions
       'socrates_site': 'Where exactly are you experiencing the pain or discomfort?',
@@ -97,13 +154,184 @@ class AppStrings {
       'voice_prescribe': 'Dictate Voice Prescription',
       'generate_pdf': 'Generate & Print PDF Rx',
       'submit_consultation': 'Complete Consultation & Next',
+
+      // Additional Dashboard, Profile, Docs & Appointments Keys
+      'token_label': 'Token',
+      'triage_badge': 'TRIAGE',
+      'active_opd_queue': 'Active in Doctor OPD Queue (Room 104)',
+      'mode_label': 'Mode',
+      'chief_complaint_label': 'Chief complaint',
+      'pre_intake_completed': 'Pre-intake completed',
+      'health_summary': 'Health Summary',
+      'btn_edit': 'Edit',
+      'gender_age': 'Gender / Age',
+      'gender_male': 'Male',
+      'gender_female': 'Female',
+      'gender_other': 'Other',
+      'none': 'None',
+      'abha_status': 'ABHA Status',
+      'verified_local': 'Verified (Local SQLite)',
+      'scanned_documents': 'Scanned Documents',
+      'scan_doc': 'Scan Doc',
+      'no_docs_yet': 'No documents scanned yet. Tap "Scan Doc" to upload.',
+      'ocr_parsed': 'OCR Parsed',
+      'edit_patient_profile': 'Edit Patient Health Profile',
+      'save_profile_db': 'Save Profile to Local Database',
+      'doctor_consultations_rx': 'Doctor Consultations & Prescriptions',
+      'consultations_completed_sub': 'Consultations completed by doctors and issued Rx orders',
+      'prescriptions_issued': 'Prescriptions Issued',
+      'digital_rx_label': 'Digital Prescription',
+      'medications_count': 'Medications Prescribed',
+      'view_print_pdf': 'View & Print Rx PDF',
+      'pre_intake_triage_sessions': 'Pre-Intake Triage Sessions',
+      'ai_triage_audit_log': 'Real-time AI triage classifications and local OPD tokens',
+      'general_triage': 'General Pre-Intake Triage',
+      'status_completed': 'COMPLETED',
+      'status_waiting': 'WAITING',
+      'upload_scan_records': 'Upload & Scan Medical Records (OCR)',
+      'capture_camera_sub': 'Capture via live optical camera or upload lab reports & prescriptions for automatic NER extraction.',
+      'take_photo_camera': 'Take Photo with Camera',
+      'upload_pdf_file': 'Upload PDF / Image File',
+      'saved_medical_docs': 'Saved Medical Documents',
+      'open_full_ocr': 'Open Full OCR Studio',
+      'upcoming_opd_consultations': 'Upcoming OPD Consultations',
+      'complete_preintake_sub': 'Complete your voice pre-intake triage to receive an instant prioritized queue token.',
+      'confirmed_slots': '2 Confirmed Slots',
+      'allopathy_dept': 'Central OPD Block • Room 104',
+      'ayush_dept': 'AYUSH Specialty Wing • Room 208',
+      'cardiology_specialty': 'Cardiology & General Internal Medicine',
+      'ayurveda_specialty': 'Ayurveda Kayachikitsa & Panchakarma',
+      'time_today_1130': 'Today at 11:30 AM',
+      'time_tomorrow_1000': 'Tomorrow at 10:00 AM',
+      'queue_active_waiting': 'Queue Active (Waiting: 3)',
+      'intake_available_now': 'Intake Available Now',
+      'start_triage_btn': 'Start Voice Triage',
+      'your_token_number': 'YOUR TOKEN NUMBER',
+      'hospital_name': 'AyuDwar Smart OPD',
+      'complaint_label': 'Complaint',
+      'triage_action': 'Triage Action',
+      'scan_at_station': 'Scan at Doctor Station',
+      'digital_token_synced': 'Digital ABHA Triage Token Synchronized with Local SQLite',
+      'print_token_slip': 'Print Token Slip',
+      'done_btn': 'Done',
+      'auto_reset_msg': 'Kiosk will automatically reset and clear session in {0} seconds.',
+
+      // Doctor Dashboard Keys
+      'doc_sidebar_queue': 'Live Triage Queue',
+      'doc_sidebar_queue_sub': 'Active waiting list sorted by P1, P2, P3',
+      'doc_sidebar_schedule': 'OPD Schedule',
+      'doc_sidebar_schedule_sub': 'View doctor appointments & duty times',
+      'doc_sidebar_previous': 'Previous Patients',
+      'doc_sidebar_previous_sub': 'View consulted patients and prescriptions',
+      'doc_sidebar_archived': 'Archived Records',
+      'doc_sidebar_archived_sub': 'Search archived clinical intakes',
+      'waiting_in_queue': 'Waiting in Queue',
+      'p1_urgent': 'Priority 1 (Urgent)',
+      'p2_moderate': 'Priority 2 (Moderate)',
+      'p3_routine': 'Priority 3 (Routine)',
+      'upcoming_intake_queue': 'Upcoming Patient Pre-Intake Queue',
+      'click_patient_sub': 'Click on any patient to view the 3-Tier AI Summary & write Voice Prescription',
+      'read_queue_status': 'Read Queue Status',
+      'no_patients_queue': 'No patients waiting in queue.',
+      'no_patients_sub': 'Patients who complete Kiosk pre-intake will appear here automatically in real time.',
+      'urgent_badge': 'URGENT',
+      'moderate_badge': 'MODERATE',
+      'routine_badge': 'ROUTINE',
+      'pain_score_label': 'Pain Score',
+      'registered_label': 'Registered',
+      'ai_summary_ready': 'AI 3-Tier Summary Ready',
+      'open_consultation': 'Open Consultation',
+      'opd_shift_schedule': 'OPD Shift Schedule & Duty Roster',
+      'morning_opd_clinic': 'Morning OPD Clinic (Room 104)',
+      'morning_opd_time': '09:00 AM - 02:00 PM • 18 Pre-Intake Slots Available',
+      'active_now': 'ACTIVE NOW',
+      'completed_consultations_today': 'Completed Consultations (Today)',
+      'no_consultations_today': 'No consultations completed yet today.',
+      'view_summary': 'View Summary',
+      'doc_opd_active': 'OPD Room 104 • Active',
+
+      // Admin Dashboard Keys
+      'admin_panel_title': 'AyuDwar — Administration & Analytics Panel',
+      'refresh_analytics': 'Refresh Analytics',
+      'admin_tab_analytics': 'Analytics & Triage',
+      'admin_tab_users': 'User Management',
+      'admin_tab_audit': 'Audit Trail & Logs',
+      'admin_tab_config': 'System & ABDM Config',
+      'create_new_user': 'Create New User Account',
+      'user_role': 'User Role',
+      'cancel_btn': 'Cancel',
+      'create_user_btn': 'Create User',
+      'save_password_btn': 'Save Password',
+
+      // Consultation & Summary Keys
+      'consultation_title': 'Consultation',
+      'read_summary_aloud': 'Read AI Summary Aloud',
+      'stop_voice_summary': 'Stop Voice Summary',
+      'three_tier_title': '3-Tier Pre-Intake Clinical Summary',
+      'tier1_title': 'Tier 1: 100% Certain (Direct Patient Confirmation)',
+      'tier2_title': 'Tier 2: Hesitation / Discrepancies',
+      'tier3_title': 'Tier 3: Unclear / Physician Clarification Needed',
+      'pain_and_symptoms': 'Pain & Symptoms',
+      'clinical_summary_notes': 'Clinical Summary Notes',
+      'doctor_diagnosis_notes': 'Doctor Diagnosis & Notes',
+      'preliminary_diagnosis': 'Preliminary Diagnosis',
+      'clinical_notes_advice': 'Clinical Notes & Advice',
+      'prescribed_medications': 'Prescribed Medications',
+      'add_drug': 'Add Drug',
+      'speak_prescription': 'Speak Prescription (Voice-to-Rx)',
+      'generate_print_pdf': 'Generate & Print Rx PDF',
+      'complete_consultation_btn': 'Complete Consultation & Next Patient',
+      'print_pdf_rx': 'Print PDF Rx',
+      'stop_audio': 'Stop Audio',
+      'play_voice_summary': 'Play Voice Summary',
+      'tier1_box_sub': 'The patient gave clear, confident responses to these parameters during pre-intake:',
+      'tier2_box_sub': 'The patient hesitated or used uncertainty markers ("maybe", "I think so"). Verify these:',
+      'tier3_box_sub': 'Unanswered or speech was unrecognized. Please ask these questions directly:',
+      'doctor_prescription_title': 'Clinical Prescription & Doctor Assessment',
+      'dictate_voice_rx': 'Dictate Voice Rx',
+      'stop_dictation': 'Stop Dictation',
+      'dictating_prefix': 'Dictating',
+      'clinical_diagnosis_label': 'Clinical Diagnosis / Assessment',
+      'diagnosis_hint': 'e.g., Acute Musculoskeletal Back Pain / Viral Bronchitis',
+      'add_drug_manually': 'Add Drug Manually',
+      'no_medications_added': 'No medications added. Use Voice Dictation or tap "Add Drug Manually".',
+      'advice_instructions_label': 'Advice / Follow-Up Instructions',
+      'notes_hint': 'e.g., Maintain rest, drink warm fluids, review in OPD after 5 days if fever persists.',
+      'preview_print_pdf': 'Preview & Print Prescription PDF',
+      'add_medication_title': 'Add Medication to Prescription',
+      'drug_name_label': 'Drug Name (e.g. Paracetamol, Amoxicillin)',
+      'dosage_label': 'Dosage (e.g. 650mg, 10ml)',
+      'frequency_label': 'Frequency (e.g. OD, BD, TDS)',
+      'duration_label': 'Duration (e.g. 5 days)',
+      'instruction_label': 'Instructions (e.g. After food)',
+      'btn_cancel': 'Cancel',
+
+      // Registration Keys
+      'reg_title': 'New Patient Registration (ABHA)',
+      'reg_subtitle': 'Create your digital health identity for seamless clinical triage.',
+      'full_name_req': 'Full Name *',
+      'mobile_req': 'Mobile Number *',
+      'aadhaar_gov_id': 'Aadhaar / Gov ID',
+      'email_address': 'Email Address',
+      'create_password_req': 'Create Password *',
+      'blood_group_label': 'Blood Group',
+      'gender_label': 'Gender',
+      'known_allergies_hint': 'Known Allergies / Medical Conditions',
+      'create_account_btn': 'Create Account & Generate ABHA ID',
+      'abha_card_created': 'ABHA Card Created',
+      'proceed_to_signin': 'Proceed to Sign In',
+
+      // Document Scanner Keys
+      'scan_docs_ocr': 'Medical Document Scanner & OCR',
+      'scan_prescriptions_reports': 'Scan Prescriptions & Lab Reports',
+      'ocr_realtime_sub': 'On-device OCR extracts medications, dosages, and abnormal lab metrics in real time.',
     },
     hi: {
-      'app_name': 'मेडीकियोस्क एआई',
+      'app_name': 'आयुद्वार',
       'tagline': 'आवाज़-सक्षम स्मार्ट क्लिनिकल प्री-इंटेक प्लेटफॉर्म',
       'welcome_title': 'अपनी भाषा चुनें',
       'welcome_subtitle': 'आरंभ करने के लिए कृपया अपनी पसंदीदा भाषा स्पर्श करें। सुनने के लिए स्पीकर दबाएं।',
-      'welcome_voice': 'नमस्ते! मेडीकियोस्क एआई में आपका स्वागत है। आगे बढ़ने के लिए कृपया अपनी भाषा चुनें।',
+      'welcome_voice': 'नमस्ते! आयुद्वार में आपका स्वागत है। आगे बढ़ने के लिए कृपया अपनी भाषा चुनें।',
       'btn_listen': 'सुनें',
       'btn_continue': 'आगे बढ़ें',
       'btn_speak': 'बोलने के लिए दबाएं',
@@ -111,6 +339,9 @@ class AppStrings {
       'speak_now': 'कृपया अब बोलें...',
       'not_understood': 'माफ़ कीजिये, मैं ठीक से समझ नहीं पाया, क्या आप दोबारा बोल सकते हैं?',
       'hesitation_detected': 'प्रतिक्रिया अनिश्चित मानी गई। कृपया अपने डॉक्टर से स्पष्ट करें।',
+      'btn_close': 'बंद करें',
+      'back': 'पीछे',
+      'loading': 'लोड हो रहा है...',
       
       // Roles & Auth
       'role_patient': 'मरीज पोर्टल',
@@ -130,17 +361,71 @@ class AppStrings {
       'allergies': 'ज्ञात एलर्जी',
       'save_profile': 'प्रोफ़ाइल सहेजें',
       'profile_updated': 'प्रोफ़ाइल सफलतापूर्वक अपडेट की गई!',
+      'patient_sign_in_title': 'मरीज साइन इन (आभा)',
+      'doctor_sign_in_title': 'डॉक्टर क्लिनिकल साइन इन',
+      'admin_sign_in_title': 'प्रशासक लॉगिन',
+      'enter_abha_or_mobile': 'अपनी आभा आईडी या मोबाइल नंबर दर्ज करें',
+      'enter_credentials': 'आगे बढ़ने के लिए अपना विवरण दर्ज करें',
+      'username_email': 'उपयोगकर्ता नाम / ईमेल आईडी',
+      'enter_id_error': 'कृपया अपनी आईडी दर्ज करें',
+      'enter_password_error': 'कृपया पासवर्ड दर्ज करें',
+      'quick_login_title': '1-क्लिक त्वरित पोर्टल लॉगिन',
+      'demo_patient_label': 'मरीज: रमेश (P1)',
+      'demo_doctor_label': 'डॉक्टर: डॉ. राजेश',
+      'demo_admin_label': 'व्यवस्थापक कियोस्क',
+      'tap_sign_in_hint': 'साइन इन दबाएं 👉',
+      
+      // Portal Switcher Bar
+      'live_demo_sync': 'लाइव डेमो सिंक',
+      'switch_portal': 'पोर्टल बदलें:',
+      'portal_patient': 'मरीज पोर्टल',
+      'portal_doctor': 'डॉक्टर ओपीडी कतार',
+      'portal_admin': 'व्यवस्थापक पैनल',
+      'multi_portal_demo': 'मल्टी-पोर्टल डेमो मोड',
       
       // Patient Dashboard
       'patient_dashboard': 'मरीज डैशबोर्ड',
+      'greeting': 'नमस्ते',
+      'dashboard_welcome_sub': 'आवाज़-निर्देशित प्री-इंटेक जांच के लिए नीचे एक क्लिनिकल मोड चुनें। आपको तुरंत ओपीडी कतार टोकन प्राप्त होगा।',
+      'start_clinical_intake': 'क्लिनिकल जांच शुरू करें',
       'allopathy_title': 'एलोपैथी जांच (आधुनिक चिकित्सा)',
       'allopathy_desc': 'तीव्र और सामान्य लक्षणों के लिए सुकरात (SOCRATES) प्रोटोकॉल।',
       'ayush_title': 'आयुष जांच (आयुर्वेदिक)',
-      'ayush_desc': 'दशविध परीक्षा 10-आयामी समग्र स्वास्थ्य मूल्यांकन।',
+      'ayush_desc': 'दशविध परीक्षा 10-आयामी समग्र स्वास्थ्य और जीवनशैली मूल्यांकन।',
       'uploaded_docs': 'पिछले मेडिकल दस्तावेज़ और रिपोर्ट',
       'upload_new_doc': 'दस्तावेज़ अपलोड / स्कैन करें',
       'upcoming_appointments': 'आगामी मुलाकातें',
       'view_summaries': 'पिछले सारांश देखें',
+      'view_status': 'स्थिति देखें',
+      'view_rx_pdf': 'पर्चा PDF देखें',
+      'doctor_consultation_completed': 'डॉक्टर परामर्श पूर्ण हुआ',
+      'diagnosis_label': 'निदान',
+      'medications_prescribed': 'दवाएं निर्धारित',
+      'menu_dashboard': 'डैशबोर्ड',
+      'menu_profile': 'मेरी स्वास्थ्य प्रोफ़ाइल',
+      'menu_summaries': 'पिछले सारांश',
+      'menu_upload': 'दस्तावेज़ अपलोड / स्कैन',
+      'menu_visits': 'आगामी मुलाकातें',
+      'desc_dashboard': 'मुख्य जांच और त्वरित कार्यों पर जाएं',
+      'desc_profile': 'रक्त समूह, एलर्जी और स्वास्थ्य विवरण देखें और बदलें',
+      'desc_summaries': 'पिछले क्लिनिकल परिणाम और टोकन देखें',
+      'desc_upload': 'पर्चे और लैब रिपोर्ट स्कैन करें',
+      'desc_visits': 'डॉक्टर अपॉइंटमेंट और समय सारिणी देखें',
+      
+      // Clinical Intake UI
+      'allopathy_header': 'एलोपैथी (सुकरात ट्रायज)',
+      'ayush_header': 'आयुष (दशविध परीक्षा)',
+      'step_x_of_y': 'चरण {0} / {1}',
+      'question_x': 'प्रश्न {0}',
+      'mic_prompt_idle': 'माइक्रोफ़ोन दबाएं या स्वाभाविक रूप से अपना उत्तर बोलें...',
+      'mic_prompt_listening': 'आपकी आवाज़ सुनी जा रही है...',
+      'mic_recorded_prefix': 'रिकॉर्ड किया गया: ',
+      'or_tap_answer': 'या नीचे दिए गए किसी विकल्प को स्पर्श करें:',
+      'done_speaking': 'बोलना पूरा हुआ (आवाज़ जमा करें)',
+      'not_sure_skip': 'निश्चित नहीं / आगे बढ़ें',
+      'hear_question_again': 'प्रश्न दोबारा सुनें',
+      'tap_mic_to_respond': 'उत्तर देने के लिए माइक या विकल्प दबाएं 🎙️',
+      'exit_intake': 'डैशबोर्ड पर वापस जाएं',
       
       // SOCRATES Allopathy Questions
       'socrates_site': 'आपको दर्द या तकलीफ़ शरीर के किस हिस्से में हो रही है?',
@@ -180,13 +465,184 @@ class AppStrings {
       'voice_prescribe': 'आवाज़ से पर्चा लिखें',
       'generate_pdf': 'पीडीएफ पर्चा बनाएं और प्रिंट करें',
       'submit_consultation': 'परामर्श पूरा करें और अगला मरीज देखें',
+
+      // Additional Dashboard, Profile, Docs & Appointments Keys
+      'token_label': 'टोकन',
+      'triage_badge': 'ट्रायज',
+      'active_opd_queue': 'डॉक्टर ओपीडी कतार में सक्रिय (कमरा 104)',
+      'mode_label': 'मोड',
+      'chief_complaint_label': 'मुख्य शिकायत',
+      'pre_intake_completed': 'प्री-इंटेक पूर्ण',
+      'health_summary': 'स्वास्थ्य सारांश',
+      'btn_edit': 'संपादित करें',
+      'gender_age': 'लिंग / आयु',
+      'gender_male': 'पुरुष',
+      'gender_female': 'महिला',
+      'gender_other': 'अन्य',
+      'none': 'कोई नहीं',
+      'abha_status': 'आभा स्थिति',
+      'verified_local': 'सत्यापित (स्थानीय SQLite)',
+      'scanned_documents': 'स्कैन किए गए दस्तावेज़',
+      'scan_doc': 'दस्तावेज़ स्कैन',
+      'no_docs_yet': 'अभी तक कोई दस्तावेज़ स्कैन नहीं हुआ। अपलोड करने के लिए "दस्तावेज़ स्कैन" दबाएं।',
+      'ocr_parsed': 'ओसीआर विश्लेषण',
+      'edit_patient_profile': 'मरीज स्वास्थ्य प्रोफ़ाइल संपादित करें',
+      'save_profile_db': 'प्रोफ़ाइल स्थानीय डेटाबेस में सहेजें',
+      'doctor_consultations_rx': 'डॉक्टर परामर्श एवं दवा पर्चे',
+      'consultations_completed_sub': 'डॉक्टरों द्वारा परामर्श पूर्ण और जारी किए गए पर्चे',
+      'prescriptions_issued': 'जारी किए गए पर्चे',
+      'digital_rx_label': 'डिजिटल दवा पर्चा',
+      'medications_count': 'दवाएं निर्धारित',
+      'view_print_pdf': 'पर्चा PDF देखें व प्रिंट करें',
+      'pre_intake_triage_sessions': 'प्री-इंटेक ट्रायज सत्र',
+      'ai_triage_audit_log': 'रीयल-टाइम एआई ट्रायज वर्गीकरण और स्थानीय ओपीडी टोकन',
+      'general_triage': 'सामान्य प्री-इंटेक ट्रायज',
+      'status_completed': 'पूर्ण हुआ',
+      'status_waiting': 'प्रतीक्षारत',
+      'upload_scan_records': 'मेडिकल रिकॉर्ड अपलोड व स्कैन करें (OCR)',
+      'capture_camera_sub': 'लाइव कैमरे से फोटो लें या ऑटोमैटिक विश्लेषण के लिए लैब रिपोर्ट व पर्चे अपलोड करें।',
+      'take_photo_camera': 'कैमरे से फोटो लें',
+      'upload_pdf_file': 'PDF / फोटो फाइल अपलोड करें',
+      'saved_medical_docs': 'सहेजे गए मेडिकल दस्तावेज़',
+      'open_full_ocr': 'पूर्ण OCR स्टूडियो खोलें',
+      'upcoming_opd_consultations': 'आगामी ओपीडी परामर्श',
+      'complete_preintake_sub': 'तुरंत प्राथमिकता वाला टोकन पाने के लिए अपनी आवाज़-निर्देशित जांच पूरी करें।',
+      'confirmed_slots': '2 निश्चित समय स्लॉट',
+      'allopathy_dept': 'केंद्रीय ओपीडी ब्लॉक • कमरा 104',
+      'ayush_dept': 'आयुष विशिष्ट विंग • कमरा 208',
+      'cardiology_specialty': 'हृदय रोग एवं सामान्य आंतरिक चिकित्सा',
+      'ayurveda_specialty': 'आयुर्वेद कायचिकित्सा एवं पंचकर्म',
+      'time_today_1130': 'आज सुबह 11:30 बजे',
+      'time_tomorrow_1000': 'कल सुबह 10:00 बजे',
+      'queue_active_waiting': 'कतार सक्रिय (प्रतीक्षारत: 3)',
+      'intake_available_now': 'जांच अभी उपलब्ध है',
+      'start_triage_btn': 'आवाज़ ट्रायज शुरू करें',
+      'your_token_number': 'आपका टोकन नंबर',
+      'hospital_name': 'आयुद्वार स्मार्ट ओपीडी',
+      'complaint_label': 'शिकायत',
+      'triage_action': 'ट्रायज कार्रवाई',
+      'scan_at_station': 'डॉक्टर स्टेशन पर स्कैन करें',
+      'digital_token_synced': 'स्थानीय SQLite के साथ सिंक्रनाइज़ डिजिटल आभा टोकन',
+      'print_token_slip': 'टोकन पर्ची प्रिंट करें',
+      'done_btn': 'पूर्ण',
+      'auto_reset_msg': 'कियोस्क {0} सेकंड में स्वचालित रूप से रीसेट हो जाएगा।',
+
+      // Doctor Dashboard Keys
+      'doc_sidebar_queue': 'लाइव मरीज कतार',
+      'doc_sidebar_queue_sub': 'P1, P2, P3 द्वारा क्रमबद्ध सक्रिय प्रतीक्षा सूची',
+      'doc_sidebar_schedule': 'ओपीडी समय सारिणी',
+      'doc_sidebar_schedule_sub': 'डॉक्टर परामर्श और ड्यूटी समय देखें',
+      'doc_sidebar_previous': 'पिछले मरीज',
+      'doc_sidebar_previous_sub': 'परामर्शित मरीज और उनके पर्चे देखें',
+      'doc_sidebar_archived': 'संग्रहीत रिकॉर्ड',
+      'doc_sidebar_archived_sub': 'पुराने क्लिनिकल रिकॉर्ड खोजें',
+      'waiting_in_queue': 'कतार में प्रतीक्षारत',
+      'p1_urgent': 'प्राथमिकता 1 (आपातकालीन)',
+      'p2_moderate': 'प्राथमिकता 2 (मध्यम)',
+      'p3_routine': 'प्राथमिकता 3 (सामान्य)',
+      'upcoming_intake_queue': 'आगामी मरीज प्री-इंटेक कतार',
+      'click_patient_sub': '3-स्तरीय एआई सारांश देखने और आवाज़ से पर्चा लिखने के लिए किसी भी मरीज पर क्लिक करें',
+      'read_queue_status': 'कतार स्थिति सुनें',
+      'no_patients_queue': 'कतार में कोई मरीज प्रतीक्षारत नहीं है।',
+      'no_patients_sub': 'कियोस्क पर प्री-इंटेक पूरा करने वाले मरीज यहां रीयल-टाइम में दिखाई देंगे।',
+      'urgent_badge': 'आपातकालीन',
+      'moderate_badge': 'मध्यम',
+      'routine_badge': 'सामान्य',
+      'pain_score_label': 'दर्द स्कोर',
+      'registered_label': 'पंजीकृत',
+      'ai_summary_ready': 'एआई 3-स्तरीय सारांश तैयार',
+      'open_consultation': 'परामर्श खोलें',
+      'opd_shift_schedule': 'ओपीडी शिफ्ट समय और ड्यूटी रोस्टर',
+      'morning_opd_clinic': 'सुबह की ओपीडी क्लिनिक (कमरा 104)',
+      'morning_opd_time': 'सुबह 09:00 - दोपहर 02:00 • 18 स्लॉट उपलब्ध',
+      'active_now': 'सक्रिय',
+      'completed_consultations_today': 'आज पूर्ण हुए परामर्श',
+      'no_consultations_today': 'आज अभी तक कोई परामर्श पूर्ण नहीं हुआ है।',
+      'view_summary': 'सारांश देखें',
+      'doc_opd_active': 'ओपीडी कमरा 104 • सक्रिय',
+
+      // Admin Dashboard Keys
+      'admin_panel_title': 'आयुद्वार — प्रशासन एवं विश्लेषण पैनल',
+      'refresh_analytics': 'विश्लेषण रीफ्रेश करें',
+      'admin_tab_analytics': 'विश्लेषण एवं ट्रायज',
+      'admin_tab_users': 'उपयोगकर्ता प्रबंधन',
+      'admin_tab_audit': 'ऑडिट ट्रेल एवं लॉग',
+      'admin_tab_config': 'सिस्टम एवं आभा विन्यास',
+      'create_new_user': 'नया उपयोगकर्ता खाता बनाएं',
+      'user_role': 'उपयोगकर्ता भूमिका',
+      'cancel_btn': 'रद्द करें',
+      'create_user_btn': 'उपयोगकर्ता बनाएं',
+      'save_password_btn': 'पासवर्ड सहेजें',
+
+      // Consultation & Summary Keys
+      'consultation_title': 'परामर्श',
+      'read_summary_aloud': 'एआई सारांश बोलकर सुनाएं',
+      'stop_voice_summary': 'आवाज़ बंद करें',
+      'three_tier_title': '3-स्तरीय प्री-इंटेक क्लिनिकल सारांश',
+      'tier1_title': 'स्तर 1: 100% निश्चित (मरीज द्वारा पुष्ट)',
+      'tier2_title': 'स्तर 2: झिझक / विसंगतियां',
+      'tier3_title': 'स्तर 3: अस्पष्ट / डॉक्टर द्वारा स्पष्टीकरण आवश्यक',
+      'pain_and_symptoms': 'दर्द एवं लक्षण',
+      'clinical_summary_notes': 'क्लिनिकल सारांश नोट्स',
+      'doctor_diagnosis_notes': 'डॉक्टर का निदान एवं सलाह',
+      'preliminary_diagnosis': 'प्रारंभिक निदान',
+      'clinical_notes_advice': 'क्लिनिकल सलाह एवं निर्देश',
+      'prescribed_medications': 'निर्धारित दवाएं',
+      'add_drug': 'दवा जोड़ें',
+      'speak_prescription': 'आवाज़ से पर्चा लिखें (Voice-to-Rx)',
+      'generate_print_pdf': 'पर्चा PDF बनाएं और प्रिंट करें',
+      'complete_consultation_btn': 'परामर्श पूरा करें एवं अगला मरीज देखें',
+      'print_pdf_rx': 'पर्चा PDF प्रिंट करें',
+      'stop_audio': 'ऑडियो रोकें',
+      'play_voice_summary': 'आवाज़ सारांश चलाएं',
+      'tier1_box_sub': 'मरीज ने प्री-इंटेक के दौरान इन मापदंडों पर स्पष्ट और आश्वस्त उत्तर दिए:',
+      'tier2_box_sub': 'मरीज ने संकोच किया या अनिश्चित शब्द कहे ("शायद", "लगता है")। कृपया पुष्टि करें:',
+      'tier3_box_sub': 'अनुत्तरित या आवाज़ पहचानी नहीं जा सकी। कृपया ये प्रश्न सीधे मरीज से पूछें:',
+      'doctor_prescription_title': 'क्लिनिकल पर्चा एवं डॉक्टर मूल्यांकन',
+      'dictate_voice_rx': 'बोलकर पर्चा लिखें',
+      'stop_dictation': 'डिक्टेशन रोकें',
+      'dictating_prefix': 'रिकॉर्ड हो रहा है',
+      'clinical_diagnosis_label': 'क्लिनिकल निदान / मूल्यांकन',
+      'diagnosis_hint': 'उदा. पीठ दर्द / वायरल बुखार',
+      'add_drug_manually': 'दवा स्वयं जोड़ें',
+      'no_medications_added': 'कोई दवा नहीं जोड़ी गई। बोलकर जोड़ें या "दवा स्वयं जोड़ें" दबाएं।',
+      'advice_instructions_label': 'सलाह / अनुवर्ती निर्देश',
+      'notes_hint': 'उदा. आराम करें, गर्म तरल पदार्थ लें, 5 दिन बाद जांच कराएं।',
+      'preview_print_pdf': 'पर्चा PDF देखें और प्रिंट करें',
+      'add_medication_title': 'पर्चे में दवा जोड़ें',
+      'drug_name_label': 'दवा का नाम (उदा. Paracetamol, Amoxicillin)',
+      'dosage_label': 'मात्रा / खुराक (उदा. 650mg, 10ml)',
+      'frequency_label': 'आवृत्ति (उदा. OD, BD, TDS)',
+      'duration_label': 'अवधि (उदा. 5 दिन)',
+      'instruction_label': 'निर्देश (उदा. भोजन के बाद)',
+      'btn_cancel': 'रद्द करें',
+
+      // Registration Keys
+      'reg_title': 'नया मरीज पंजीकरण (आभा)',
+      'reg_subtitle': 'सहज क्लिनिकल ट्रायज के लिए अपनी डिजिटल स्वास्थ्य पहचान बनाएं।',
+      'full_name_req': 'पूरा नाम *',
+      'mobile_req': 'मोबाइल नंबर *',
+      'aadhaar_gov_id': 'आधार / पहचान पत्र',
+      'email_address': 'ईमेल पता',
+      'create_password_req': 'पासवर्ड बनाएं *',
+      'blood_group_label': 'रक्त समूह',
+      'gender_label': 'लिंग',
+      'known_allergies_hint': 'ज्ञात एलर्जी / चिकित्सीय स्थितियां',
+      'create_account_btn': 'खाता बनाएं और आभा आईडी प्राप्त करें',
+      'abha_card_created': 'आभा कार्ड तैयार',
+      'proceed_to_signin': 'साइन इन के लिए आगे बढ़ें',
+
+      // Document Scanner Keys
+      'scan_docs_ocr': 'मेडिकल दस्तावेज़ स्कैनर एवं ओसीआर',
+      'scan_prescriptions_reports': 'पर्चे और लैब रिपोर्ट स्कैन करें',
+      'ocr_realtime_sub': 'डिवाइस पर ओसीआर दवाओं, खुराक और असामान्य लैब मानों का तुरंत विश्लेषण करता है।',
     },
     ta: {
-      'app_name': 'மெடிகியோஸ்க் AI',
+      'app_name': 'ஆயுத்வார்',
       'tagline': 'குரல்வழி இயங்கும் ஸ்மார்ட் மருத்துவ பரிசோதனை தளம்',
       'welcome_title': 'உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்',
       'welcome_subtitle': 'தொடங்க உங்கள் விருப்பமான மொழியைத் தொடவும். கேட்க ஸ்பீக்கரை அழுத்தவும்.',
-      'welcome_voice': 'வணக்கம்! மெடிகியோஸ்க் AI-க்கு உங்களை வரவேற்கிறோம். தொடர உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்.',
+      'welcome_voice': 'வணக்கம்! ஆயுத்வாருக்கு உங்களை வரவேற்கிறோம். தொடர உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்.',
       'btn_listen': 'கேளுங்கள்',
       'btn_continue': 'தொடரவும்',
       'btn_speak': 'பேச தொடவும்',
@@ -194,6 +650,11 @@ class AppStrings {
       'speak_now': 'இப்போது பேசுங்கள்...',
       'not_understood': 'மன்னிக்கவும், என்னால் சரியாகப் புரிந்து கொள்ள முடியவில்லை, மீண்டும் கூற முடியுமா?',
       'hesitation_detected': 'பதில் உறுதியற்றதாகக் குறிக்கப்பட்டது. மருத்துவரிடம் தெளிவுபடுத்தவும்.',
+      'btn_close': 'மூடு',
+      'back': 'பின்செல்',
+      'loading': 'ஏற்றுகிறது...',
+      
+      // Roles & Auth
       'role_patient': 'நோயாளி போர்ட்டல்',
       'role_doctor': 'மருத்துவர் போர்ட்டல்',
       'role_admin': 'நிர்வாக அமைப்பு',
@@ -201,9 +662,83 @@ class AppStrings {
       'sign_out': 'வெளியேறு',
       'register': 'புதிய நோயாளி பதிவு',
       'abha_id_label': 'ஆபா ஐடி / பயனர் பெயர்',
+      'abha_id_hint': 'எ.கா: patient_1024@abdm அல்லது 9876543210',
+      'password_label': 'கடவுச்சொல்',
+      'full_name': 'முழு பெயர்',
+      'phone_number': 'மொபைல் எண்',
+      'aadhaar_number': 'ஆதார் / அடையாள அட்டை',
+      'email': 'மின்னஞ்சல் முகவரி',
+      'blood_type': 'இரத்த வகை',
+      'allergies': 'ஒவ்வாமைகள்',
+      'save_profile': 'விவரங்களைச் சேமிக்கவும்',
+      'profile_updated': 'நோயாளி விவரங்கள் வெற்றிகரமாகப் புதுப்பிக்கப்பட்டன!',
+      'patient_sign_in_title': 'நோயாளி உள்நுழைவு (ஆபா)',
+      'doctor_sign_in_title': 'மருத்துவர் மருத்துவ உள்நுழைவு',
+      'admin_sign_in_title': 'நிர்வாக அணுகல்',
+      'enter_abha_or_mobile': 'உங்கள் ஆபா ஐடி அல்லது மொபைல் எண்ணை உள்ளிடவும்',
+      'enter_credentials': 'தொடர உங்கள் உள்நுழைவு விவரங்களை உள்ளிடவும்',
+      'username_email': 'பயனர் பெயர் / மின்னஞ்சல் முகவரி',
+      'enter_id_error': 'தயவுசெய்து உங்கள் ஐடியை உள்ளிடவும்',
+      'enter_password_error': 'தயவுசெய்து கடவுச்சொல்லை உள்ளிடவும்',
+      'quick_login_title': '1-கிளிக் விரைவு போர்டல் உள்நுழைவு',
+      'demo_patient_label': 'நோயாளி: ரமேஷ் (P1)',
+      'demo_doctor_label': 'மருத்துவர்: டாக்டர். ராஜேஷ்',
+      'demo_admin_label': 'நிர்வாக கியோஸ்க்',
+      'tap_sign_in_hint': 'உள்நுழைய தொடவும் 👉',
+      
+      // Portal Switcher Bar
+      'live_demo_sync': 'நேரடி டெமோ ஒத்திசைவு',
+      'switch_portal': 'போர்ட்டல் மாற்றுக:',
+      'portal_patient': 'நோயாளி போர்ட்டல்',
+      'portal_doctor': 'மருத்துவர் ஓபிடி வரிசை',
+      'portal_admin': 'நிர்வாக குழு',
+      'multi_portal_demo': 'பல போர்ட்டல் டெமோ முறை',
+      
+      // Patient Dashboard
       'patient_dashboard': 'நோயாளி டாஷ்போர்டு',
+      'greeting': 'வணக்கம்',
+      'dashboard_welcome_sub': 'குரல்வழி மருத்துவ பரிசோதனைக்கு கீழே ஒரு முறையைத் தேர்ந்தெடுக்கவும். உடனடி ஓபிடி வரிசை டோக்கன் பெறுவீர்கள்.',
+      'start_clinical_intake': 'மருத்துவ பரிசோதனையைத் தொடங்குங்கள்',
       'allopathy_title': 'அலோபதி பரிசோதனை (நவீன மருத்துவம்)',
+      'allopathy_desc': 'கடுமையான மற்றும் பொதுவான அறிகுறிகளுக்கான சாக்ரட்டீஸ் நெறிமுறை.',
       'ayush_title': 'ஆயுஷ் பரிசோதனை (ஆயுர்வேதம்)',
+      'ayush_desc': 'உடல்நலம் மற்றும் வாழ்க்கை முறைக்கான தசவித பரீட்சை 10-மடங்கு மதிப்பீடு.',
+      'uploaded_docs': 'முந்தைய மருத்துவ ஆவணங்கள் மற்றும் அறிக்கைகள்',
+      'upload_new_doc': 'ஆவணத்தைப் பதிவேற்ற / ஸ்கேன் செய்க',
+      'upcoming_appointments': 'வரவிருக்கும் மருத்துவ சந்திப்புகள்',
+      'view_summaries': 'முந்தைய சுருக்கங்களைக் காண்க',
+      'view_status': 'நிலையைக் காண்க',
+      'view_rx_pdf': 'மருத்துவ சீட்டு PDF பார்க்க',
+      'doctor_consultation_completed': 'மருத்துவர் ஆலோசனை முடிந்தது',
+      'diagnosis_label': 'நோய் கண்டறிதல்',
+      'medications_prescribed': 'பரிந்துரைக்கப்பட்ட மருந்துகள்',
+      'menu_dashboard': 'டாஷ்போர்டு',
+      'menu_profile': 'என் உடல்நல விவரம்',
+      'menu_summaries': 'முந்தைய சுருக்கங்கள்',
+      'menu_upload': 'ஆவணங்கள் பதிவேற்றம் / ஸ்கேன்',
+      'menu_visits': 'வரவிருக்கும் வருகைகள்',
+      'desc_dashboard': 'முக்கிய மருத்துவ பரிசோதனை மற்றும் விரைவு நடவடிக்கைகளுக்குச் செல்லவும்',
+      'desc_profile': 'இரத்த வகை, ஒவ்வாமை மற்றும் உடல்நல விவரங்களைக் காண்க',
+      'desc_summaries': 'கடந்த மருத்துவ முடிவுகள் மற்றும் டோக்கன்களைக் காண்க',
+      'desc_upload': 'மருத்துவ சீட்டுகள் மற்றும் ஆய்வக அறிக்கைகளை ஸ்கேன் செய்யவும்',
+      'desc_visits': 'மருத்துவர் சந்திப்புகள் மற்றும் அட்டவணையைப் பார்க்கவும்',
+      
+      // Clinical Intake UI
+      'allopathy_header': 'அலோபதி (சாக்ரட்டீஸ் பரிசோதனை)',
+      'ayush_header': 'ஆயுஷ் (தசவித பரீட்சை)',
+      'step_x_of_y': 'படி {0} / {1}',
+      'question_x': 'கேள்வி {0}',
+      'mic_prompt_idle': 'மைக்ரோஃபோனைத் தொடவும் அல்லது உங்கள் பதிலை இயல்பாகப் பேசவும்...',
+      'mic_prompt_listening': 'உங்கள் குரலைக் கேட்கிறது...',
+      'mic_recorded_prefix': 'பதிவு செய்யப்பட்டது: ',
+      'or_tap_answer': 'அல்லது கீழே உள்ள ஒரு பதிலை அழுத்தவும்:',
+      'done_speaking': 'பேசி முடிந்தது (குரலை சமர்ப்பிக்கவும்)',
+      'not_sure_skip': 'உறுதி இல்லை / தவிர்க்கவும்',
+      'hear_question_again': 'கேள்வியை மீண்டும் கேளுங்கள்',
+      'tap_mic_to_respond': 'பதிலளிக்க மைக் அல்லது விருப்பத்தைத் தொடவும் 🎙️',
+      'exit_intake': 'டாஷ்போர்டிற்குத் திரும்பு',
+      
+      // SOCRATES Allopathy Questions
       'socrates_site': 'வலி அல்லது அசௌகரியம் சரியாக எங்கு உள்ளது?',
       'socrates_onset': 'இந்த பிரச்சனை எப்போது தொடங்கியது?',
       'socrates_character': 'வலி எவ்வாறு உணர்கிறது? கூர்மையானதா அல்லது எரிச்சலா?',
@@ -212,17 +747,210 @@ class AppStrings {
       'socrates_timing': 'வலி நாள் முழுவதும் இருக்கிறதா அல்லது வந்து போகிறதா?',
       'socrates_exacerbating': 'எதாவது செய்யும்போது வலி அதிகமாகிறதா அல்லது குறைகிறதா?',
       'socrates_severity': '1 முதல் 10 வரை, வலி எவ்வளவு தீவிரமாக உள்ளது?',
+      
+      // AYUSH Dashavidha Pariksha Questions
+      'ayush_prakriti': 'உங்கள் உடல் இயற்கை பிரகிருதி என்ன (வாதம், பித்தம், கபம்)?',
+      'ayush_vikriti': 'தற்போது உங்களுக்கு எந்த தோஷம் சமநிலையின்றி இருப்பதாக உணர்கிறீர்கள் (விக்ருதி)?',
+      'ayush_sara': 'உங்கள் உடல் தாது பலம் மற்றும் ஒட்டுமொத்த சக்தி நிலை எப்படி உள்ளது (சாரம்)?',
+      'ayush_samhanana': 'உங்கள் உடற்கட்டு மற்றும் தசை வலிமை எவ்வாறு உள்ளது (சம்ஹனனம்)?',
+      'ayush_pramana': 'உங்கள் உடல் விகிதம் மற்றும் எடை சமநிலையில் உள்ளதா (பிரமாணம்)?',
+      'ayush_satmya': 'உங்களுக்கு எந்த உணவு மற்றும் சூழல் நலம் தருகிறது (சாத்மியம்)?',
+      'ayush_satva': 'உங்கள் மன உறுதி, கவனம் மற்றும் மன அமைதி நிலை எப்படி உள்ளது (சத்துவம்)?',
+      'ayush_ahara': 'உங்கள் பசி மற்றும் செரிமான திறன் எவ்வாறு உள்ளது (ஆஹார சக்தி)?',
+      'ayush_vyayama': 'உங்கள் உடற்பயிற்சி மற்றும் உடல் தாங்கும் சக்தி எப்படி உள்ளது (வியாயாம சக்தி)?',
+      'ayush_vaya': 'உங்கள் வயது மற்றும் தற்போதைய வாழ்க்கை நிலை என்ன (வயோ)?',
+
       'token_generated': 'பரிசோதனை முடிந்தது - டோக்கன் உருவானது',
       'priority_p1': 'முன்னுரிமை 1 (அவசரம்)',
       'priority_p2': 'முன்னுரிமை 2 (மிதமான)',
       'priority_p3': 'முன்னுரிமை 3 (வழக்கமான)',
+      'token_message': 'தயவுசெய்து உங்கள் டோக்கன் சீட்டை எடுத்து காத்திருப்பு பகுதிக்குச் செல்லுங்கள். மருத்துவர் உங்களை விரைவில் அழைப்பார்.',
+      'doctor_queue': 'நேரடி நோயாளி வரிசை',
+      'certain_section': '100% உறுதியானது (AI சரிபார்க்கப்பட்டது)',
+      'not_sure_section': 'உறுதியற்றது (நோயாளி தயங்கினார்)',
+      'unclear_section': 'தெளிவற்றது (மருத்துவர் விளக்கம் தேவை)',
+      'read_summary': 'சுருக்கத்தை உரக்கப் படியுங்கள்',
+      'voice_prescribe': 'குரல் மூலம் மருந்து சீட்டு எழுதுங்கள்',
+      'generate_pdf': 'PDF சீட்டை உருவாக்கி அச்சிடுங்கள்',
+      'submit_consultation': 'ஆலோசனையை முடித்து அடுத்த நோயாளியை அழைக்கவும்',
+
+      // Additional Dashboard, Profile, Docs & Appointments Keys
+      'token_label': 'டோக்கன்',
+      'triage_badge': 'ட்ரையஜ்',
+      'active_opd_queue': 'மருத்துவர் ஓபிடி வரிசையில் செயலில் உள்ளது (அறை 104)',
+      'mode_label': 'முறை',
+      'chief_complaint_label': 'முக்கிய குறைபாடு',
+      'pre_intake_completed': 'முன் பரிசோதனை முடிந்தது',
+      'health_summary': 'உடல்நல சுருக்கம்',
+      'btn_edit': 'திருத்து',
+      'gender_age': 'பாலினம் / வயது',
+      'gender_male': 'ஆண்',
+      'gender_female': 'பெண்',
+      'gender_other': 'மற்றவை',
+      'none': 'எதுவுமில்லை',
+      'abha_status': 'ஆபா நிலை',
+      'verified_local': 'சரிபார்க்கப்பட்டது (உள்ளூர் SQLite)',
+      'scanned_documents': 'ஸ்கேன் செய்யப்பட்ட ஆவணங்கள்',
+      'scan_doc': 'ஆவணத்தை ஸ்கேன் செய்',
+      'no_docs_yet': 'இதுவரை எந்த ஆவணமும் ஸ்கேன் செய்யப்படவில்லை. பதிவேற்ற "ஆவணத்தை ஸ்கேன் செய்" தொடவும்.',
+      'ocr_parsed': 'OCR பகுப்பாய்வு',
+      'edit_patient_profile': 'நோயாளி உடல்நல விவரத்தைத் திருத்துக',
+      'save_profile_db': 'விவரங்களை உள்ளூர் தரவுத்தளத்தில் சேமி',
+      'doctor_consultations_rx': 'மருத்துவர் ஆலோசனைகள் & மருத்துவ சீட்டுகள்',
+      'consultations_completed_sub': 'மருத்துவர்களால் முடிக்கப்பட்ட ஆலோசனைகள் மற்றும் வழங்கப்பட்ட மருந்து சீட்டுகள்',
+      'prescriptions_issued': 'வழங்கப்பட்ட மருந்து சீட்டுகள்',
+      'digital_rx_label': 'டிஜிட்டல் மருத்துவ சீட்டு',
+      'medications_count': 'பரிந்துரைக்கப்பட்ட மருந்துகள்',
+      'view_print_pdf': 'மருத்துவ சீட்டு PDF பார் & அச்சிடு',
+      'pre_intake_triage_sessions': 'முன் பரிசோதனை ட்ரையஜ் அமர்வுகள்',
+      'ai_triage_audit_log': 'நிகழ்நேர AI ட்ரையஜ் மற்றும் உள்ளூர் ஓபிடி டோக்கன்கள்',
+      'general_triage': 'பொது முன் பரிசோதனை ட்ரையஜ்',
+      'status_completed': 'முடிந்தது',
+      'status_waiting': 'காத்திருக்கிறது',
+      'upload_scan_records': 'மருத்துவ ஆவணங்களைப் பதிவேற்ற & ஸ்கேன் செய் (OCR)',
+      'capture_camera_sub': 'நேரடி கேமரா மூலம் புகைப்படம் எடுக்கவும் அல்லது தானியங்கி பிரித்தெடுப்புக்கு ஆய்வக அறிக்கைகளைப் பதிவேற்றவும்.',
+      'take_photo_camera': 'கேமரா மூலம் படம் எடு',
+      'upload_pdf_file': 'PDF / படக் கோப்பை பதிவேற்றுக',
+      'saved_medical_docs': 'சேமிக்கப்பட்ட மருத்துவ ஆவணங்கள்',
+      'open_full_ocr': 'முழு OCR ஸ்டுடியோவை திற',
+      'upcoming_opd_consultations': 'வரவிருக்கும் ஓபிடி ஆலோசனைகள்',
+      'complete_preintake_sub': 'உடனடி முன்னுரிமை டோக்கன் பெற உங்கள் குரல்வழி முன் பரிசோதனையை முடிக்கவும்.',
+      'confirmed_slots': '2 உறுதிசெய்யப்பட்ட முன்பதிவுகள்',
+      'allopathy_dept': 'மத்திய ஓபிடி பிரிவு • அறை 104',
+      'ayush_dept': 'ஆயுஷ் சிறப்பு பிரிவு • அறை 208',
+      'cardiology_specialty': 'இதயவியல் & பொது உள் மருத்துவம்',
+      'ayurveda_specialty': 'ஆயுர்வேத காயசிகிச்சை & பஞ்சகர்மா',
+      'time_today_1130': 'இன்று காலை 11:30 மணிக்கு',
+      'time_tomorrow_1000': 'நாளை காலை 10:00 மணிக்கு',
+      'queue_active_waiting': 'வரிசை செயலில் (காத்திருப்பு: 3)',
+      'intake_available_now': 'பரிசோதனை இப்போது கிடைக்கிறது',
+      'start_triage_btn': 'குரல் பரிசோதனையைத் தொடங்கு',
+      'your_token_number': 'உங்கள் டோக்கன் எண்',
+      'hospital_name': 'ஆயுத்வார் ஸ்மார்ட் ஓபிடி',
+      'complaint_label': 'குறைபாடு',
+      'triage_action': 'ட்ரையஜ் நடவடிக்கை',
+      'scan_at_station': 'மருத்துவர் பிரிவில் ஸ்கேன் செய்க',
+      'digital_token_synced': 'உள்ளூர் SQLite உடன் ஒத்திசைக்கப்பட்ட டிஜிட்டல் ஆபா டோக்கன்',
+      'print_token_slip': 'டோக்கன் சீட்டை அச்சிடுக',
+      'done_btn': 'முடிந்தது',
+      'auto_reset_msg': 'கியோஸ்க் {0} வினாடிகளில் தானாகவே மீட்டமைக்கப்படும்.',
+
+      // Doctor Dashboard Keys
+      'doc_sidebar_queue': 'நேரலை நோயாளிகள் வரிசை',
+      'doc_sidebar_queue_sub': 'P1, P2, P3 மூலம் வரிசைப்படுத்தப்பட்ட காத்திருப்பு பட்டியல்',
+      'doc_sidebar_schedule': 'ஓபிடி கால அட்டவணை',
+      'doc_sidebar_schedule_sub': 'மருத்துவர் சந்திப்புகள் மற்றும் பணி நேரத்தைக் காண்க',
+      'doc_sidebar_previous': 'முந்தைய நோயாளிகள்',
+      'doc_sidebar_previous_sub': 'பரிசோதிக்கப்பட்ட நோயாளிகள் மற்றும் மருந்துச்சீட்டுகளைக் காண்க',
+      'doc_sidebar_archived': 'காப்பகப் பதிவுகள்',
+      'doc_sidebar_archived_sub': 'பழைய மருத்துவ பதிவுகளைத் தேடுங்கள்',
+      'waiting_in_queue': 'வரிசையில் காத்திருப்போர்',
+      'p1_urgent': 'முன்னுரிமை 1 (அவசரம்)',
+      'p2_moderate': 'முன்னுரிமை 2 (மிதமான)',
+      'p3_routine': 'முன்னுரிமை 3 (வழக்கமான)',
+      'upcoming_intake_queue': 'வரவிருக்கும் நோயாளி முந்தைய வரிசை',
+      'click_patient_sub': '3-அடுக்கு AI சுருக்கத்தைக் காண மற்றும் குரல் மூலம் மருந்துச்சீட்டு எழுத நோயாளியைத் தொடவும்',
+      'read_queue_status': 'வரிசை நிலையை கேளுங்கள்',
+      'no_patients_queue': 'வரிசையில் நோயாளிகள் யாரும் காத்திருக்கவில்லை.',
+      'no_patients_sub': 'கியோஸ்க்கில் பரிசோதனை முடித்த நோயாளிகள் இங்கே நிகழ்நேரத்தில் தோன்றுவார்கள்.',
+      'urgent_badge': 'அவசரம்',
+      'moderate_badge': 'மிதமான',
+      'routine_badge': 'வழக்கமான',
+      'pain_score_label': 'வலி மதிப்பெண்',
+      'registered_label': 'பதிவு செய்யப்பட்டது',
+      'ai_summary_ready': 'AI 3-அடுக்கு சுருக்கம் தயார்',
+      'open_consultation': 'ஆலோசனையைத் தொடங்கு',
+      'opd_shift_schedule': 'ஓபிடி ஷிப்ட் அட்டவணை & பணிப் பட்டியல்',
+      'morning_opd_clinic': 'காலை ஓபிடி கிளினிக் (அறை 104)',
+      'morning_opd_time': 'காலை 09:00 - மதியம் 02:00 • 18 இடங்கள் உள்ளன',
+      'active_now': 'செயலில் உள்ளது',
+      'completed_consultations_today': 'இன்று முடிவடைந்த ஆலோசனைகள்',
+      'no_consultations_today': 'இன்று இன்னும் எந்த ஆலோசனையும் முடிவடையவில்லை.',
+      'view_summary': 'சுருக்கத்தைக் காண்க',
+      'doc_opd_active': 'ஓபிடி அறை 104 • செயலில்',
+
+      // Admin Dashboard Keys
+      'admin_panel_title': 'ஆயுத்துவார் — நிர்வாகம் & பகுப்பாய்வு குழு',
+      'refresh_analytics': 'பகுப்பாய்வைப் புதுப்பிக்கவும்',
+      'admin_tab_analytics': 'பகுப்பாய்வு & முன்னுரிமை',
+      'admin_tab_users': 'பயனர் மேலாண்மை',
+      'admin_tab_audit': 'தணிக்கை பதிவு & பதிவுகள்',
+      'admin_tab_config': 'கணினி & ஆபா அமைப்பு',
+      'create_new_user': 'புதிய பயனர் கணக்கை உருவாக்கவும்',
+      'user_role': 'பயனர் பங்கு',
+      'cancel_btn': 'ரத்துசெய்',
+      'create_user_btn': 'பயனரை உருவாக்கு',
+      'save_password_btn': 'கடவுச்சொல்லைச் சேமிக்கவும்',
+
+      // Consultation & Summary Keys
+      'consultation_title': 'ஆலோசனை',
+      'read_summary_aloud': 'AI சுருக்கத்தை சத்தமாக படிக்கவும்',
+      'stop_voice_summary': 'குரலை நிறுத்தவும்',
+      'three_tier_title': '3-அடுக்கு மருத்துவ சுருக்கம்',
+      'tier1_title': 'நிலை 1: 100% உறுதியானது (நோயாளி உறுதிப்படுத்தியது)',
+      'tier2_title': 'நிலை 2: தயக்கம் / முரண்பாடுகள்',
+      'tier3_title': 'நிலை 3: தெளிவற்றது / மருத்துவர் தெளிவுபடுத்த வேண்டும்',
+      'pain_and_symptoms': 'வலி மற்றும் அறிகுறிகள்',
+      'clinical_summary_notes': 'மருத்துவ சுருக்க குறிப்புகள்',
+      'doctor_diagnosis_notes': 'மருத்துவர் நோயறிதல் மற்றும் குறிப்புகள்',
+      'preliminary_diagnosis': 'ஆரம்ப நோயறிதல்',
+      'clinical_notes_advice': 'மருத்துவக் குறிப்புகள் & அறிவுரை',
+      'prescribed_medications': 'பரிந்துரைக்கப்பட்ட மருந்துகள்',
+      'add_drug': 'மருந்தைச் சேர்க்கவும்',
+      'speak_prescription': 'குரல் மூலம் மருந்துச்சீட்டு எழுதுங்கள்',
+      'generate_print_pdf': 'மருந்துச்சீட்டு PDF அச்சிடுக',
+      'complete_consultation_btn': 'ஆலோசனையை முடித்து அடுத்த நோயாளியைப் பார்க்கவும்',
+      'print_pdf_rx': 'மருந்துசீட்டு PDF அச்சிடுக',
+      'stop_audio': 'ஆடியோவை நிறுத்துக',
+      'play_voice_summary': 'குரல் சுருக்கத்தை இயக்குக',
+      'tier1_box_sub': 'முன் பரிசோதனையின் போது நோயாளி இந்த விவரங்களுக்கு தெளிவான பதில்களை அளித்தார்:',
+      'tier2_box_sub': 'நோயாளி தயங்கினார் அல்லது உறுதியற்ற வார்த்தைகளைப் பயன்படுத்தினார் ("இருக்கலாம்", "நினைக்கிறேன்"). இவற்றைச் சரிபார்க்கவும்:',
+      'tier3_box_sub': 'பதிலளிக்கப்படவில்லை அல்லது குரல் அடையாளம் காணப்படவில்லை. இந்த கேள்விகளை நேரடியாகக் கேட்கவும்:',
+      'doctor_prescription_title': 'மருத்துவ சீட்டு மற்றும் மருத்துவர் மதிப்பீடு',
+      'dictate_voice_rx': 'குரல் மூலம் மருந்து சீட்டு எழுதுக',
+      'stop_dictation': 'குரல் பதிவை நிறுத்துக',
+      'dictating_prefix': 'பதிவாகிறது',
+      'clinical_diagnosis_label': 'மருத்துவ பரிசோதனை முடிவு / கண்டறிதல்',
+      'diagnosis_hint': 'எ.கா: தீவிர முதுகு வலி / வைரஸ் காய்ச்சல்',
+      'add_drug_manually': 'மருந்தை கைமுறையாக சேர்க்க',
+      'no_medications_added': 'மருந்துகள் சேர்க்கப்படவில்லை. குரல் மூலமாகவோ அல்லது "மருந்தை கைமுறையாக சேர்க்க" மூலமாகவோ சேர்க்கவும்.',
+      'advice_instructions_label': 'மருத்துவ ஆலோசனை / பின்தொடர்தல் வழிமுறைகள்',
+      'notes_hint': 'எ.கா: ஓய்வெடுக்கவும், வெதுவெதுப்பான நீர் அருந்தவும், 5 நாட்களுக்குப் பின் வரவும்.',
+      'preview_print_pdf': 'மருந்து சீட்டு PDF ஐப் பார்த்து அச்சிடுக',
+      'add_medication_title': 'மருந்து சீட்டில் மருந்தைச் சேர்க்கவும்',
+      'drug_name_label': 'மருந்தின் பெயர் (எ.கா: Paracetamol, Amoxicillin)',
+      'dosage_label': 'அளவு (எ.கா: 650mg, 10ml)',
+      'frequency_label': 'அதிர்வெண் (எ.கா: OD, BD, TDS)',
+      'duration_label': 'கால அளவு (எ.கா: 5 நாட்கள்)',
+      'instruction_label': 'வழிமுறைகள் (எ.கா: உணவுக்குப் பின்)',
+      'btn_cancel': 'ரத்துசெய்',
+
+      // Registration Keys
+      'reg_title': 'புதிய நோயாளி பதிவு (ஆபா)',
+      'reg_subtitle': 'தடையற்ற மருத்துவ பரிசோதனைக்கு உங்கள் டிஜிட்டல் சுகாதார அடையாளத்தை உருவாக்கவும்.',
+      'full_name_req': 'முழுப் பெயர் *',
+      'mobile_req': 'கைபேசி எண் *',
+      'aadhaar_gov_id': 'ஆதார் / அடையாள அட்டை',
+      'email_address': 'மின்னஞ்சல் முகவரி',
+      'create_password_req': 'கடவுச்சொல்லை உருவாக்கவும் *',
+      'blood_group_label': 'இரத்த வகை',
+      'gender_label': 'பாலினம்',
+      'known_allergies_hint': 'தெரிந்த ஒவ்வாமைகள் / மருத்துவ நிலைமைகள்',
+      'create_account_btn': 'கணக்கை உருவாக்கி ஆபா ஐடி பெறவும்',
+      'abha_card_created': 'ஆபா அட்டை உருவாக்கப்பட்டது',
+      'proceed_to_signin': 'உள்நுழைய தொடரவும்',
+
+      // Document Scanner Keys
+      'scan_docs_ocr': 'மருத்துவ ஆவண ஸ்கேனர் & OCR',
+      'scan_prescriptions_reports': 'மருந்துச்சீட்டுகள் & ஆய்வக அறிக்கைகளை ஸ்கேன் செய்க',
+      'ocr_realtime_sub': 'சாதனத்திலுள்ள OCR மருந்துகள், அளவுகள் மற்றும் ஆய்வக முடிவுகளை நிகழ்நேரத்தில் பிரித்தெடுக்கிறது.',
     },
     te: {
-      'app_name': 'మెడికియోస్క్ AI',
+      'app_name': 'ఆయుద్వార్',
       'tagline': 'వాయిస్ ఆధారిత స్మార్ట్ క్లినికల్ ప్రి-ఇన్‌టేక్ ప్లాట్‌ఫామ్',
       'welcome_title': 'మీ భాషను ఎంచుకోండి',
       'welcome_subtitle': 'ప్రారంభించడానికి దయచేసి మీ భాషను ఎంచుకోండి. వినడానికి స్పీకర్‌ను నొక్కండి.',
-      'welcome_voice': 'నమస్కారం! మెడికియోస్క్ AI కి స్వాగతం. కొనసాగడానికి దయచేసి మీ భాషను ఎంచుకోండి.',
+      'welcome_voice': 'నమస్కారం! ఆయుద్వార్ కి స్వాగతం. కొనసాగడానికి దయచేసి మీ భాషను ఎంచుకోండి.',
       'btn_listen': 'వినండి',
       'btn_continue': 'కొనసాగించండి',
       'btn_speak': 'మాట్లాడటానికి నొక్కండి',
@@ -230,6 +958,11 @@ class AppStrings {
       'speak_now': 'దయచేసి ఇప్పుడు మాట్లాడండి...',
       'not_understood': 'క్షమించండి, సరిగ్గా అర్థం కాలేదు, దయచేసి మళ్ళీ చెప్పగలరా?',
       'hesitation_detected': 'సమాధానం అనిశ్చితంగా గుర్తించబడింది. వైద్యుడితో స్పష్టం చేయండి.',
+      'btn_close': 'మూసివేయి',
+      'back': 'వెనుకకు',
+      'loading': 'లోడ్ అవుతోంది...',
+      
+      // Roles & Auth
       'role_patient': 'రోగి పోర్టల్',
       'role_doctor': 'వైద్యుల పోర్టల్',
       'role_admin': 'అడ్మిన్ సిస్టమ్',
@@ -237,9 +970,83 @@ class AppStrings {
       'sign_out': 'లాగ్ అవుట్',
       'register': 'కొత్త రోగి నమోదు',
       'abha_id_label': 'ఆభా ఐడి / యూజర్ నేమ్',
+      'abha_id_hint': 'ఉదా: patient_1024@abdm లేదా 9876543210',
+      'password_label': 'పాస్‌వర్డ్',
+      'full_name': 'పూర్తి పేరు',
+      'phone_number': 'మొబైల్ నంబర్',
+      'aadhaar_number': 'ఆధార్ / గుర్తింపు కార్డు',
+      'email': 'ఈమెయిల్ చిరునామా',
+      'blood_type': 'రక్త గ్రూపు',
+      'allergies': 'తెలిసిన అలెర్జీలు',
+      'save_profile': 'ప్రొఫైల్ సేవ్ చేయండి',
+      'profile_updated': 'రోగి ప్రొఫైల్ విజయవంతంగా నవీకరించబడింది!',
+      'patient_sign_in_title': 'రోగి సైన్ ఇన్ (ఆభా)',
+      'doctor_sign_in_title': 'వైద్యుల క్లినికల్ సైన్ ఇన్',
+      'admin_sign_in_title': 'అడ్మినిస్ట్రేటర్ లాగిన్',
+      'enter_abha_or_mobile': 'మీ ఆభా ఐడి లేదా మొబైల్ నంబర్‌ను నమోదు చేయండి',
+      'enter_credentials': 'కొనసాగడానికి మీ లాగిన్ వివరాలను నమోదు చేయండి',
+      'username_email': 'యూజర్ నేమ్ / ఈమెయిల్ ఐడి',
+      'enter_id_error': 'దయచేసి మీ ఐడిని నమోదు చేయండి',
+      'enter_password_error': 'దయచేసి పాస్‌వర్డ్ నమోదు చేయండి',
+      'quick_login_title': '1-క్లిక్ త్వరిత పోర్టల్ లాగిన్',
+      'demo_patient_label': 'రోగి: రమేష్ (P1)',
+      'demo_doctor_label': 'వైద్యుడు: డాక్టర్ రాజేష్',
+      'demo_admin_label': 'అడ్మిన్ కియోస్క్',
+      'tap_sign_in_hint': 'సైన్ ఇన్ నొక్కండి 👉',
+      
+      // Portal Switcher Bar
+      'live_demo_sync': 'లైవ్ డెమో సింక్',
+      'switch_portal': 'పోర్టల్ మార్చండి:',
+      'portal_patient': 'రోగి పోర్టల్',
+      'portal_doctor': 'వైద్యుల ఓపీడీ క్యూ',
+      'portal_admin': 'అడ్మిన్ ప్యానెల్',
+      'multi_portal_demo': 'మల్టీ-పోర్టల్ డెమో మోడ్',
+      
+      // Patient Dashboard
       'patient_dashboard': 'రోగి డ్యాష్‌బోర్డ్',
+      'greeting': 'నమస్కారం',
+      'dashboard_welcome_sub': 'వాయిస్ గైడెడ్ ప్రి-ఇన్‌టేక్ కోసం క్రింద ఒక క్లినికల్ మోడ్‌ను ఎంచుకోండి. మీకు తక్షణమే ఓపీడీ టోకెన్ లభిస్తుంది.',
+      'start_clinical_intake': 'క్లినికల్ ఇన్టేక్ ప్రారంభించండి',
       'allopathy_title': 'అల్లోపతి ఇన్టేక్ (ఆధునిక వైద్యం)',
+      'allopathy_desc': 'తీవ్రమైన మరియు సాధారణ లక్షణాల కోసం సోక్రటీస్ ప్రోటోకాల్.',
       'ayush_title': 'ఆయుష్ ఇన్టేక్ (ఆయుర్వేదం)',
+      'ayush_desc': 'ఆరోగ్యం మరియు జీవనశైలి కోసం దశవిధ పరీక్ష 10-రెట్లు సమగ్ర అంచనా.',
+      'uploaded_docs': 'మునుపటి వైద్య పత్రాలు మరియు నివేదికలు',
+      'upload_new_doc': 'పత్రాన్ని అప్‌లోడ్ / స్కాన్ చేయండి',
+      'upcoming_appointments': 'రాబోయే వైద్యుల అపాయింట్‌మెంట్లు',
+      'view_summaries': 'మునుపటి సారాంశాలను చూడండి',
+      'view_status': 'స్థితిని చూడండి',
+      'view_rx_pdf': 'ప్రిస్క్రిప్షన్ PDF చూడండి',
+      'doctor_consultation_completed': 'వైద్యుల సంప్రదింపు పూర్తయింది',
+      'diagnosis_label': 'రోగ నిర్ధారణ',
+      'medications_prescribed': 'సూచించిన మందులు',
+      'menu_dashboard': 'డ్యాష్‌బోర్డ్',
+      'menu_profile': 'నా ఆరోగ్య వివరాలు',
+      'menu_summaries': 'మునుపటి సారాంశాలు',
+      'menu_upload': 'పత్రాలు అప్‌లోడ్ / స్కాన్',
+      'menu_visits': 'రాబోయే సందర్శనలు',
+      'desc_dashboard': 'ప్రధాన ఇన్టేక్ మరియు శీఘ్ర చర్యలకు వెళ్లండి',
+      'desc_profile': 'రక్త గ్రూప్, అలెర్జీలు మరియు ఆరోగ్య వివరాలను చూడండి',
+      'desc_summaries': 'గత క్లినికల్ ఫలితాలు మరియు టోకెన్లను చూడండి',
+      'desc_upload': 'ప్రిస్క్రిప్షన్లు మరియు ల్యాబ్ నివేదికలను స్కాన్ చేయండి',
+      'desc_visits': 'వైద్యుల అపాయింట్‌మెంట్లు మరియు షెడ్యూల్ చూడండి',
+      
+      // Clinical Intake UI
+      'allopathy_header': 'అల్లోపతి (సోక్రటీస్ ట్రయాజ్)',
+      'ayush_header': 'ఆయుష్ (దశవిధ పరీక్ష)',
+      'step_x_of_y': 'దశ {0} / {1}',
+      'question_x': 'ప్రశ్న {0}',
+      'mic_prompt_idle': 'మైక్రోఫోన్ నొక్కండి లేదా మీ సమాధానాన్ని సహజంగా మాట్లాడండి...',
+      'mic_prompt_listening': 'మీ వాయిస్ వినబడుతోంది...',
+      'mic_recorded_prefix': 'రికార్డ్ చేయబడింది: ',
+      'or_tap_answer': 'లేదా క్రింద ఉన్న సమాధానాన్ని నొక్కండి:',
+      'done_speaking': 'మాట్లాడటం పూర్తయింది (వాయిస్ సమర్పించండి)',
+      'not_sure_skip': 'ఖచ్చితంగా తెలియదు / దాటవేయి',
+      'hear_question_again': 'ప్రశ్నను మళ్లీ వినండి',
+      'tap_mic_to_respond': 'సమాధానం ఇవ్వడానికి మైక్ లేదా ఎంపికను నొక్కండి 🎙️',
+      'exit_intake': 'డ్యాష్‌బోర్డ్‌కు తిరిగి వెళ్లండి',
+      
+      // SOCRATES Allopathy Questions
       'socrates_site': 'బాధ లేదా నొప్పి శరీరంలో ఖచ్చితంగా ఎక్కడ ఉంది?',
       'socrates_onset': 'ఈ సమస్య ఎప్పుడు ప్రారంభమైంది?',
       'socrates_character': 'నొప్పి ఎలా అనిపిస్తుంది? తీవ్రంగానా లేక మంటగానా?',
@@ -248,17 +1055,210 @@ class AppStrings {
       'socrates_timing': 'నొప్పి రోజంతా స్థిరంగా ఉంటుందా లేదా వచ్చి పోతుందా?',
       'socrates_exacerbating': 'విశ్రాంతి తీసుకుంటే లేదా ఏదైనా చేస్తే నొప్పి తగ్గుతుందా?',
       'socrates_severity': '1 నుండి 10 స్కేలులో, నొప్పి తీవ్రత ఎంత?',
+      
+      // AYUSH Dashavidha Pariksha Questions
+      'ayush_prakriti': 'మీ శరీర ప్రాకృతిక స్వభావం ఏమిటి (వాత, పిత్త, కఫ)?',
+      'ayush_vikriti': 'ప్రస్తుతం మీకు ఏ దోషం అసమతుల్యంగా ఉందని అనిపిస్తోంది (వికృతి)?',
+      'ayush_sara': 'మీ శరీర ధాతు శక్తి మరియు ఉత్సాహం ఎలా ఉంది (సార)?',
+      'ayush_samhanana': 'మీ శారీరక దృఢత్వం మరియు కండరాల బలం ఎలా ఉంది (సంహనన)?',
+      'ayush_pramana': 'మీ శరీర కొలతలు మరియు బరువు సమతుల్యంగా ఉన్నాయా (ప్రమాణ)?',
+      'ayush_satmya': 'మీకు ఏ ఆహారాలు మరియు వాతావరణం బాగా సరిపోతాయి (సాత్మ్య)?',
+      'ayush_satva': 'మీ మానసిక దృఢత్వం మరియు ఏకాగ్రత ఎలా ఉన్నాయి (సత్వ)?',
+      'ayush_ahara': 'మీ ఆకలి మరియు జీర్ణక్రియ శక్తి ఎలా ఉంది (ఆహార శక్తి)?',
+      'ayush_vyayama': 'మీ శారీరక వ్యాయామ శక్తి మరియు సహనం ఎంత (వ్యాయామ శక్తి)?',
+      'ayush_vaya': 'మీ వయస్సు మరియు జీవన దశ ఏమిటి (వయో)?',
+
       'token_generated': 'పూర్తయింది - టోకెన్ జారీ చేయబడింది',
       'priority_p1': 'ప్రాధాన్యత 1 (అత్యవసరం)',
       'priority_p2': 'ప్రాధాన్యత 2 (మధ్యస్థం)',
       'priority_p3': 'ప్రాధాన్యత 3 (సాధారణం)',
+      'token_message': 'దయచేసి మీ టోకెన్ తీసుకొని వేచి ఉండే ప్రదేశానికి వెళ్ళండి. వైద్యుడు మిమ్మల్ని త్వరలో పిలుస్తారు.',
+      'doctor_queue': 'ప్రత్యక్ష రోగి క్యూ',
+      'certain_section': '100% ఖచ్చితమైనది (AI ధృవీకరించబడింది)',
+      'not_sure_section': 'అనిశ్చితం (రోగి సంకోచించారు)',
+      'unclear_section': 'అస్పష్టం (వైద్యుల వివరణ అవసరం)',
+      'read_summary': 'సారాంశాన్ని బిగ్గరగా చదవండి',
+      'voice_prescribe': 'వాయిస్ ద్వారా ప్రిస్క్రిప్షన్ రాయండి',
+      'generate_pdf': 'PDF ప్రిస్క్రిప్షన్ తయారు చేసి ప్రింట్ చేయండి',
+      'submit_consultation': 'సంప్రదింపును పూర్తి చేసి తదుపరి రోగిని పిలవండి',
+
+      // Additional Dashboard, Profile, Docs & Appointments Keys
+      'token_label': 'టోకెన్',
+      'triage_badge': 'ట్రయాజ్',
+      'active_opd_queue': 'వైద్యుల ఓపీడీ క్యూలో యాక్టివ్‌గా ఉంది (గది 104)',
+      'mode_label': 'మోడ్',
+      'chief_complaint_label': 'ప్రధాన ఫిర్యాదు',
+      'pre_intake_completed': 'ప్రి-ఇన్‌టేక్ పూర్తయింది',
+      'health_summary': 'ఆరోగ్య సారాంశం',
+      'btn_edit': 'సవరించు',
+      'gender_age': 'లింగం / వయస్సు',
+      'gender_male': 'పురుషుడు',
+      'gender_female': 'స్త్రీ',
+      'gender_other': 'ఇతర',
+      'none': 'ఏదీ లేదు',
+      'abha_status': 'ఆభా స్థితి',
+      'verified_local': 'ధృవీకరించబడింది (స్థానిక SQLite)',
+      'scanned_documents': 'స్కాన్ చేసిన పత్రాలు',
+      'scan_doc': 'పత్రాన్ని స్కాన్ చేయి',
+      'no_docs_yet': 'ఇంకా ఎలాంటి పత్రాలు స్కాన్ చేయలేదు. అప్‌లోడ్ చేయడానికి "పత్రాన్ని స్కాన్ చేయి" నొక్కండి.',
+      'ocr_parsed': 'OCR విశ్లేషణ',
+      'edit_patient_profile': 'రోగి ఆరోగ్య ప్రొఫైల్ సవరించండి',
+      'save_profile_db': 'ప్రొఫైల్‌ను స్థానిక డేటాబేస్‌లో సేవ్ చేయండి',
+      'doctor_consultations_rx': 'వైద్యుల సంప్రదింపులు & ప్రిస్క్రిప్షన్లు',
+      'consultations_completed_sub': 'వైద్యులు పూర్తి చేసిన సంప్రదింపులు మరియు జారీ చేసిన ప్రిస్క్రిప్షన్లు',
+      'prescriptions_issued': 'జారీ చేసిన ప్రిస్క్రిప్షన్లు',
+      'digital_rx_label': 'డిజిటల్ ప్రిస్క్రిప్షన్',
+      'medications_count': 'సూచించిన మందులు',
+      'view_print_pdf': 'ప్రిస్క్రిప్షన్ PDF చూడండి & ప్రింట్ చేయండి',
+      'pre_intake_triage_sessions': 'ప్రి-ఇన్‌టేక్ ట్రయాజ్ సెషన్‌లు',
+      'ai_triage_audit_log': 'రియల్-టైమ్ AI ట్రయాజ్ వర్గీకరణ మరియు స్థానిక ఓపీడీ టోకెన్లు',
+      'general_triage': 'సాధారణ ప్రి-ఇన్‌టేక్ ట్రయాజ్',
+      'status_completed': 'పూర్తయింది',
+      'status_waiting': 'వేచి ఉంది',
+      'upload_scan_records': 'వైద్య రికార్డులను అప్‌లోడ్ & స్కాన్ చేయండి (OCR)',
+      'capture_camera_sub': 'లైవ్ కెమెరా ద్వారా ఫోటో తీయండి లేదా ల్యాబ్ నివేదికలు & ప్రిస్క్రిప్షన్లను అప్‌లోడ్ చేయండి.',
+      'take_photo_camera': 'కెమెరాతో ఫోటో తీయండి',
+      'upload_pdf_file': 'PDF / చిత్రం ఫైల్‌ను అప్‌లోడ్ చేయండి',
+      'saved_medical_docs': 'సేవ్ చేసిన వైద్య పత్రాలు',
+      'open_full_ocr': 'పూర్తి OCR స్టూడియోని తెరవండి',
+      'upcoming_opd_consultations': 'రాబోయే ఓపీడీ సంప్రదింపులు',
+      'complete_preintake_sub': 'తక్షణ ప్రాధాన్యతా టోకెన్ పొందడానికి మీ వాయిస్ ప్రి-ఇన్‌టేక్ పూర్తి చేయండి.',
+      'confirmed_slots': '2 ఖరారైన స్లాట్లు',
+      'allopathy_dept': 'సెంట్రల్ ఓపీడీ బ్లాక్ • గది 104',
+      'ayush_dept': 'ఆయుష్ స్పెషాలిటీ వింగ్ • గది 208',
+      'cardiology_specialty': 'కార్డియాలజీ & జనరల్ ఇంటర్నల్ మెడిసిన్',
+      'ayurveda_specialty': 'ఆయుర్వేద కాయచికిత్స & పంచకర్మ',
+      'time_today_1130': 'ఈ రోజు ఉదయం 11:30 గంటలకు',
+      'time_tomorrow_1000': 'రేపు ఉదయం 10:00 గంటలకు',
+      'queue_active_waiting': 'క్యూ యాక్టివ్‌గా ఉంది (వేచి ఉన్నవారు: 3)',
+      'intake_available_now': 'ఇన్‌టేక్ ఇప్పుడు అందుబాటులో ఉంది',
+      'start_triage_btn': 'వాయిస్ ట్రయాజ్ ప్రారంభించండి',
+      'your_token_number': 'మీ టోకెన్ సంఖ్య',
+      'hospital_name': 'ఆయుద్వార్ స్మార్ట్ ఓపీడీ',
+      'complaint_label': 'ఫిర్యాదు',
+      'triage_action': 'ట్రయాజ్ చర్య',
+      'scan_at_station': 'వైద్యుల స్టేషన్‌లో స్కాన్ చేయండి',
+      'digital_token_synced': 'స్థానిక SQLiteతో సమకాలీకరించబడిన డిజిటల్ ఆభా టోకెన్',
+      'print_token_slip': 'టోకెన్ స్లిప్‌ను ప్రింట్ చేయండి',
+      'done_btn': 'పూర్తయింది',
+      'auto_reset_msg': 'కియోస్క్ {0} సెకన్లలో స్వయంచాలకంగా రీసెట్ అవుతుంది.',
+
+      // Doctor Dashboard Keys
+      'doc_sidebar_queue': 'లైవ్ పేషెంట్ క్యూ',
+      'doc_sidebar_queue_sub': 'P1, P2, P3 ద్వారా క్రమబద్ధీకరించబడిన నిరీక్షణ జాబితా',
+      'doc_sidebar_schedule': 'ఓపీడీ షెడ్యూల్',
+      'doc_sidebar_schedule_sub': 'వైద్యుల నియామకాలు & విధి సమయాలు చూడండి',
+      'doc_sidebar_previous': 'మునుపటి రోగులు',
+      'doc_sidebar_previous_sub': 'సంప్రదించిన రోగులు మరియు ప్రిస్క్రిప్షన్లను చూడండి',
+      'doc_sidebar_archived': 'ఆర్కైవ్ చేసిన రికార్డులు',
+      'doc_sidebar_archived_sub': 'పాత క్లినికల్ రికార్డులను శోధించండి',
+      'waiting_in_queue': 'క్యూలో వేచి ఉన్నారు',
+      'p1_urgent': 'ప్రాధాన్యత 1 (అత్యవసరం)',
+      'p2_moderate': 'ప్రాధాన్యత 2 (మధ్యస్థ)',
+      'p3_routine': 'ప్రాధాన్యత 3 (సాధారణ)',
+      'upcoming_intake_queue': 'రాబోయే రోగి ప్రి-ఇన్‌టేక్ క్యూ',
+      'click_patient_sub': '3-అంచెల AI సారాంశాన్ని చూడటానికి & వాయిస్ ప్రిస్క్రిప్షన్ రాయడానికి ఏదైనా రోగిపై క్లిక్ చేయండి',
+      'read_queue_status': 'క్యూ స్థితి వినండి',
+      'no_patients_queue': 'క్యూలో రోగులెవరూ వేచి లేరు.',
+      'no_patients_sub': 'కియోస్క్‌లో పరీక్ష పూర్తి చేసిన రోగులు ఇక్కడ నిజ సమయంలో కనిపిస్తారు.',
+      'urgent_badge': 'అత్యవసరం',
+      'moderate_badge': 'మధ్యస్థ',
+      'routine_badge': 'సాధారణ',
+      'pain_score_label': 'నొప్పి స్కోరు',
+      'registered_label': 'నమోదైంది',
+      'ai_summary_ready': 'AI 3-అంచెల సారాంశం సిద్ధం',
+      'open_consultation': 'సంప్రదింపును తెరవండి',
+      'opd_shift_schedule': 'ఓపీడీ షిఫ్ట్ షెడ్యూల్ & డ్యూటీ రోస్టర్',
+      'morning_opd_clinic': 'ఉదయం ఓపీడీ క్లినిక్ (గది 104)',
+      'morning_opd_time': 'ఉదయం 09:00 - మధ్యాహ్నం 02:00 • 18 స్లాట్లు అందుబాటులో ఉన్నాయి',
+      'active_now': 'ప్రస్తుతం చురుకుగా ఉంది',
+      'completed_consultations_today': 'ఈరోజు పూర్తయిన సంప్రదింపులు',
+      'no_consultations_today': 'ఈరోజు ఇంకా సంప్రదింపులేవీ పూర్తి కాలేదు.',
+      'view_summary': 'సారాంశం చూడండి',
+      'doc_opd_active': 'ఓపీడీ గది 104 • చురుకుగా ఉంది',
+
+      // Admin Dashboard Keys
+      'admin_panel_title': 'ఆయుద్వార్ — పరిపాలన & విశ్లేషణల ప్యానెల్',
+      'refresh_analytics': 'విశ్లేషణలను రిఫ్రెష్ చేయండి',
+      'admin_tab_analytics': 'విశ్లేషణలు & ట్రయాజ్',
+      'admin_tab_users': 'వినియోగదారుల నిర్వహణ',
+      'admin_tab_audit': 'ఆడిట్ ట్రయిల్ & లాగ్స్',
+      'admin_tab_config': 'సిస్టమ్ & ఆభా కాన్ఫిగ్',
+      'create_new_user': 'కొత్త వినియోగదారు ఖాతాను సృష్టించండి',
+      'user_role': 'వినియోగదారు పాత్ర',
+      'cancel_btn': 'రద్దు చేయండి',
+      'create_user_btn': 'వినియోగదారుని సృష్టించండి',
+      'save_password_btn': 'పాస్‌వర్డ్‌ను సేవ్ చేయండి',
+
+      // Consultation & Summary Keys
+      'consultation_title': 'సంప్రదింపు',
+      'read_summary_aloud': 'AI సారాంశాన్ని బిగ్గరగా చదవండి',
+      'stop_voice_summary': 'వాయిస్ ఆపండి',
+      'three_tier_title': '3-అంచెల క్లినికల్ సారాంశం',
+      'tier1_title': 'స్థాయి 1: 100% ఖచ్చితమైనది (రోగి ధృవీకరించినది)',
+      'tier2_title': 'స్థాయి 2: సంకోచం / తేడాలు',
+      'tier3_title': 'స్థాయి 3: అస్పష్టమైనది / వైద్యుల స్పష్టత అవసరం',
+      'pain_and_symptoms': 'నొప్పి & లక్షణాలు',
+      'clinical_summary_notes': 'క్లినికల్ సారాంశ గమనికలు',
+      'doctor_diagnosis_notes': 'వైద్యుల నిర్ధారణ & గమనికలు',
+      'preliminary_diagnosis': 'ప్రాథమిక నిర్ధారణ',
+      'clinical_notes_advice': 'క్లినికల్ గమనికలు & సలహా',
+      'prescribed_medications': 'సూచించిన మందులు',
+      'add_drug': 'మందును జోడించండి',
+      'speak_prescription': 'వాయిస్ ద్వారా ప్రిస్క్రిప్షన్ రాయండి',
+      'generate_print_pdf': 'ప్రిస్క్రిప్షన్ PDF ప్రింట్ చేయండి',
+      'complete_consultation_btn': 'సంప్రదింపును పూర్తి చేసి తదుపరి రోగిని చూడండి',
+      'print_pdf_rx': 'ప్రిస్క్రిప్షన్ PDF ప్రింట్ చేయండి',
+      'stop_audio': 'ఆడియో ఆపండి',
+      'play_voice_summary': 'వాయిస్ సారాంశం ప్లే చేయండి',
+      'tier1_box_sub': 'ప్రీ-ఇన్‌టేక్ సమయంలో రోగి ఈ అంశాలకు స్పష్టమైన సమాధానాలు ఇచ్చారు:',
+      'tier2_box_sub': 'రోగి సంకోచించారు లేదా అనిశ్చిత పదాలు ఉపయోగించారు ("బహుశా", "అనుకుంటున్నాను"). వీటిని పరిశీలించండి:',
+      'tier3_box_sub': 'సమాధానం ఇవ్వబడలేదు లేదా మాటలు గుర్తించబడలేదు. దయచేసి ఈ ప్రశ్నలను నేరుగా అడగండి:',
+      'doctor_prescription_title': 'క్లినికల్ ప్రిస్క్రిప్షన్ & డాక్టర్ అసెస్‌మెంట్',
+      'dictate_voice_rx': 'నోటితో ప్రిస్క్రిప్షన్ చెప్పండి',
+      'stop_dictation': 'డిక్టేషన్ ఆపండి',
+      'dictating_prefix': 'రికార్డ్ అవుతోంది',
+      'clinical_diagnosis_label': 'క్లినికల్ నిర్ధారణ / అసెస్‌మెంట్',
+      'diagnosis_hint': 'ఉదా: తీవ్ర వెన్నునొప్పి / వైరల్ జ్వరం',
+      'add_drug_manually': 'ఔషధాన్ని మాన్యువల్‌గా జోడించండి',
+      'no_medications_added': 'మందులు జోడించబడలేదు. వాయిస్ ఉపయోగించండి లేదా "ఔషధాన్ని మాన్యువల్‌గా జోడించండి" నొక్కండి.',
+      'advice_instructions_label': 'సలహాలు / ఫాలో-అప్ సూచనలు',
+      'notes_hint': 'ఉదా: విశ్రాంతి తీసుకోండి, వేడి ద్రవాలు తాగండి, 5 రోజుల తర్వాత మళ్ళీ సంప్రదించండి.',
+      'preview_print_pdf': 'ప్రిస్క్రిప్షన్ PDF ప్రివ్యూ & ప్రింట్',
+      'add_medication_title': 'ప్రిస్క్రిప్షన్‌లో ఔషధాన్ని చేర్చండి',
+      'drug_name_label': 'ఔషధం పేరు (ఉదా: Paracetamol, Amoxicillin)',
+      'dosage_label': 'మోతాదు (ఉదా: 650mg, 10ml)',
+      'frequency_label': 'తరచుదనం (ఉదా: OD, BD, TDS)',
+      'duration_label': 'వ్యవధి (ఉదా: 5 రోజులు)',
+      'instruction_label': 'సూచనలు (ఉదా: భోజనం తర్వాత)',
+      'btn_cancel': 'రద్దు చేయి',
+
+      // Registration Keys
+      'reg_title': 'కొత్త రోగి నమోదు (ఆభా)',
+      'reg_subtitle': 'సులభమైన క్లినికల్ ట్రయాజ్ కోసం మీ డిజిటల్ ఆరోగ్య గుర్తింపును సృష్టించండి.',
+      'full_name_req': 'పూర్తి పేరు *',
+      'mobile_req': 'మొబైల్ సంఖ్య *',
+      'aadhaar_gov_id': 'ఆధార్ / గుర్తింపు కార్డు',
+      'email_address': 'ఇమెయిల్ చిరునామా',
+      'create_password_req': 'పాస్‌వర్డ్‌ను సృష్టించండి *',
+      'blood_group_label': 'రక్త వర్గం',
+      'gender_label': 'లింగం',
+      'known_allergies_hint': 'తెలిసిన అలెర్జీలు / వైద్య పరిస్థితులు',
+      'create_account_btn': 'ఖాతాను సృష్టించి ఆభా ఐడి పొందండి',
+      'abha_card_created': 'ఆభా కార్డు సృష్టించబడింది',
+      'proceed_to_signin': 'సైన్ ఇన్ చేయడానికి కొనసాగండి',
+
+      // Document Scanner Keys
+      'scan_docs_ocr': 'వైద్య పత్రాల స్కానర్ & OCR',
+      'scan_prescriptions_reports': 'ప్రిస్క్రిప్షన్లు & ల్యాబ్ నివేదికలను స్కాన్ చేయండి',
+      'ocr_realtime_sub': 'ఆన్-డివైస్ OCR మందులు, మోతాదులు మరియు ల్యాబ్ ఫలితాలను నిజ సమయంలో విశ్లేషిస్తుంది.',
     },
     bn: {
-      'app_name': 'মেডিকিওস্ক এআই',
+      'app_name': 'আয়ুদ্বার',
       'tagline': 'ভয়েস-সক্ষম স্মার্ট ক্লিনিকাল প্রি-ইনটেক প্ল্যাটফর্ম',
       'welcome_title': 'আপনার ভাষা নির্বাচন করুন',
       'welcome_subtitle': 'শুরু করতে আপনার পছন্দের ভাষা স্পর্শ করুন। শুনতে স্পিকার চাপুন।',
-      'welcome_voice': 'নমস্কার! মেডিকিওস্ক এআই-তে আপনাকে স্বাগতম। এগিয়ে যেতে অনুগ্রহ করে আপনার ভাষা বেছে নিন।',
+      'welcome_voice': 'নমস্কার! আয়ুদ্বারে আপনাকে স্বাগতম। এগিয়ে যেতে অনুগ্রহ করে আপনার ভাষা বেছে নিন।',
       'btn_listen': 'শুনুন',
       'btn_continue': 'এগিয়ে যান',
       'btn_speak': 'কথা বলতে স্পর্শ করুন',
@@ -266,6 +1266,11 @@ class AppStrings {
       'speak_now': 'দয়া করে এখন বলুন...',
       'not_understood': 'দুঃখিত, ঠিক বুঝতে পারিনি, আপনি কি পুনরায় বলতে পারবেন?',
       'hesitation_detected': 'উত্তরটি অনিশ্চিত বলে চিহ্নিত করা হয়েছে। ডাক্তারের সাথে পরামর্শ করুন।',
+      'btn_close': 'বন্ধ করুন',
+      'back': 'ফিরে যান',
+      'loading': 'লোড হচ্ছে...',
+      
+      // Roles & Auth
       'role_patient': 'রোগীর পোর্টাল',
       'role_doctor': 'ডাক্তারের পোর্টাল',
       'role_admin': 'প্রশাসনিক ব্যবস্থা',
@@ -273,9 +1278,83 @@ class AppStrings {
       'sign_out': 'সাইন আউট',
       'register': 'নতুন রোগীর নিবন্ধন',
       'abha_id_label': 'আভা আইডি / ব্যবহারকারীর নাম',
+      'abha_id_hint': 'যেমন: patient_1024@abdm বা 9876543210',
+      'password_label': 'পাসওয়ার্ড',
+      'full_name': 'পুরো নাম',
+      'phone_number': 'মোবাইল নম্বর',
+      'aadhaar_number': 'আধার / পরিচয়পত্র',
+      'email': 'ইমেল ঠিকানা',
+      'blood_type': 'রক্তের গ্রুপ',
+      'allergies': 'জানা অ্যালার্জি',
+      'save_profile': 'প্রোফাইল সংরক্ষণ করুন',
+      'profile_updated': 'রোগীর প্রোফাইল সফলভাবে আপডেট করা হয়েছে!',
+      'patient_sign_in_title': 'রোগীর সাইন ইন (আভা)',
+      'doctor_sign_in_title': 'ডাক্তারের ক্লিনিকাল সাইন ইন',
+      'admin_sign_in_title': 'প্রশাসক অ্যাক্সেস',
+      'enter_abha_or_mobile': 'আপনার আভা আইডি বা মোবাইল নম্বর লিখুন',
+      'enter_credentials': 'চালিয়ে যেতে আপনার শংসাপত্র লিখুন',
+      'username_email': 'ব্যবহারকারীর নাম / ইমেল',
+      'enter_id_error': 'অনুগ্রহ করে আপনার আইডি লিখুন',
+      'enter_password_error': 'অনুগ্রহ করে পাসওয়ার্ড লিখুন',
+      'quick_login_title': '১-ক্লিক দ্রুত পোর্টাল লগইন',
+      'demo_patient_label': 'রোগী: রমেশ (P1)',
+      'demo_doctor_label': 'ডাক্তার: ডাঃ রাজেশ',
+      'demo_admin_label': 'প্রশাসক কিওস্ক',
+      'tap_sign_in_hint': 'সাইন ইন স্পর্শ করুন 👉',
+      
+      // Portal Switcher Bar
+      'live_demo_sync': 'লাইভ ডেমো সিঙ্ক',
+      'switch_portal': 'পোর্টাল পরিবর্তন করুন:',
+      'portal_patient': 'রোগীর পোর্টাল',
+      'portal_doctor': 'ডাক্তার ওপিডি সারি',
+      'portal_admin': 'প্রশাসক প্যানেল',
+      'multi_portal_demo': 'মাল্টি-পোর্টাল ডেমো মোড',
+      
+      // Patient Dashboard
       'patient_dashboard': 'রোগীর ড্যাশবোর্ড',
+      'greeting': 'নমস্কার',
+      'dashboard_welcome_sub': 'ভয়েস-নির্দেশিত প্রাক-পরীক্ষার জন্য নিচে একটি ক্লিনিকাল মোড নির্বাচন করুন। আপনি সাথে সাথে ওপিডি টোকেন পাবেন।',
+      'start_clinical_intake': 'ক্লিনিকাল ইনটেক শুরু করুন',
       'allopathy_title': 'অ্যালোপ্যাথি ইনটেক (আধুনিক চিকিৎসা)',
+      'allopathy_desc': 'তীব্র এবং সাধারণ উপসর্গের জন্য সক্রেটিস প্রোটোকল।',
       'ayush_title': 'আয়ুষ ইনটেক (আয়ুর্বেদিক)',
+      'ayush_desc': 'সুস্থতা এবং জীবনধারার জন্য দশবিধ পরীক্ষা ১০-গুণ সামগ্রিক মূল্যায়ন।',
+      'uploaded_docs': 'পূর্ববর্তী চিকিৎসা নথি এবং রিপোর্ট',
+      'upload_new_doc': 'নথি আপলোড / স্ক্যান করুন',
+      'upcoming_appointments': 'আসন্ন চিকিৎসকের সাক্ষাৎ',
+      'view_summaries': 'পূর্ববর্তী সারাংশ দেখুন',
+      'view_status': 'স্থিতি দেখুন',
+      'view_rx_pdf': 'প্রেসক্রিপশন PDF দেখুন',
+      'doctor_consultation_completed': 'ডাক্তারের পরামর্শ সম্পন্ন হয়েছে',
+      'diagnosis_label': 'রোগ নির্ণয়',
+      'medications_prescribed': 'নির্ধারিত ওষুধ',
+      'menu_dashboard': 'ড্যাশবোর্ড',
+      'menu_profile': 'আমার স্বাস্থ্য প্রোফাইল',
+      'menu_summaries': 'পূর্ববর্তী সারাংশ',
+      'menu_upload': 'নথি আপলোড / স্ক্যান',
+      'menu_visits': 'আসন্ন সাক্ষাৎ',
+      'desc_dashboard': 'প্রধান ইনটেক এবং দ্রুত পদক্ষেপে যান',
+      'desc_profile': 'রক্তের গ্রুপ, অ্যালার্জি এবং স্বাস্থ্য তথ্য দেখুন',
+      'desc_summaries': 'পূর্ববর্তী ক্লিনিকাল ফলাফল এবং টোকেন দেখুন',
+      'desc_upload': 'প্রেসক্রিপশন এবং ল্যাব রিপোর্ট স্ক্যান করুন',
+      'desc_visits': 'ডাক্তারের অ্যাপয়েন্টমেন্ট এবং সময়সূচী দেখুন',
+      
+      // Clinical Intake UI
+      'allopathy_header': 'অ্যালোপ্যাথি (সক্রেটিস ট্রায়াজ)',
+      'ayush_header': 'আয়ুষ (দশবিধ পরীক্ষা)',
+      'step_x_of_y': 'ধাপ {0} / {1}',
+      'question_x': 'প্রশ্ন {0}',
+      'mic_prompt_idle': 'মাইক্রোফোন স্পর্শ করুন বা আপনার উত্তর স্বাভাবিকভাবে বলুন...',
+      'mic_prompt_listening': 'আপনার কথা শোনা হচ্ছে...',
+      'mic_recorded_prefix': 'রেকর্ড করা হয়েছে: ',
+      'or_tap_answer': 'অথবা নিচের একটি উত্তর স্পর্শ করুন:',
+      'done_speaking': 'কথা বলা শেষ (ভয়েস জমা দিন)',
+      'not_sure_skip': 'নিশ্চিত নই / এড়িয়ে যান',
+      'hear_question_again': 'প্রশ্নটি আবার শুনুন',
+      'tap_mic_to_respond': 'উত্তর দিতে মাইক বা বিকল্প স্পর্শ করুন 🎙️',
+      'exit_intake': 'ড্যাশবোর্ডে ফিরে যান',
+      
+      // SOCRATES Allopathy Questions
       'socrates_site': 'ব্যথা বা অস্বস্তি শরীরের ঠিক কোন জায়গায় হচ্ছে?',
       'socrates_onset': 'এই সমস্যাটি কখন শুরু হয়েছিল?',
       'socrates_character': 'ব্যথাটি কেমন ধরনের? তীব্র, নাকি জ্বালাপোড়া ভাব?',
@@ -284,40 +1363,652 @@ class AppStrings {
       'socrates_timing': 'ব্যথা কি সারাদিন থাকে নাকি আসে যায়?',
       'socrates_exacerbating': 'বিশ্রাম নিলে বা কিছু করলে ব্যথা কি কমে বা বাড়ে?',
       'socrates_severity': '১ থেকে ১০ এর স্কেলে, ব্যথার মাত্রা কত?',
+      
+      // AYUSH Dashavidha Pariksha Questions
+      'ayush_prakriti': 'আপনার স্বাভাবিক শারীরিক প্রকৃতি কী (বাত, পিত্ত, কফ)?',
+      'ayush_vikriti': 'বর্তমানে আপনার কোন দোষের ভারসাম্যহীনতা মনে হচ্ছে (বিকৃতি)?',
+      'ayush_sara': 'আপনার শরীরের শক্তি এবং ধাতুর ভারসাম্য কেমন (সার)?',
+      'ayush_samhanana': 'আপনার শারীরিক গঠন এবং পেশীর দৃঢ়তা কেমন (সংহনন)?',
+      'ayush_pramana': 'আপনার শারীরিক অনুপাত, উচ্চতা এবং ওজন কি সুষম (প্রমাণ)?',
+      'ayush_satmya': 'কোন ধরণের খাবার এবং আবহাওয়া আপনার শরীরে মানানসই (সাত্ম্য)?',
+      'ayush_satva': 'আপনার মানসিক শক্তি এবং মানসিক ভারসাম্য কেমন (সত্ত্ব)?',
+      'ayush_ahara': 'আপনার ক্ষুধা এবং হজম ক্ষমতা কেমন (আহার শক্তি)?',
+      'ayush_vyayama': 'আপনার শারীরিক সহনশীলতা এবং ব্যায়ামের ক্ষমতা কেমন (ব্যায়াম শক্তি)?',
+      'ayush_vaya': 'আপনার বর্তমান বয়স বা জীবনকাল কোন পর্যায়ে (বয়)?',
+
       'token_generated': 'সম্পন্ন - টোকেন তৈরি হয়েছে',
       'priority_p1': 'অগ্রাধিকার ১ (জরুরী)',
       'priority_p2': 'অগ্রাধিকার ২ (মাঝারি)',
       'priority_p3': 'অগ্রাধিকার ৩ (সাধারণ)',
+      'token_message': 'দয়া করে আপনার টোকেন স্লিপ নিয়ে অপেক্ষা করার জায়গায় যান। ডাক্তার আপনাকে শীঘ্রই ডাকবেন।',
+      'doctor_queue': 'লাইভ রোগীর সারি',
+      'certain_section': '১০০% নিশ্চিত (AI যাচাইকৃত)',
+      'not_sure_section': 'অনিশ্চিত (রোগী দ্বিধাগ্রস্ত ছিলেন)',
+      'unclear_section': 'অস্পষ্ট (ডাক্তারের স্পষ্টীকরণ প্রয়োজন)',
+      'read_summary': 'সারাংশ পড়ে শোনান',
+      'voice_prescribe': 'ভয়েস দিয়ে প্রেসক্রিপশন লিখুন',
+      'generate_pdf': 'PDF প্রেসক্রিপশন তৈরি ও প্রিন্ট করুন',
+      'submit_consultation': 'পরামর্শ সম্পন্ন করুন ও পরবর্তী রোগীকে ডাকুন',
+
+      // Additional Dashboard, Profile, Docs & Appointments Keys
+      'token_label': 'টোকেন',
+      'triage_badge': 'ট্রায়াজ',
+      'active_opd_queue': 'ডাক্তার ওপিডি সারিতে সক্রিয় (রুম ১০৪)',
+      'mode_label': 'মোড',
+      'chief_complaint_label': 'প্রধান অভিযোগ',
+      'pre_intake_completed': 'প্রাক-ইনটেক সম্পন্ন',
+      'health_summary': 'স্বাস্থ্য সারাংশ',
+      'btn_edit': 'সম্পাদনা',
+      'gender_age': 'লিঙ্গ / বয়স',
+      'gender_male': 'পুরুষ',
+      'gender_female': 'মহিলা',
+      'gender_other': 'অন্যান্য',
+      'none': 'কিছুই না',
+      'abha_status': 'আভা স্থিতি',
+      'verified_local': 'যাচাইকৃত (স্থানীয় SQLite)',
+      'scanned_documents': 'স্ক্যান করা নথি',
+      'scan_doc': 'নথি স্ক্যান',
+      'no_docs_yet': 'এখনও কোনো নথি স্ক্যান করা হয়নি। আপলোড করতে "নথি স্ক্যান" স্পর্শ করুন।',
+      'ocr_parsed': 'OCR বিশ্লেষণ',
+      'edit_patient_profile': 'রোগীর স্বাস্থ্য প্রোফাইল সম্পাদনা করুন',
+      'save_profile_db': 'প্রোফাইল স্থানীয় ডাটাবেসে সংরক্ষণ করুন',
+      'doctor_consultations_rx': 'ডাক্তারের পরামর্শ ও প্রেসক্রিপশন',
+      'consultations_completed_sub': 'ডাক্তারদের দ্বারা সম্পন্ন পরামর্শ এবং জারি করা প্রেসক্রিপশন',
+      'prescriptions_issued': 'জারি করা প্রেসক্রিপশন',
+      'digital_rx_label': 'ডিজিটাল প্রেসক্রিপশন',
+      'medications_count': 'নির্ধারিত ওষুধ',
+      'view_print_pdf': 'প্রেসক্রিপশন PDF দেখুন ও প্রিন্ট করুন',
+      'pre_intake_triage_sessions': 'প্রাক-ইনটেক ট্রায়াজ সেশন',
+      'ai_triage_audit_log': 'রিয়েল-টাইম AI ট্রায়াজ এবং স্থানীয় ওপিডি টোকেন',
+      'general_triage': 'সাধারণ প্রাক-ইনটেক ট্রায়াজ',
+      'status_completed': 'সম্পন্ন',
+      'status_waiting': 'অপেক্ষমাণ',
+      'upload_scan_records': 'চিকিৎসা নথি আপলোড ও স্ক্যান করুন (OCR)',
+      'capture_camera_sub': 'লাইভ ক্যামেরার মাধ্যমে ছবি তুলুন অথবা স্বয়ংক্রিয় বিশ্লেষণের জন্য ল্যাব রিপোর্ট ও প্রেসক্রিপশন আপলোড করুন।',
+      'take_photo_camera': 'ক্যামেরা দিয়ে ছবি তুলুন',
+      'upload_pdf_file': 'PDF / ছবির ফাইল আপলোড করুন',
+      'saved_medical_docs': 'সংরক্ষিত চিকিৎসা নথি',
+      'open_full_ocr': 'সম্পূর্ণ OCR স্টুডিও খুলুন',
+      'upcoming_opd_consultations': 'আসন্ন ওপিডি পরামর্শ',
+      'complete_preintake_sub': 'তাত্ক্ষণিক অগ্রাধিকার টোকেন পেতে আপনার ভয়েস প্রাক-পরীক্ষা সম্পন্ন করুন।',
+      'confirmed_slots': '২টি নিশ্চিত স্লট',
+      'allopathy_dept': 'সেন্ট্রাল ওপিডি ব্লক • রুম ১০৪',
+      'ayush_dept': 'আয়ুষ বিশেষায়িত শাখা • রুম ২০৮',
+      'cardiology_specialty': 'কার্ডিওলজি ও সাধারণ মেডিসিন',
+      'ayurveda_specialty': 'আয়ুর্বেদ কায়চিকিৎসা ও পঞ্চকর্ম',
+      'time_today_1130': 'আজ সকাল ১১:৩০ মিনিটে',
+      'time_tomorrow_1000': 'কাল সকাল ১০:০০ টায়',
+      'queue_active_waiting': 'সারি সক্রিয় (অপেক্ষমাণ: ৩)',
+      'intake_available_now': 'পরীক্ষা এখন উপলব্ধ',
+      'start_triage_btn': 'ভয়েস ট্রায়াজ শুরু করুন',
+      'your_token_number': 'আপনার টোকেন নম্বর',
+      'hospital_name': 'আয়ুদ্বার স্মার্ট ওপিডি',
+      'complaint_label': 'অভিযোগ',
+      'triage_action': 'ট্রায়াজ পদক্ষেপ',
+      'scan_at_station': 'ডাক্তারের স্টেশনে স্ক্যান করুন',
+      'digital_token_synced': 'স্থানীয় SQLite-এর সাথে সিঙ্ক করা ডিজিটাল আভা টোকেন',
+      'print_token_slip': 'টোকেন স্লিপ প্রিন্ট করুন',
+      'done_btn': 'সম্পন্ন',
+      'auto_reset_msg': 'কিওস্ক {0} সেকেন্ডে স্বয়ংক্রিয়ভাবে রিসেট হয়ে যাবে।',
+
+      // Doctor Dashboard Keys
+      'doc_sidebar_queue': 'লাইভ রোগী সারি',
+      'doc_sidebar_queue_sub': 'P1, P2, P3 অনুযায়ী সাজানো অপেক্ষার তালিকা',
+      'doc_sidebar_schedule': 'ওপিডি সময়সূচী',
+      'doc_sidebar_schedule_sub': 'ডাক্তারের অ্যাপয়েন্টমেন্ট এবং দায়িত্বের সময় দেখুন',
+      'doc_sidebar_previous': 'পূর্ববর্তী রোগী',
+      'doc_sidebar_previous_sub': 'পরামর্শপ্রাপ্ত রোগী ও প্রেসক্রিপশন দেখুন',
+      'doc_sidebar_archived': 'সংরক্ষণাগারভুক্ত রেকর্ড',
+      'doc_sidebar_archived_sub': 'সংরক্ষণাগারের ক্লিনিকাল রেকর্ড খুঁজুন',
+      'waiting_in_queue': 'সারিতে অপেক্ষমাণ',
+      'p1_urgent': 'অগ্রাধিকার ১ (জরুরী)',
+      'p2_moderate': 'অগ্রাধিকার ২ (মাঝারি)',
+      'p3_routine': 'অগ্রাধিকার ৩ (নিয়মিত)',
+      'upcoming_intake_queue': 'আসন্ন রোগী প্রাক-ইনটেক সারি',
+      'click_patient_sub': '৩-স্তরীয় এআই সারাংশ দেখতে এবং ভয়েস প্রেসক্রিপশন লিখতে রোগীর উপর ক্লিক করুন',
+      'read_queue_status': 'সারির অবস্থা শুনুন',
+      'no_patients_queue': 'সারিতে কোনো রোগী অপেক্ষা করছেন না।',
+      'no_patients_sub': 'কিয়স্কে পরীক্ষা সম্পন্ন করা রোগীরা এখানে রিয়েল-টাইমে প্রদর্শিত হবে।',
+      'urgent_badge': 'জরুরী',
+      'moderate_badge': 'মাঝারি',
+      'routine_badge': 'নিয়মিত',
+      'pain_score_label': 'ব্যথার স্কোর',
+      'registered_label': 'নিবন্ধিত',
+      'ai_summary_ready': 'এআই ৩-স্তরীয় সারাংশ প্রস্তুত',
+      'open_consultation': 'পরামর্শ শুরু করুন',
+      'opd_shift_schedule': 'ওপিডি শিফট সময়সূচী এবং ডিউটি रोস্টার',
+      'morning_opd_clinic': 'সকালের ওপিডি ক্লিনিক (রুম ১০৪)',
+      'morning_opd_time': 'সকাল ০৯:০০ - দুপুর ০২:০০ • ১৮টি স্লট উপলব্ধ',
+      'active_now': 'বর্তমানে সক্রিয়',
+      'completed_consultations_today': 'আজ সম্পন্ন পরামর্শসমূহ',
+      'no_consultations_today': 'আজ এখনও কোনো পরামর্শ সম্পন্ন হয়নি।',
+      'view_summary': 'সারাংশ দেখুন',
+      'doc_opd_active': 'ওপিডি রুম ১০৪ • সক্রিয়',
+
+      // Admin Dashboard Keys
+      'admin_panel_title': 'আয়ুদ্বার — প্রশাসন ও অ্যানালিটিক্স প্যানেল',
+      'refresh_analytics': 'অ্যানালিটিক্স রিফ্রেশ করুন',
+      'admin_tab_analytics': 'অ্যানালিটিক্স ও ট্রায়াজ',
+      'admin_tab_users': 'ব্যবহারকারী ব্যবস্থাপনা',
+      'admin_tab_audit': 'অডিট ট্রেইল ও লগ',
+      'admin_tab_config': 'সিস্টেম ও আভা কনফিগারেশন',
+      'create_new_user': 'নতুন ব্যবহারকারী অ্যাকাউন্ট তৈরি করুন',
+      'user_role': 'ব্যবহারকারীর ভূমিকা',
+      'cancel_btn': 'বাতিল করুন',
+      'create_user_btn': 'ব্যবহারকারী তৈরি করুন',
+      'save_password_btn': 'পাসওয়ার্ড সংরক্ষণ করুন',
+
+      // Consultation & Summary Keys
+      'consultation_title': 'পরামর্শ',
+      'read_summary_aloud': 'এআই সারাংশ উচ্চস্বরে শুনুন',
+      'stop_voice_summary': 'ভয়েস বন্ধ করুন',
+      'three_tier_title': '৩-স্তরীয় ক্লিনিকাল সারাংশ',
+      'tier1_title': 'স্তর ১: ১০০% নিশ্চিত (রোগী কর্তৃক নিশ্চিত)',
+      'tier2_title': 'স্তর ২: দ্বিধা / অসঙ্গতি',
+      'tier3_title': 'স্তর ৩: অস্পষ্ট / চিকিৎসকের স্পষ্টীকরণ প্রয়োজন',
+      'pain_and_symptoms': 'ব্যথা ও উপসর্গ',
+      'clinical_summary_notes': 'ক্লিনিকাল সারাংশ নোট',
+      'doctor_diagnosis_notes': 'ডাক্তারের রোগ নির্ণয় ও পরামর্শ',
+      'preliminary_diagnosis': 'প্রাথমিক রোগ নির্ণয়',
+      'clinical_notes_advice': 'ক্লিনিকাল নোট ও পরামর্শ',
+      'prescribed_medications': 'নির্ধারিত ওষুধসমূহ',
+      'add_drug': 'ওষুধ যোগ করুন',
+      'speak_prescription': 'ভয়েসের মাধ্যমে প্রেসক্রিপশন লিখুন',
+      'generate_print_pdf': 'প্রেসক্রিপশন PDF তৈরি ও প্রিন্ট করুন',
+      'complete_consultation_btn': 'পরামর্শ সম্পন্ন করুন ও পরবর্তী রোগী দেখুন',
+      'print_pdf_rx': 'প্রেসক্রিপশন PDF প্রিন্ট করুন',
+      'stop_audio': 'অডিও থামান',
+      'play_voice_summary': 'ভয়েস সারাংশ চালান',
+      'tier1_box_sub': 'প্রাক-ইনটেকের সময় রোগী এই পরামিতিগুলিতে স্পষ্ট উত্তর দিয়েছেন:',
+      'tier2_box_sub': 'রোগী দ্বিধাগ্রস্ত ছিলেন বা অনিশ্চিত শব্দ ব্যবহার করেছেন ("হয়তো", "মনে হয়")। এগুলো যাচাই করুন:',
+      'tier3_box_sub': 'উত্তর দেওয়া হয়নি বা কণ্ঠস্বর সনাক্ত করা যায়নি। দয়া করে এই প্রশ্নগুলি সরাসরি জিজ্ঞাসা করুন:',
+      'doctor_prescription_title': 'ক্লিনিকাল প্রেসক্রিপশন ও ডাক্তার মূল্যায়ন',
+      'dictate_voice_rx': 'কণ্ঠে প্রেসক্রিপশন লিখুন',
+      'stop_dictation': 'ডিকটেশন থামান',
+      'dictating_prefix': 'রেকর্ড হচ্ছে',
+      'clinical_diagnosis_label': 'ক্লিনিকাল নির্ণয় / মূল্যায়ন',
+      'diagnosis_hint': 'যেমন: তীব্র পিঠের ব্যথা / ভাইরাল জ্বর',
+      'add_drug_manually': 'ওষুধ নিজে যোগ করুন',
+      'no_medications_added': 'কোন ওষুধ যোগ করা হয়নি। ভয়েস ব্যবহার করুন অথবা "ওষুধ নিজে যোগ করুন" স্পর্শ করুন।',
+      'advice_instructions_label': 'পরামর্শ / ফলো-আপ নির্দেশাবলী',
+      'notes_hint': 'যেমন: বিশ্রাম নিন, গরম তরল পান করুন, ৫ দিন পর আবার দেখা করুন।',
+      'preview_print_pdf': 'প্রেসক্রিপশন PDF দেখুন এবং প্রিন্ট করুন',
+      'add_medication_title': 'প্রেসক্রিপশনে ওষুধ যোগ করুন',
+      'drug_name_label': 'ওষুধের নাম (যেমন: Paracetamol, Amoxicillin)',
+      'dosage_label': 'মাত্রা (যেমন: 650mg, 10ml)',
+      'frequency_label': 'ফ্রিকোয়েন্সি (যেমন: OD, BD, TDS)',
+      'duration_label': 'মেয়াদ (যেমন: ৫ দিন)',
+      'instruction_label': 'নির্দেশাবলী (যেমন: খাবারের পরে)',
+      'btn_cancel': 'বাতিল',
+
+      // Registration Keys
+      'reg_title': 'নতুন রোগী নিবন্ধন (আভা)',
+      'reg_subtitle': 'সহজ ক্লিনিকাল ট্রায়াজের জন্য আপনার ডিজিটাল স্বাস্থ্য পরিচয় তৈরি করুন।',
+      'full_name_req': 'সম্পূর্ণ নাম *',
+      'mobile_req': 'মোবাইল নম্বর *',
+      'aadhaar_gov_id': 'আধার / পরিচয়পত্র',
+      'email_address': 'ইমেল ঠিকানা',
+      'create_password_req': 'পাসওয়ার্ড তৈরি করুন *',
+      'blood_group_label': 'রক্তের গ্রুপ',
+      'gender_label': 'লিঙ্গ',
+      'known_allergies_hint': 'পরিচিত অ্যালার্জি / শারীরিক অবস্থা',
+      'create_account_btn': 'অ্যাকাউন্ট তৈরি করুন ও আভা আইডি পান',
+      'abha_card_created': 'আভা কার্ড তৈরি হয়েছে',
+      'proceed_to_signin': 'সাইন ইন করতে এগিয়ে যান',
+
+      // Document Scanner Keys
+      'scan_docs_ocr': 'মেডিকেল ডকুমেন্ট স্ক্যানার ও OCR',
+      'scan_prescriptions_reports': 'প্রেসক্রিপশন এবং ল্যাব রিপোর্ট স্ক্যান করুন',
+      'ocr_realtime_sub': 'ডিভাইসের OCR ওষুধ, ডোজ এবং ল্যাব রিপোর্ট রিয়েল-টাইমে বিশ্লেষণ করে।',
     },
   };
 
-  static String tr(String key, {String lang = 'en'}) {
+  static String tr(String key, {String lang = 'en', List<String> args = const []}) {
     final langMap = _localizedValues[lang] ?? _localizedValues[en]!;
-    return langMap[key] ?? _localizedValues[en]?[key] ?? key;
+    var value = langMap[key] ?? _localizedValues[en]?[key] ?? key;
+    for (int i = 0; i < args.length; i++) {
+      value = value.replaceAll('{$i}', args[i]);
+    }
+    return value;
+  }
+
+  static String format(String key, {String lang = 'en', Map<String, String>? args}) {
+    var value = tr(key, lang: lang);
+    if (args != null) {
+      args.forEach((k, v) {
+        value = value.replaceAll('{$k}', v);
+      });
+    }
+    return value;
+  }
+
+  static String getQuestionSubtitle(String key, {String lang = 'en', String defaultSub = ''}) {
+    final Map<String, Map<String, String>> subtitles = {
+      // SOCRATES Subtitles
+      'site': {
+        'en': 'Site & Anatomical Location of Symptom',
+        'hi': 'लक्षण या दर्द का शारीरिक स्थान',
+        'ta': 'அறிகுறி அல்லது வலி உள்ள உடல் இடம்',
+        'te': 'లక్షణం లేదా నొప్పి ఉన్న శరీర భాగం',
+        'bn': 'উপসর্গ বা ব্যথার শারীরিক স্থান',
+      },
+      'onset': {
+        'en': 'Onset and Speed of Symptoms',
+        'hi': 'लक्षण शुरू होने का समय व गति',
+        'ta': 'தொடங்கிய நேரம் மற்றும் வேகம்',
+        'te': 'ప్రారంభమైన సమయం మరియు వేగం',
+        'bn': 'শুরু হওয়ার সময় ও গতি',
+      },
+      'character': {
+        'en': 'Character of Pain or Discomfort',
+        'hi': 'दर्द का स्वरूप एवं अनुभूति',
+        'ta': 'வலியின் தன்மை மற்றும் உணர்வு',
+        'te': 'నొప్పి స్వభావం మరియు రకం',
+        'bn': 'ব্যথার ধরন ও অনুভূতি',
+      },
+      'radiation': {
+        'en': 'Radiation / Spread of Pain',
+        'hi': 'दर्द का फैलाव / प्रसार',
+        'ta': 'வலி உடலின் பிற பகுதிகளுக்கு பரவுதல்',
+        'te': 'నొప్పి ఇతర శరీర భాగాలకు వ్యాపించడం',
+        'bn': 'ব্যথা শরীরের অন্যত্র ছড়িয়ে পড়া',
+      },
+      'associated': {
+        'en': 'Associated Symptoms & Red Flags',
+        'hi': 'साथ जुड़े अन्य लक्षण',
+        'ta': 'உடன் இருக்கும் பிற அறிகுறிகள்',
+        'te': 'తోడుగా ఉన్న ఇతర లక్షణాలు',
+        'bn': 'সাথে থাকা অন্যান্য উপসর্গ',
+      },
+      'timing': {
+        'en': 'Timing, Constancy & Course',
+        'hi': 'दर्द का समय और अवधि',
+        'ta': 'வலியின் நேரம் மற்றும் கால அளவு',
+        'te': 'నొప్పి సమయం మరియు వ్యవధి',
+        'bn': 'ব্যথার সময় ও স্থায়িত্বকাল',
+      },
+      'exacerbating': {
+        'en': 'Exacerbating & Relieving Factors',
+        'hi': 'दर्द बढ़ाने या घटाने वाले कारक',
+        'ta': 'வலியை கூட்டும் அல்லது குறைக்கும் காரணிகள்',
+        'te': 'నొప్పిని పెంచే లేదా తగ్గించే అంశాలు',
+        'bn': 'ব্যথা বাড়ার বা কমার কারণ',
+      },
+      // AYUSH Subtitles
+      'prakriti': {
+        'en': 'Prakriti — Constitutional Body Type',
+        'hi': 'प्रकृति — शारीरिक बनावट व स्वभाव',
+        'ta': 'பிரகிருதி — உடல் அமைப்பு மற்றும் இயற்கை',
+        'te': 'ప్రకృతి — సహజ శరీర స్వభావం',
+        'bn': 'প্রকৃতি — জন্মগত শারীরিক গঠন ও স্বভাব',
+      },
+      'vikriti': {
+        'en': 'Vikriti — Current Dosha Imbalance',
+        'hi': 'विकृति — वर्तमान दोष असंतुलन',
+        'ta': 'விக்ருதி — தற்போதைய தோஷ ஏற்றத்தாழ்வு',
+        'te': 'వికృతి — ప్రస్తుత దోష అసమతుల్యత',
+        'bn': 'বিকৃতি — বর্তমান দোষের ভারসাম্যহীনতা',
+      },
+      'sara': {
+        'en': 'Sara — Tissue Vitality & Essence',
+        'hi': 'सार — धातु गुणवत्ता व शारीरिक बल',
+        'ta': 'சாரம் — தாது பலம் மற்றும் ஒட்டுமொத்த சக்தி',
+        'te': 'సార — ధాతు బలం మరియు శక్తి',
+        'bn': 'সার — ধাতু বল ও শারীরিক শক্তি',
+      },
+      'samhanana': {
+        'en': 'Samhanana — Body Build & Musculoskeletal Symmetry',
+        'hi': 'संहनन — शारीरिक सुदृढ़ता व गठन',
+        'ta': 'சம்ஹனனம் — உடற்கட்டு மற்றும் தசை வலிமை',
+        'te': 'సంహనన — శారీరక దృఢత్వం మరియు నిర్మాణం',
+        'bn': 'সংহনন — শারীরিক দৃঢ়তা ও পেশী গঠন',
+      },
+      'pramana': {
+        'en': 'Pramana — Anthropometric Proportions & Balance',
+        'hi': 'प्रमाण — शारीरिक अनुपात व माप',
+        'ta': 'பிரமாணம் — உடல் அளவுகள் மற்றும் சமநிலை',
+        'te': 'ప్రమాణ — శరీర కొలతలు మరియు నిష్పత్తి',
+        'bn': 'প্রমাণ — শারীরিক পরিমাপ ও অনুপাত',
+      },
+      'satmya': {
+        'en': 'Satmya — Habituation & Dietary Adaptability',
+        'hi': 'सात्म्य — अनुकूल खान-पान व जीवनशैली',
+        'ta': 'சாத்மியம் — உணவு மற்றும் பழக்கவழக்க ஏற்பு',
+        'te': 'సాత్మ్య — సరిపడే ఆహారాలు మరియు అలవాట్లు',
+        'bn': 'সাত্ম্য — খাদ্যাভ্যাস ও সহনশীলতা',
+      },
+      'satva': {
+        'en': 'Satva — Mental Resilience & Stress Tolerance',
+        'hi': 'सत्व — मानसिक मनोबल व सहनशक्ति',
+        'ta': 'சத்துவம் — மன உறுதி மற்றும் அமைதி',
+        'te': 'సత్వ — మనోధైర్యం మరియు సహనశక్తి',
+        'bn': 'সত্ত্ব — মানসিক দৃঢ়তা ও শান্ত ভাব',
+      },
+      'ahara_shakti': {
+        'en': 'Ahara Shakti — Appetite & Digestive Capacity',
+        'hi': 'आहार शक्ति — पाचन क्षमता व भूख',
+        'ta': 'ஆஹார சக்தி — பசி மற்றும் செரிமான திறன்',
+        'te': 'ఆహార శక్తి — ఆకలి మరియు జీర్ణక్రియ',
+        'bn': 'আহার শক্তি — ক্ষুধা ও পরিপাক ক্ষমতা',
+      },
+      'vyayama_shakti': {
+        'en': 'Vyayama Shakti — Physical Endurance & Work Capacity',
+        'hi': 'व्यायाम शक्ति — शारीरिक सहनशक्ति व कार्यक्षमता',
+        'ta': 'வியாயாம சக்தி — உடற்பயிற்சி மற்றும் தாங்கு திறன்',
+        'te': 'వ్యాయామ శక్తి — శారీరక సామర్థ్యం',
+        'bn': 'ব্যায়াম শক্তি — শারীরিক সহনশীলতা ও কাজ করার ক্ষমতা',
+      },
+      'vaya': {
+        'en': 'Vaya — Age Category & Chronological Stage',
+        'hi': 'वय — आयु वर्ग एवं जीवन अवस्था',
+        'ta': 'வயோ — வயது மற்றும் வளர்ச்சி நிலை',
+        'te': 'వయో — వయస్సు మరియు జీవిత దశ',
+        'bn': 'বয় — বর্তমান বয়স ও জীবনদশা',
+      },
+    };
+
+    return subtitles[key]?[lang] ?? subtitles[key]?['en'] ?? defaultSub;
+  }
+
+  static List<String> getQuestionOptions(String key, {String lang = 'en', List<String> defaultOptions = const []}) {
+    final Map<String, Map<String, List<String>>> allOptions = {
+      // SOCRATES Options
+      'site': {
+        'en': ['Chest', 'Abdomen', 'Head / Forehead', 'Lower Back', 'Left Arm', 'Throat', 'Joints'],
+        'hi': ['सीना (छाती)', 'पेट', 'सिर / माथा', 'कमर / पीठ', 'बायां हाथ', 'गला', 'जोड़ों का दर्द'],
+        'ta': ['நெஞ்சு', 'வயிறு', 'தலை / நெற்றி', 'இடுப்பு / கீழ் முதுகு', 'இடது கை', 'தொண்டை', 'மூட்டுகள்'],
+        'te': ['ఛాతీ', 'కడుపు', 'తల / నుదురు', 'నడుము / వీపు', 'ఎడమ చేయి', 'గొంతు', 'కీళ్ళు'],
+        'bn': ['বুক', 'পেট', 'মাথা / কপাল', 'কোমর / পিঠ', 'বাঁ হাত', 'গলা', 'গাঁট / অস্থিসন্ধি'],
+      },
+      'onset': {
+        'en': ['Sudden (few hours ago)', 'Gradual (few days ago)', 'Started this morning', 'Chronic (weeks)'],
+        'hi': ['अचानक (कुछ घंटे पहले)', 'धीरे-धीरे (कुछ दिन पहले)', 'आज सुबह शुरू हुआ', 'काफी समय से (हफ्तों से)'],
+        'ta': ['திடீரென (சில மணிநேரம் முன்)', 'படிப்படியாக (சில நாட்கள் முன்)', 'இன்று காலை தொடங்கியது', 'நீண்ட காலமாக (சில வாரங்கள்)'],
+        'te': ['అకస్మాత్తుగా (కొన్ని గంటల క్రితం)', 'క్రమంగా (కొన్ని రోజుల క్రితం)', 'ఈ రోజు ఉదయం మొదలైంది', 'చాలా కాలంగా (వారాలుగా)'],
+        'bn': ['হঠাৎ করে (কয়েক ঘণ্টা আগে)', 'ধীরে ধীরে (কয়েক দিন আগে)', 'আজ সকালে শুরু হয়েছে', 'দীর্ঘস্থায়ী (কয়েক সপ্তাহ)'],
+      },
+      'character': {
+        'en': ['Sharp & stabbing', 'Dull ache', 'Heavy pressure / squeezing', 'Burning sensation', 'Throbbing'],
+        'hi': ['तीखा और चुभने वाला', 'हल्का दर्द', 'भारी दबाव / घुटन', 'जलन जैसा दर्द', 'धड़कने वाला दर्द'],
+        'ta': ['கூர்மையான குத்தும் வலி', 'மந்தமான வலி', 'கடுமையான அழுத்தம் / பிசைதல்', 'எரியும் உணர்வு', 'துடிக்கும் வலி'],
+        'te': ['తీవ్రమైన పొడిచే నొప్పి', 'మందమైన నొప్పి', 'భారీ ఒత్తిడి / బిగుతు', 'మంటగా ఉండటం', 'దడదడలాడే నొప్పి'],
+        'bn': ['তীব্র ও সূঁচ ফোটার মতো', 'মৃদু ব্যথা', 'ভারী চাপ / নিষ্পেষণ', 'জ্বলুনি ভাব', 'দপদপ করা ব্যথা'],
+      },
+      'radiation': {
+        'en': ['Radiates to left shoulder/arm', 'Radiates to back', 'Spreads down leg', 'No radiation (localized)'],
+        'hi': ['बाएं कंधे/हाथ की ओर फैलता है', 'पीठ की ओर फैलता है', 'पैर की ओर फैलता है', 'कहीं नहीं फैलता (एक जगह)'],
+        'ta': ['இடது தோள்பட்டை/கைக்கு பரவுகிறது', 'முதுகுக்கு பரவுகிறது', 'காலுக்கு பரவுகிறது', 'பரவவில்லை (குறிப்பிட்ட இடத்தில் மட்டும்)'],
+        'te': ['ఎడమ భుజం/చేయి వైపు పాకుతుంది', 'వీపు వైపు పాకుతుంది', 'కాలు వైపు వ్యాపిస్తుంది', 'వ్యాపించదు (ఒకే చోట)'],
+        'bn': ['বাঁ কাঁধ/হাতে ছড়িয়ে পড়ছে', 'পিঠে ছড়িয়ে পড়ছে', 'পায়ে ছড়িয়ে পড়ছে', 'কোথাও ছড়ায় না (এক জায়গায়)'],
+      },
+      'associated': {
+        'en': ['Shortness of breath & sweating', 'Nausea & vomiting', 'High fever & chills', 'Dizziness', 'None'],
+        'hi': ['सांस फूलना और पसीना', 'जी मिचलाना और उल्टी', 'तेज़ बुखार और कंपकंपी', 'चक्कर आना', 'कोई अन्य लक्षण नहीं'],
+        'ta': ['மூச்சுத்திணறல் மற்றும் வியர்வை', 'குமட்டல் மற்றும் வாந்தி', 'கடுமையான காய்ச்சல் மற்றும் நடுக்கம்', 'மயக்கம்', 'வேறு எதுவும் இல்லை'],
+        'te': ['శ్వాస ఆడకపోవడం మరియు చెమట', 'వికారం మరియు వాంతులు', 'తీవ్ర జ్వరం మరియు వణుకు', 'తలతిరగడం', 'మరేమీ లేదు'],
+        'bn': ['শ্বাসকষ্ট ও ঘাম', 'বমি বমি ভাব ও বমি', 'তীব্র জ্বর ও কাঁপুনি', 'মাথা ঘোরা', 'অন্য কোনো উপসর্গ নেই'],
+      },
+      'timing': {
+        'en': ['Constant and persistent', 'Comes and goes in waves', 'Worse in morning', 'Worse at night'],
+        'hi': ['लगातार बना रहता है', 'आता-जाता रहता है', 'सुबह अधिक होता है', 'रात को अधिक होता है'],
+        'ta': ['தொடர்ச்சியாக உள்ளது', 'அலை அலையாக வந்து போகிறது', 'காலையில் அதிகம்', 'இரவில் அதிகம்'],
+        'te': ['నిరంతరం ఉంటుంది', 'తరంగాలులా వచ్చి పోతుంది', 'ఉదయం ఎక్కువ', 'రాత్రి వేళ ఎక్కువ'],
+        'bn': ['একটানা হয়ে চলেছে', 'ঢেউয়ের মতো আসে ও যায়', 'সকালে বাড়ে', 'রাতে বাড়ে'],
+      },
+      'exacerbating': {
+        'en': ['Worse with exertion, better with rest', 'Worse after eating', 'Better after lying down', 'No change'],
+        'hi': ['काम करने पर बढ़ता है, आराम से घटता है', 'खाने के बाद बढ़ता है', 'लेटने से आराम मिलता है', 'कोई बदलाव नहीं'],
+        'ta': ['வேலை செய்தால் கூடுகிறது, ஓய்வில் குறைகிறது', 'சாப்பிட்ட பின் கூடுகிறது', 'படுத்துக்கொண்டால் குறைகிறது', 'எந்த மாற்றமும் இல்லை'],
+        'te': ['పని చేస్తే పెరుగుతుంది, విశ్రాంతి తీసుకుంటే తగ్గుతుంది', 'తిన్న తర్వాత పెరుగుతుంది', 'పడుకుంటే ఉపశమనం', 'ఎలాంటి మార్పు లేదు'],
+        'bn': ['পরিশ্রমে বাড়ে, বিশ্রামে কমে', 'খাওয়ার পরে বাড়ে', 'শুয়ে থাকলে উপশম হয়', 'কোনো পরিবর্তন নেই'],
+      },
+      // AYUSH Options
+      'prakriti': {
+        'en': ['Vata Predominant (Lean, Light, Active)', 'Pitta Predominant (Medium, Warm, Sharp)', 'Kapha Predominant (Sturdy, Calm, Heavy)', 'Vata-Pitta', 'Pitta-Kapha', 'Tridosha Balanced'],
+        'hi': ['वात प्रधान (दुबला, हल्का, सक्रिय)', 'पित्त प्रधान (मध्यम, उष्ण, तीक्ष्ण)', 'कफ प्रधान (मजबूत, शांत, भारी)', 'वात-पित्त', 'पित्त-कफ', 'त्रिदोष समतुल्य'],
+        'ta': ['வாத ஆதிக்கம் (மெலிந்த, சுறுசுறுப்பான)', 'பித்த ஆதிக்கம் (நடுத்தர, உஷ்ணமான, கூர்மையான)', 'கப ஆதிக்கம் (திடமான, அமைதியான, கனமான)', 'வாத-பித்தம்', 'பித்த-கபம்', 'சமநிலை திரிதோஷம்'],
+        'te': ['వాత ప్రధానం (సన్నని, తేలికపాటి, చురుకైన)', 'పిత్త ప్రధానం (మధ్యస్థ, వేడి, తీక్షణ)', 'కఫ ప్రధానం (ధృడమైన, ప్రశాంత, బరువైన)', 'వాత-పిత్త', 'పిత్త-కఫ', 'త్రిదోష సమతుల్యత'],
+        'bn': ['বাত প্রধান (কৃশ, হালকা, সক্রিয়)', 'পিত্ত প্রধান (মাঝারি, উষ্ণ, তীক্ষ্ণ)', 'কফ প্রধান (বলিষ্ঠ, শান্ত, ভারী)', 'বাত-পিত্ত', 'পিত্ত-কফ', 'ত্রিদ্ৰোষ ভারসাম্যপূর্ণ'],
+      },
+      'vikriti': {
+        'en': ['Vata Aggravation (Pain, Dryness, Anxiety)', 'Pitta Aggravation (Burning, Acid Reflux, Heat)', 'Kapha Aggravation (Congestion, Lethargy, Heaviness)', 'Dwandwaja (Dual Dosha)'],
+        'hi': ['वात प्रकोप (दर्द, रूखापन, घबराहट)', 'पित्त प्रकोप (जलन, एसिडिटी, अत्यधिक गर्मी)', 'कफ प्रकोप (कफ/जकड़न, सुस्ती, भारीपन)', 'द्वन्द्वज (दोहरा दोष प्रकोप)'],
+        'ta': ['வாத சீற்றம் (வலி, வறட்சி, பதட்டம்)', 'பித்த சீற்றம் (எரிச்சல், நெஞ்செரிச்சல், உடல் சூடு)', 'கப சீற்றம் (சளி அடைப்பு, சோம்பல், பாரம்)', 'த்வந்த்வஜ (இரு தோஷங்கள்)'],
+        'te': ['వాత ప్రకోపం (నొప్పి, పొడిబారడం, ఆందోళన)', 'పిత్త ప్రకోపం (మంట, ఎసిడిటీ, అధిక వేడి)', 'కఫ ప్రకోపం (రొంప, బద్ధకం, బరువు)', 'ద్వంద్వజ (రెండు దోషాలు)'],
+        'bn': ['বাত বৃদ্ধি (ব্যথা, শুষ্কতা, উদ্বেগ)', 'পিত্ত বৃদ্ধি (জ্বলন, অম্বল, অতিরিক্ত গরম)', 'কফ বৃদ্ধি (কফ জমার ভাব, অলসতা, ভারী ভাব)', 'দ্বন্দ্বজ (দ্বৈত দোষ)'],
+      },
+      'sara': {
+        'en': ['Pravara (Excellent / High Vitality)', 'Madhyama (Medium Vitality)', 'Avara (Poor / Low Tissue Strength)'],
+        'hi': ['प्रवर (उत्कृष्ट / उच्च धातु शक्ति)', 'मध्यम (साधारण शारीरिक शक्ति)', 'अवर (कमजोर धातु एवं शक्ति)'],
+        'ta': ['பிரவர (மிகச்சிறந்த தாது பலம்)', 'மத்யம (நடுத்தர பலம்)', 'அவர (குறைந்த தாது பலம்)'],
+        'te': ['ప్రవర (అద్భుతమైన / అధిక ధాతు బలం)', 'మధ్యమ (సాధారణ బలం)', 'అవర (తక్కువ ధాతు బలం)'],
+        'bn': ['প্রবর (চমৎকার / উচ্চ ধাতু বল)', 'মধ্যম (মাঝারি শক্তি)', 'অবর (দুর্বল ধাতু বল)'],
+      },
+      'samhanana': {
+        'en': ['Susamhata (Compact & Well-knit)', 'Madhyama (Moderate Build)', 'Heena (Poorly compacted / Fragile)'],
+        'hi': ['सुसंहत (सुगठित एवं मजबूत शरीर)', 'मध्यम (सामान्य गठन)', 'हीन (कमजोर / ढीला गठन)'],
+        'ta': ['சுஸம்ஹத (நன்கு அமைந்த கட்டுக்கோப்பு)', 'மத்யம (மிதமான உடலமைப்பு)', 'ஹீன (மெலிந்த / தளர்ந்த உடல்)'],
+        'te': ['సుసంహత (దృఢమైన శరీర నిర్మాణం)', 'మధ్యమ (సాధారణ నిర్మాణం)', 'హీన (బలహీనమైన నిర్మాణం)'],
+        'bn': ['সুসংহত (দৃঢ় ও সুগঠিত শরীর)', 'মধ্যম (সাধারণ গড়ন)', 'হীন (দুর্বল ও ভঙ্গুর)'],
+      },
+      'pramana': {
+        'en': ['Yathokta (Harmonious / Ideal Proportions)', 'Ati-Sthula (Obese / Heavy)', 'Ati-Krisha (Emaciated / Underweight)'],
+        'hi': ['यथोक्त (संतुलित / आदर्श शारीरिक माप)', 'अति-स्थूल (अधिक वजन / मोटापा)', 'अति-कृश (अत्यधिक दुबला)'],
+        'ta': ['யதோக்த (சமச்சீரான விகிதம்)', 'அதி-ஸ்தூல (அதிக எடை / பருமன்)', 'அதி-கிருஷ (மிகவும் மெலிந்த)'],
+        'te': ['యథోక్త (సమతుల్య కొలతలు)', 'అతి-స్థూల (అధిక బరువు / ఊబకాయం)', 'అతి-కృశ (చాలా సన్నని)'],
+        'bn': ['যথোক্ত (সুষম শারীরিক অনুপাত)', 'অতি-স্থূল (স্থূল / অতিরিক্ত ওজন)', 'অতি-কৃশ (অত্যধিক রোগা)'],
+      },
+      'satmya': {
+        'en': ['Sarva-Rasa Satmya (Adapted to all 6 tastes)', 'Eka-Rasa (Restricted habituation)', 'Visham Satmya (Digestive sensitivity)'],
+        'hi': ['सर्वरस सात्म्य (सभी 6 रसों का अनुकूलन)', 'एक-रस सात्म्य (सीमित खानपान अनुकूलन)', 'विषम सात्म्य (संवेदनशील पाचन)'],
+        'ta': ['சர்வ-ரச சாத்மியம் (அனைத்து 6 சுவைகளும் ஏற்புடையது)', 'ஏக-ரச (வரையறுக்கப்பட்ட சுவை வழக்கம்)', 'விஷம சாத்மியம் (செரிமான ஒவ்வாமை)'],
+        'te': ['సర్వరస సాత్మ్య (అన్ని 6 రుచులు అలవాటు)', 'ఏక-రస (పరిమిత ఆహారపు అలవాటు)', 'విషమ సాత్మ్య (సున్నితమైన జీర్ణవ్యవస్థ)'],
+        'bn': ['সর্ব-রস সাত্ম্য (সকল ৬টি স্বাদে অভ্যস্ত)', 'এক-রস (সীমিত স্বাদ অভ্যাস)', 'বিষম সাত্ম্য (সংবেদনশীল হজম ব্যবস্থা)'],
+      },
+      'satva': {
+        'en': ['Pravara Satva (High resilience & calm mind)', 'Madhyama Satva (Moderate tolerance)', 'Avara Satva (Easily anxious / overwhelmed)'],
+        'hi': ['प्रवर सत्व (मजबूत मनोबल एवं शांत मन)', 'मध्यम सत्व (सामान्य सहनशीलता)', 'अवर सत्व (जल्द घबराने वाला मन)'],
+        'ta': ['பிரவர சத்துவம் (உயர் மன உறுதி & அமைதி)', 'மத்யம சத்துவம் (மிதமான தாங்கும் சக்தி)', 'அவர சத்துவம் (எளிதில் பதட்டமடையும் மனம்)'],
+        'te': ['ప్రవర సత్వ (గొప్ప మనోధైర్యం & ప్రశాంతత)', 'మధ్యమ సత్వ (మధ్యస్థ సహనం)', 'అవర సత్వ (త్వరగా ఆందోళన చెందే మనస్సు)'],
+        'bn': ['প্রবর সত্ত্ব (উচ্চ মানসিক শক্তি ও শান্ত মন)', 'মধ্যম সত্ত্ব (মাঝারি সহনশীলতা)', 'অবর সত্ত্ব (সহজেই আতঙ্কিত মন)'],
+      },
+      'ahara_shakti': {
+        'en': ['Tikshnagni (Strong / Fast digestion)', 'Mandagni (Sluggish digestion / heaviness)', 'Vishamagni (Irregular appetite)', 'Samagni (Balanced digestion)'],
+        'hi': ['तीक्ष्णाग्नि (तेज़ पाचन एवं तीव्र भूख)', 'मंदाग्नि (धीमा पाचन एवं भारीपन)', 'विषमाग्नि (अनियमित भूख)', 'समाग्नि (संतुलित पाचन एवं भूख)'],
+        'ta': ['தீக்ஷ்ணாக்னி (வேகமான செரிமானம் & தீவிர பசி)', 'மந்தாக்னி (மந்தமான செரிமானம் & பாரம்)', 'விஷமாக்னி (ஒழுங்கற்ற பசி)', 'சமாக்னி (சமநிலையான செரிமானம்)'],
+        'te': ['తీక్ష్ణాగ్ని (శీఘ్ర జీర్ణం & తీవ్ర ఆకలి)', 'మందాగ్ని (మందగించిన జీర్ణం & బరువు)', 'విషమాగ్ని (అనియమిత ఆకలి)', 'సమాగ్ని (సమతుల్య జీర్ణం)'],
+        'bn': ['তীক্ষ্ণাগ্নি (দ্রুত হজম ও তীব্র ক্ষুধা)', 'মন্দাগ্নি (ধীর হজম ও ভারী ভাব)', 'বিষমাগ্নি (অনিয়মিত ক্ষুধা)', 'সবাগ্নি (ভারসাম্যপূর্ণ হজম)'],
+      },
+      'vyayama_shakti': {
+        'en': ['Uttama (High physical endurance)', 'Madhyama (Moderate endurance)', 'Heena (Fatigues easily / low stamina)'],
+        'hi': ['उत्तम (उच्च शारीरिक सहनशक्ति एवं स्टैमिना)', 'मध्यम (सामान्य सहनशक्ति)', 'हीन (जल्दी थकने वाला / कम स्टैमिना)'],
+        'ta': ['உத்தம (அதிக உடல்திறன் & தாங்கும் சக்தி)', 'மத்யம (மிதமான திறன்)', 'ஹீன (விரைவில் சோர்வடையும் / குறைந்த ஆற்றல்)'],
+        'te': ['ఉత్తమ (అధిక శారీరక సామర్థ్యం)', 'మధ్యమ (మధ్యస్థ సామర్థ్యం)', 'హీన (త్వరగా అలసిపోవడం)'],
+        'bn': ['উত্তম (উচ্চ শারীরিক সহনশীলতা)', 'মধ্যম (মাঝারি সহ্যক্ষমতা)', 'হীন (সহজেই ক্লান্ত হয় / কম স্ট্যামিনা)'],
+      },
+      'vaya': {
+        'en': ['Bala (Childhood / Growth Stage)', 'Madhyama (Youth & Adult 16-60 yrs)', 'Vriddha (Elderly 60+ yrs)'],
+        'hi': ['बाल (बचपन / वृद्धि अवस्था)', 'मध्यम (युवा एवं प्रौढ़ 16-60 वर्ष)', 'वृद्ध (बुजुर्ग 60+ वर्ष)'],
+        'ta': ['பால (குழந்தைப் பருவம் / வளரும் நிலை)', 'மத்யம (இளமை & வயதுவந்தோர் 16-60)', 'விருத்த (முதியோர் 60+)'],
+        'te': ['బాల (బాల్యం / పెరుగుదల దశ)', 'మధ్యమ (యువత & పెద్దలు 16-60 సం.)', 'వృద్ధ (వృద్ధాప్యం 60+ సం.)'],
+        'bn': ['বাল (শৈশব / বৃদ্ধির বয়স)', 'মধ্যম (যুব ও প্রাপ্তবয়স্ক ১৬-৬০ বছর)', 'বৃদ্ধ (বয়োজ্যেষ্ঠ ৬০+ বছর)']
+      },
+    };
+
+    return allOptions[key]?[lang] ?? allOptions[key]?['en'] ?? defaultOptions;
   }
 
   static String getSpeechDescription(String buttonId, {String lang = 'en'}) {
     switch (buttonId) {
       case 'btn_allopathy':
-        return lang == 'hi'
-            ? 'यह बटन आधुनिक एलोपैथी जांच के लिए है। अपने लक्षणों के बारे में बताने के लिए दबाएं।'
-            : 'This button starts the Allopathy intake for modern medical evaluation.';
+        switch (lang) {
+          case 'hi':
+            return 'यह बटन आधुनिक एलोपैथी जांच के लिए है। अपने लक्षणों के बारे में बताने के लिए दबाएं।';
+          case 'ta':
+            return 'இந்த பொத்தான் நவீன அலோபதி மருத்துவ பரிசோதனைக்கானது. உங்கள் அறிகுறிகளைக் கூற இதை அழுத்தவும்.';
+          case 'te':
+            return 'ఈ బటన్ ఆధునిక అల్లోపతి వైద్య పరీక్ష కోసం. మీ లక్షణాలను వివరించడానికి నొక్కండి.';
+          case 'bn':
+            return 'এই বোতামটি আধুনিক অ্যালোপ্যাথি পরীক্ষার জন্য। আপনার উপসর্গ বলতে এটি স্পর্শ করুন।';
+          default:
+            return 'This button starts the Allopathy intake for modern medical evaluation.';
+        }
       case 'btn_ayush':
-        return lang == 'hi'
-            ? 'यह बटन पारंपरिक आयुष और आयुर्वेदिक स्वास्थ्य मूल्यांकन के लिए है।'
-            : 'This button starts the AYUSH Dashavidha Pariksha holistic assessment.';
+        switch (lang) {
+          case 'hi':
+            return 'यह बटन पारंपरिक आयुष और आयुर्वेदिक स्वास्थ्य मूल्यांकन के लिए है।';
+          case 'ta':
+            return 'இந்த பொத்தான் பாரம்பரிய ஆயுஷ் மற்றும் ஆயுர்வேத தசவித பரீட்சை மதிப்பீட்டிற்கானது.';
+          case 'te':
+            return 'ఈ బటన్ సంప్రదాయ ఆయుష్ మరియు ఆయుర్వేద దశవిధ పరీక్ష కోసం.';
+          case 'bn':
+            return 'এই বোতামটি ঐতিহ্যবাহী আয়ুষ এবং আয়ুর্বেদিক দশবিধ পরীক্ষার জন্য।';
+          default:
+            return 'This button starts the AYUSH Dashavidha Pariksha holistic assessment.';
+        }
       case 'btn_signin':
-        return lang == 'hi'
-            ? 'अपने खाते में साइन इन करने के लिए यहां दबाएं।'
-            : 'Press here to sign in with your ABHA ID or phone number.';
+        switch (lang) {
+          case 'hi':
+            return 'अपने खाते में साइन इन करने के लिए यहां दबाएं।';
+          case 'ta':
+            return 'உங்கள் ஆபா ஐடி மூலம் கணக்கில் உள்நுழைய இங்கு அழுத்தவும்.';
+          case 'te':
+            return 'మీ ఆభా ఐడితో సైన్ ఇన్ చేయడానికి ఇక్కడ నొక్కండి.';
+          case 'bn':
+            return 'আপনার আভা আইডি দিয়ে সাইন ইন করতে এখানে স্পর্শ করুন।';
+          default:
+            return 'Press here to sign in with your ABHA ID or phone number.';
+        }
       case 'btn_register':
-        return lang == 'hi'
-            ? 'नया मरीज खाता बनाने के लिए यहां दबाएं।'
-            : 'Press here to register as a new patient.';
+        switch (lang) {
+          case 'hi':
+            return 'नया मरीज खाता बनाने के लिए यहां दबाएं।';
+          case 'ta':
+            return 'புதிய நோயாளி கணக்கு உருவாக்க இங்கு அழுத்தவும்.';
+          case 'te':
+            return 'కొత్త రోగి ఖాతాను నమోదు చేయడానికి ఇక్కడ నొక్కండి.';
+          case 'bn':
+            return 'নতুন রোগীর অ্যাকাউন্ট তৈরি করতে এখানে স্পর্শ করুন।';
+          default:
+            return 'Press here to register as a new patient.';
+        }
       case 'btn_upload':
-        return lang == 'hi'
-            ? 'अपनी पर्ची या लैब रिपोर्ट स्कैन करने के लिए यहां दबाएं।'
-            : 'Press here to upload or scan medical reports and prescriptions.';
+        switch (lang) {
+          case 'hi':
+            return 'अपनी पर्ची या लैब रिपोर्ट स्कैन करने के लिए यहां दबाएं।';
+          case 'ta':
+            return 'மருத்துவ சீட்டு அல்லது ஆய்வக அறிக்கையை ஸ்கேன் செய்ய இங்கு அழுத்தவும்.';
+          case 'te':
+            return 'మీ ప్రిస్క్రిప్షన్ లేదా ల్యాబ్ రిపోర్టును స్కాన్ చేయడానికి ఇక్కడ నొక్కండి.';
+          case 'bn':
+            return 'প্রেসক্রিপশন বা ল্যাব রিপোর্ট স্ক্যান করতে এখানে স্পর্শ করুন।';
+          default:
+            return 'Press here to upload or scan medical reports and prescriptions.';
+        }
+      case 'btn_signout':
+        switch (lang) {
+          case 'hi':
+            return 'कियोस्क से सुरक्षित साइन आउट करने के लिए यहां दबाएं।';
+          case 'ta':
+            return 'கியோஸ்க்கிலிருந்து பாதுகாப்பாக வெளியேற இங்கு அழுத்தவும்.';
+          case 'te':
+            return 'కియోస్క్ నుండి సురక్షితంగా లాగ్ అవుట్ కావడానికి ఇక్కడ నొక్కండి.';
+          case 'bn':
+            return 'কিয়স্ক থেকে নিরাপদে সাইন আউট করতে এখানে স্পর্শ করুন।';
+          default:
+            return 'Tap here to securely sign out of the kiosk.';
+        }
+      case 'btn_dashboard':
+        switch (lang) {
+          case 'hi':
+            return 'मुख्य क्लिनिकल जांच और डैशबोर्ड पर जाने के लिए दबाएं।';
+          case 'ta':
+            return 'முதன்மை மருத்துவ பரிசோதனை டாஷ்போர்டிற்குச் செல்ல அழுத்தவும்.';
+          case 'te':
+            return 'ప్రధాన క్లినికల్ ఇన్టేక్ డ్యాష్‌బోర్డ్‌కు వెళ్లడానికి నొక్కండి.';
+          case 'bn':
+            return 'প্রধান ক্লিনিকাল ইনটেক ড্যাশবোর্ডে যেতে স্পর্শ করুন।';
+          default:
+            return 'Tap to go to the main clinical intake dashboard.';
+        }
+      case 'btn_profile':
+        switch (lang) {
+          case 'hi':
+            return 'अपनी स्वास्थ्य प्रोफ़ाइल और एलर्जी देखने के लिए दबाएं।';
+          case 'ta':
+            return 'உங்கள் உடல்நல விவரம் மற்றும் ஒவ்வாமைகளைக் காண அழுத்தவும்.';
+          case 'te':
+            return 'మీ ఆరోగ్య వివరాలు మరియు అలెర్జీలను చూడటానికి నొక్కండి.';
+          case 'bn':
+            return 'আপনার স্বাস্থ্য প্রোফাইল এবং অ্যালার্জি দেখতে স্পর্শ করুন।';
+          default:
+            return 'Tap to view and edit your health profile and allergies.';
+        }
+      case 'btn_summaries':
+        switch (lang) {
+          case 'hi':
+            return 'अपने पिछले क्लिनिकल सारांश और टोकन देखने के लिए दबाएं।';
+          case 'ta':
+            return 'உங்கள் முந்தைய மருத்துவ சுருக்கங்கள் மற்றும் டோக்கன்களைக் காண அழுத்தவும்.';
+          case 'te':
+            return 'మీ మునుపటి క్లినికల్ సారాంశాలు మరియు టోకెన్లను చూడటానికి నొక్కండి.';
+          case 'bn':
+            return 'আপনার পূর্ববর্তী ক্লিনিকাল সারাংশ এবং টোকেন দেখতে স্পর্শ করুন।';
+          default:
+            return 'Tap to view your past clinical summaries and tokens.';
+        }
+      case 'btn_visits':
+        switch (lang) {
+          case 'hi':
+            return 'अपनी आगामी डॉक्टर नियुक्तियां देखने के लिए दबाएं।';
+          case 'ta':
+            return 'உங்கள் வரவிருக்கும் மருத்துவர் சந்திப்புகளைக் காண அழுத்தவும்.';
+          case 'te':
+            return 'మీ రాబోయే వైద్యుల అపాయింట్‌మెంట్లను చూడటానికి నొక్కండి.';
+          case 'bn':
+            return 'আপনার আসন্ন ডাক্তারের অ্যাপয়েন্টমেন্ট দেখতে স্পর্শ করুন।';
+          default:
+            return 'Tap to view your upcoming doctor appointments.';
+        }
+      case 'btn_patient_overview':
+        switch (lang) {
+          case 'hi':
+            return 'मरीज पोर्टल में आपका स्वागत है। जांच शुरू करने के लिए एलोपैथी या आयुष चुनें।';
+          case 'ta':
+            return 'நோயாளி போர்ட்டலுக்கு நல்வரவு! பரிசோதனையைத் தொடங்க அலோபதி அல்லது ஆயுஷ் முறையைத் தேர்ந்தெடுக்கவும்.';
+          case 'te':
+            return 'రోగి పోర్టల్‌కు స్వాగతం! ప్రి-ఇన్‌టేక్ ప్రారంభించడానికి అల్లోపతి లేదా ఆయుష్ ఎంచుకోండి.';
+          case 'bn':
+            return 'রোগীর পোর্টালে স্বাগতম! পরীক্ষা শুরু করতে অ্যালোপ্যাথি বা আয়ুষ নির্বাচন করুন।';
+          default:
+            return 'Welcome to Patient Portal. Choose Allopathy or AYUSH intake to begin pre-consultation triage.';
+        }
+      case 'btn_banner':
+        switch (lang) {
+          case 'hi':
+            return 'नमस्ते! क्लिनिकल जांच शुरू करने के लिए एलोपैथी या आयुष चुनें। आपको तुरंत ओपीडी कतार टोकन मिलेगा।';
+          case 'ta':
+            return 'வணக்கம்! மருத்துவ பரிசோதனை தொடங்க அலோபதி அல்லது ஆயுஷ் முறையைத் தேர்ந்தெடுக்கவும். உடனடி ஓபிடி டோக்கன் பெறுவீர்கள்.';
+          case 'te':
+            return 'నమస్కారం! క్లినికల్ పరీక్ష కోసం అల్లోపతి లేదా ఆయుష్ ఎంచుకోండి. తక్షణమే ఓపీడీ టోకెన్ పొందండి.';
+          case 'bn':
+            return 'নমস্কার! ক্লিনিকাল পরীক্ষা শুরু করতে অ্যালোপ্যাথি বা আয়ুষ বেছে নিন। সাথে সাথে ওপিডি টোকেন পাবেন।';
+          default:
+            return 'Hello! Choose Allopathy or AYUSH intake for your voice-guided pre-intake consultation.';
+        }
+      case 'doc_queue_status':
+        switch (lang) {
+          case 'hi':
+            return 'लाइव ट्रायज कतार में मरीज प्रतीक्षारत हैं। कृपया प्राथमिकता के अनुसार परामर्श शुरू करें।';
+          case 'ta':
+            return 'நேரலை வரிசையில் நோயாளிகள் காத்திருக்கின்றனர். முன்னுரிமை அடிப்படையில் ஆலோசனையைத் தொடங்குங்கள்.';
+          case 'te':
+            return 'లైవ్ ట్రయాజ్ క్యూలో రోగులు వేచి ఉన్నారు. దయచేసి ప్రాధాన్యత ఆధారంగా సంప్రదింపులను ప్రారంభించండి.';
+          case 'bn':
+            return 'লাইভ ট্রায়াজ সারিতে রোগীরা অপেক্ষা করছেন। দয়া করে অগ্রাধিকার ভিত্তিতে পরামর্শ শুরু করুন।';
+          default:
+            return 'Patients are waiting in the live triage queue. Please open consultation by priority.';
+        }
       default:
         return 'Interactive button.';
     }

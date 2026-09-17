@@ -102,6 +102,18 @@ class DocumentNotifier extends StateNotifier<DocumentState> {
     await _processFile(patientId: patientId, fileName: fileName);
   }
 
+  Future<void> processCapturedBytes({
+    required String patientId,
+    required Uint8List bytes,
+    required String fileName,
+  }) async {
+    await _processFile(
+      patientId: patientId,
+      fileName: fileName,
+      bytes: bytes,
+    );
+  }
+
   Future<void> _processFile({
     required String patientId,
     required String fileName,

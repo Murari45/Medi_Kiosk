@@ -55,88 +55,95 @@ class _VoiceGuidanceButtonState extends State<VoiceGuidanceButton> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: widget.backgroundColor.withValues(alpha: 0.3),
-            blurRadius: 10,
+            color: widget.backgroundColor.withValues(alpha: 0.35),
+            blurRadius: 12,
             offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Material(
         color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: widget.onPressed,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: widget.isLarge ? 20.0 : 14.0,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
-                    shape: BoxShape.circle,
+        child: Row(
+          children: [
+            // Main card area: clicking navigates directly to intake
+            Expanded(
+              child: InkWell(
+                borderRadius: const BorderRadius.horizontal(left: Radius.circular(16)),
+                onTap: widget.onPressed,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: widget.isLarge ? 20.0 : 14.0,
                   ),
-                  child: Icon(widget.icon, color: widget.foregroundColor, size: widget.isLarge ? 28 : 22),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
+                  child: Row(
                     children: [
-                      Text(
-                        widget.title,
-                        style: TextStyle(
-                          color: widget.foregroundColor,
-                          fontSize: widget.isLarge ? 17 : 15,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(widget.icon, color: widget.foregroundColor, size: widget.isLarge ? 28 : 22),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              widget.title,
+                              style: TextStyle(
+                                color: widget.foregroundColor,
+                                fontSize: widget.isLarge ? 17 : 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            if (widget.subtitle != null) ...[
+                              const SizedBox(height: 3),
+                              Text(
+                                widget.subtitle!,
+                                style: TextStyle(
+                                  color: widget.foregroundColor.withValues(alpha: 0.88),
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ],
                         ),
                       ),
-                      if (widget.subtitle != null) ...[
-                        const SizedBox(height: 3),
-                        Text(
-                          widget.subtitle!,
-                          style: TextStyle(
-                            color: widget.foregroundColor.withValues(alpha: 0.85),
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
                     ],
                   ),
                 ),
-                const SizedBox(width: 8),
-                // Speaker icon for low-literacy users
-                Tooltip(
-                  message: 'Hear button explanation',
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(20),
-                      onTap: _speakGuidance,
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: _isSpeakingGuidance
-                              ? Colors.amberAccent.withValues(alpha: 0.3)
-                              : Colors.white.withValues(alpha: 0.15),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          _isSpeakingGuidance ? Icons.volume_up_rounded : Icons.volume_mute_rounded,
-                          color: _isSpeakingGuidance ? Colors.amberAccent : widget.foregroundColor,
-                          size: 22,
-                        ),
-                      ),
+              ),
+            ),
+            // Dedicated Speaker Button (Disjoint touch target, never conflicts with card tap)
+            Padding(
+              padding: const EdgeInsets.only(right: 12.0, left: 4.0),
+              child: Tooltip(
+                message: 'Listen',
+                child: InkResponse(
+                  radius: 24,
+                  onTap: _speakGuidance,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.all(9),
+                    decoration: BoxDecoration(
+                      color: _isSpeakingGuidance
+                          ? Colors.amberAccent
+                          : Colors.white.withValues(alpha: 0.22),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      _isSpeakingGuidance ? Icons.volume_up_rounded : Icons.volume_up_outlined,
+                      color: _isSpeakingGuidance ? Colors.black87 : widget.foregroundColor,
+                      size: widget.isLarge ? 26 : 22,
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

@@ -5,6 +5,7 @@ import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/doctor_dashboard/presentation/providers/doctor_provider.dart';
 import '../../features/patient_dashboard/presentation/providers/patient_provider.dart';
 import '../constants/app_colors.dart';
+import '../constants/app_strings.dart';
 import '../services/notification_service.dart';
 
 class PortalDemoSwitcher extends ConsumerWidget {
@@ -46,6 +47,8 @@ class PortalDemoSwitcher extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final lang = ref.watch(authProvider).currentLanguage;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
       decoration: BoxDecoration(
@@ -59,107 +62,111 @@ class PortalDemoSwitcher extends ConsumerWidget {
           ),
         ],
       ),
-      child: Row(
-        children: [
-          // Live Sync Indicator
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-            decoration: BoxDecoration(
-              color: Colors.green.shade50,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.green.shade300),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 7,
-                  height: 7,
-                  decoration: const BoxDecoration(
-                    color: Colors.green,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 5),
-                const Text(
-                  'LIVE DEMO SYNC',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 12),
-          const Text(
-            'Switch Portal:',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
-            ),
-          ),
-          const SizedBox(width: 8),
-
-          // Portal Tabs
-          _buildPortalChip(
-            context: context,
-            ref: ref,
-            portalId: 'patient',
-            label: 'Patient Portal',
-            icon: Icons.person_rounded,
-            activeColor: AppColors.primary,
-            activeBg: AppColors.primaryContainer,
-          ),
-          const SizedBox(width: 6),
-          _buildPortalChip(
-            context: context,
-            ref: ref,
-            portalId: 'doctor',
-            label: 'Doctor OPD Queue',
-            icon: Icons.medical_services_rounded,
-            activeColor: AppColors.ayushGreen,
-            activeBg: AppColors.ayushGreenContainer,
-          ),
-          const SizedBox(width: 6),
-          _buildPortalChip(
-            context: context,
-            ref: ref,
-            portalId: 'admin',
-            label: 'Admin Panel',
-            icon: Icons.admin_panel_settings_rounded,
-            activeColor: Colors.purple.shade700,
-            activeBg: Colors.purple.shade50,
-          ),
-
-          const Spacer(),
-
-          // Hackathon Demo Helper Pill
-          Tooltip(
-            message: 'All 3 portals share the same live SQLite database. Open separate browser tabs to demonstrate real-time triage queue updates!',
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Live Sync Indicator
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
-                borderRadius: BorderRadius.circular(12),
+                color: Colors.green.shade50,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.green.shade300),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.lightbulb_rounded, size: 14, color: Colors.amber),
-                  SizedBox(width: 4),
+                  Container(
+                    width: 7,
+                    height: 7,
+                    decoration: const BoxDecoration(
+                      color: Colors.green,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 5),
                   Text(
-                    'Multi-Portal Demo Mode',
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                    AppStrings.tr('live_demo_sync', lang: lang),
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                      letterSpacing: 0.5,
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+            const SizedBox(width: 12),
+            Text(
+              AppStrings.tr('switch_portal', lang: lang),
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textSecondary,
+              ),
+            ),
+            const SizedBox(width: 8),
+
+            // Portal Tabs
+            _buildPortalChip(
+              context: context,
+              ref: ref,
+              portalId: 'patient',
+              label: AppStrings.tr('portal_patient', lang: lang),
+              icon: Icons.person_rounded,
+              activeColor: AppColors.primary,
+              activeBg: AppColors.primaryContainer,
+            ),
+            const SizedBox(width: 6),
+            _buildPortalChip(
+              context: context,
+              ref: ref,
+              portalId: 'doctor',
+              label: AppStrings.tr('portal_doctor', lang: lang),
+              icon: Icons.medical_services_rounded,
+              activeColor: AppColors.ayushGreen,
+              activeBg: AppColors.ayushGreenContainer,
+            ),
+            const SizedBox(width: 6),
+            _buildPortalChip(
+              context: context,
+              ref: ref,
+              portalId: 'admin',
+              label: AppStrings.tr('portal_admin', lang: lang),
+              icon: Icons.admin_panel_settings_rounded,
+              activeColor: Colors.purple.shade700,
+              activeBg: Colors.purple.shade50,
+            ),
+
+            const SizedBox(width: 24),
+
+            // Hackathon Demo Helper Pill
+            Tooltip(
+              message: 'All 3 portals share the same live SQLite database.',
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.surfaceVariant,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.lightbulb_rounded, size: 14, color: Colors.amber),
+                    const SizedBox(width: 4),
+                    Text(
+                      AppStrings.tr('multi_portal_demo', lang: lang),
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

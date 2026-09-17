@@ -61,7 +61,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     if (registeredUser != null) {
       final tts = getIt<TTSService>();
-      tts.speak('Registration complete. Your simulated ABHA ID is ${registeredUser.abhaId}. Redirecting to sign in.');
+      final lang = ref.read(authProvider).currentLanguage;
+      final speechMsg = lang == 'hi'
+          ? 'पंजीकरण पूर्ण हुआ। आपकी आभा आईडी ${registeredUser.abhaId} है। साइन इन पर भेजा जा रहा है।'
+          : lang == 'ta'
+              ? 'பதிவு முடிந்தது. உங்கள் ஆபா ஐடி ${registeredUser.abhaId}. உள்நுழைவு பக்கத்திற்கு திருப்பி விடப்படுகிறீர்கள்.'
+              : lang == 'te'
+                  ? 'నమోదు పూర్తయింది. మీ ఆభా ఐడి ${registeredUser.abhaId}. సైన్ ఇన్ పేజీకి దారి మళ్లించబడుతోంది.'
+                  : lang == 'bn'
+                      ? 'নিবন্ধন সম্পন্ন হয়েছে। আপনার আভা আইডি হল ${registeredUser.abhaId}। সাইন ইন পৃষ্ঠায় পুনর্নির্দেশ করা হচ্ছে।'
+                      : 'Registration complete. Your simulated ABHA ID is ${registeredUser.abhaId}. Redirecting to sign in.';
+      tts.speak(speechMsg, langCode: lang);
 
       // Show ABHA ID preview dialog
       showDialog(
@@ -69,11 +79,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         barrierDismissible: false,
         builder: (ctx) => AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Row(
+          title: Row(
             children: [
-              Icon(Icons.check_circle_rounded, color: AppColors.certainGreen, size: 28),
-              SizedBox(width: 10),
-              Text('ABHA Card Created'),
+              const Icon(Icons.check_circle_rounded, color: AppColors.certainGreen, size: 28),
+              const SizedBox(width: 10),
+              Text(AppStrings.tr('abha_card_created', lang: lang)),
             ],
           ),
           content: Column(
@@ -103,14 +113,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     const SizedBox(height: 12),
                     Text(registeredUser.name, style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 4),
-                    Text('ABHA ID: ${registeredUser.abhaId}', style: const TextStyle(color: Colors.amberAccent, fontSize: 13, fontWeight: FontWeight.w600)),
+                    Text('${AppStrings.tr('token_label', lang: lang)} ABHA: ${registeredUser.abhaId}', style: const TextStyle(color: Colors.amberAccent, fontSize: 13, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 2),
-                    Text('Mobile: ${registeredUser.phone} | Blood: $_selectedBloodType', style: const TextStyle(color: Colors.white70, fontSize: 11)),
+                    Text('${registeredUser.phone} | Blood: $_selectedBloodType', style: const TextStyle(color: Colors.white70, fontSize: 11)),
                   ],
                 ),
               ),
               const SizedBox(height: 14),
-              const Text('Your account has been saved to the local SQLite database. You can now sign in using your ABHA ID or phone number.', style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+              Text(AppStrings.tr('digital_token_synced', lang: lang), style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
             ],
           ),
           actions: [
@@ -119,7 +129,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 Navigator.pop(ctx);
                 context.go('/auth');
               },
-              child: const Text('Proceed to Sign In'),
+              child: Text(AppStrings.tr('proceed_to_signin', lang: lang)),
             ),
           ],
         ),
@@ -169,19 +179,19 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'New Patient Registration (ABHA)',
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                      Text(
+                        AppStrings.tr('reg_title', lang: lang),
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
                       ),
                       const SizedBox(height: 4),
-                      const Text(
-                        'Create your digital health identity for seamless clinical triage.',
-                        style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+                      Text(
+                        AppStrings.tr('reg_subtitle', lang: lang),
+                        style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
                       ),
                       const Divider(height: 28),
 
                       // Full Name
-                      const Text('Full Name *', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                      Text(AppStrings.tr('full_name_req', lang: lang), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                       const SizedBox(height: 6),
                       TextFormField(
                         controller: _nameController,
@@ -189,7 +199,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           hintText: 'e.g. Anand Varma',
                           prefixIcon: Icon(Icons.person_outline_rounded),
                         ),
-                        validator: (val) => val == null || val.trim().isEmpty ? 'Please enter your name' : null,
+                        validator: (val) => val == null || val.trim().isEmpty ? AppStrings.tr('full_name', lang: lang) : null,
                       ),
                       const SizedBox(height: 14),
 
@@ -200,7 +210,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Mobile Number *', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                                Text(AppStrings.tr('mobile_req', lang: lang), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                                 const SizedBox(height: 6),
                                 TextFormField(
                                   controller: _phoneController,
@@ -209,7 +219,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                     hintText: '98XXXXXXXX',
                                     prefixIcon: Icon(Icons.phone_outlined),
                                   ),
-                                  validator: (val) => val == null || val.trim().length < 10 ? 'Enter valid 10-digit number' : null,
+                                  validator: (val) => val == null || val.trim().length < 10 ? AppStrings.tr('phone_number', lang: lang) : null,
                                 ),
                               ],
                             ),
@@ -219,7 +229,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Aadhaar / Gov ID', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                                Text(AppStrings.tr('aadhaar_gov_id', lang: lang), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                                 const SizedBox(height: 6),
                                 TextFormField(
                                   controller: _aadhaarController,
@@ -242,7 +252,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Email Address', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                                Text(AppStrings.tr('email_address', lang: lang), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                                 const SizedBox(height: 6),
                                 TextFormField(
                                   controller: _emailController,
@@ -260,7 +270,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Create Password *', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                                Text(AppStrings.tr('create_password_req', lang: lang), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                                 const SizedBox(height: 6),
                                 TextFormField(
                                   controller: _passwordController,
@@ -269,7 +279,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                     hintText: '••••••••',
                                     prefixIcon: Icon(Icons.lock_outline_rounded),
                                   ),
-                                  validator: (val) => val == null || val.length < 4 ? 'Min 4 characters' : null,
+                                  validator: (val) => val == null || val.length < 4 ? AppStrings.tr('enter_password_error', lang: lang) : null,
                                 ),
                               ],
                             ),
@@ -285,7 +295,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Blood Group', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                                Text(AppStrings.tr('blood_group_label', lang: lang), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                                 const SizedBox(height: 6),
                                 DropdownButtonFormField<String>(
                                   initialValue: _selectedBloodType,
@@ -301,12 +311,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Gender', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                                Text(AppStrings.tr('gender_label', lang: lang), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                                 const SizedBox(height: 6),
                                 DropdownButtonFormField<String>(
                                   initialValue: _selectedGender,
                                   decoration: const InputDecoration(prefixIcon: Icon(Icons.wc_rounded)),
-                                  items: _genders.map((g) => DropdownMenuItem(value: g, child: Text(g))).toList(),
+                                  items: _genders.map((g) {
+                                    final label = g == 'Male' ? AppStrings.tr('gender_male', lang: lang) : g == 'Female' ? AppStrings.tr('gender_female', lang: lang) : AppStrings.tr('gender_other', lang: lang);
+                                    return DropdownMenuItem(value: g, child: Text(label));
+                                  }).toList(),
                                   onChanged: (val) => setState(() => _selectedGender = val ?? 'Male'),
                                 ),
                               ],
@@ -317,13 +330,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       const SizedBox(height: 14),
 
                       // Allergies
-                      const Text('Known Allergies / Medical Conditions', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                      Text(AppStrings.tr('known_allergies_hint', lang: lang), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                       const SizedBox(height: 6),
                       TextFormField(
                         controller: _allergiesController,
-                        decoration: const InputDecoration(
-                          hintText: 'e.g. Penicillin, Peanuts, Asthma (or None)',
-                          prefixIcon: Icon(Icons.warning_amber_rounded),
+                        decoration: InputDecoration(
+                          hintText: AppStrings.tr('none', lang: lang),
+                          prefixIcon: const Icon(Icons.warning_amber_rounded),
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -337,12 +350,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                         child: authState.isLoading
                             ? const CircularProgressIndicator(color: Colors.white)
-                            : const Row(
+                            : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.how_to_reg_rounded, color: Colors.white),
-                                  SizedBox(width: 8),
-                                  Text('Create Account & Generate ABHA ID', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                                  const Icon(Icons.how_to_reg_rounded, color: Colors.white),
+                                  const SizedBox(width: 8),
+                                  Text(AppStrings.tr('create_account_btn', lang: lang), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
                                 ],
                               ),
                       ),

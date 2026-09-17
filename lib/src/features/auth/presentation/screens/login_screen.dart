@@ -54,7 +54,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         : role == 'doctor'
             ? AppStrings.tr('role_doctor', lang: lang)
             : AppStrings.tr('role_admin', lang: lang);
-    tts.speak('Selected $roleName. Enter your credentials to sign in.', langCode: lang);
+    final prompt = lang == 'hi'
+        ? '$roleName चुना गया। साइन इन करने के लिए अपना विवरण दर्ज करें।'
+        : lang == 'ta'
+            ? '$roleName தேர்ந்தெடுக்கப்பட்டது. உள்நுழைய உங்கள் விவரங்களை உள்ளிடவும்.'
+            : lang == 'te'
+                ? '$roleName ఎంపిక చేయబడింది. సైన్ ఇన్ చేయడానికి మీ వివరాలను నమోదు చేయండి.'
+                : lang == 'bn'
+                    ? '$roleName নির্বাচিত হয়েছে। সাইন ইন করতে আপনার বিবরণ লিখুন।'
+                    : 'Selected $roleName. Enter your credentials to sign in.';
+    tts.speak(prompt, langCode: lang);
   }
 
   void _speakSignInGuidance() {
@@ -213,10 +222,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                       children: [
                                         Text(
                                           _selectedRole == 'patient'
-                                              ? 'Patient Sign In (ABHA)'
+                                              ? AppStrings.tr('patient_sign_in_title', lang: lang)
                                               : _selectedRole == 'doctor'
-                                                  ? 'Doctor Clinical Sign In'
-                                                  : 'Administrator Access',
+                                                  ? AppStrings.tr('doctor_sign_in_title', lang: lang)
+                                                  : AppStrings.tr('admin_sign_in_title', lang: lang),
                                           style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -225,8 +234,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                         ),
                                         Text(
                                           _selectedRole == 'patient'
-                                              ? 'Enter your ABHA ID or Mobile Number'
-                                              : 'Enter your credentials to continue',
+                                              ? AppStrings.tr('enter_abha_or_mobile', lang: lang)
+                                              : AppStrings.tr('enter_credentials', lang: lang),
                                           style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
                                         ),
                                       ],
@@ -240,7 +249,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               Text(
                                 _selectedRole == 'patient'
                                     ? AppStrings.tr('abha_id_label', lang: lang)
-                                    : 'Username / Email ID',
+                                    : AppStrings.tr('username_email', lang: lang),
                                 style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                               ),
                               const SizedBox(height: 8),
@@ -250,7 +259,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   hintText: AppStrings.tr('abha_id_hint', lang: lang),
                                   prefixIcon: const Icon(Icons.badge_rounded, color: AppColors.primary),
                                 ),
-                                validator: (val) => val == null || val.trim().isEmpty ? 'Please enter your ID' : null,
+                                validator: (val) => val == null || val.trim().isEmpty ? AppStrings.tr('enter_id_error', lang: lang) : null,
                               ),
                               const SizedBox(height: 18),
 
@@ -271,7 +280,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                                   ),
                                 ),
-                                validator: (val) => val == null || val.isEmpty ? 'Please enter password' : null,
+                                validator: (val) => val == null || val.isEmpty ? AppStrings.tr('enter_password_error', lang: lang) : null,
                               ),
                               const SizedBox(height: 24),
 
@@ -307,7 +316,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   ),
                                   const SizedBox(width: 10),
                                   Tooltip(
-                                    message: 'Hear sign in guidance',
+                                    message: AppStrings.tr('btn_listen', lang: lang),
                                     child: IconButton.filledTonal(
                                       icon: const Icon(Icons.volume_up_rounded, color: AppColors.primary),
                                       onPressed: _speakSignInGuidance,
@@ -342,9 +351,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 children: [
                                   const Icon(Icons.touch_app_rounded, color: AppColors.primary, size: 20),
                                   const SizedBox(width: 6),
-                                  const Text(
-                                    '1-Click Quick Portal Login',
-                                    style: TextStyle(
+                                  Text(
+                                    AppStrings.tr('quick_login_title', lang: lang),
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,
                                       color: AppColors.textPrimary,
@@ -359,19 +368,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 children: [
                                   ActionChip(
                                     avatar: const Icon(Icons.person_rounded, size: 16, color: Colors.white),
-                                    label: const Text('Patient: Ramesh (P1)', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12)),
+                                    label: Text(AppStrings.tr('demo_patient_label', lang: lang), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12)),
                                     backgroundColor: AppColors.primary,
                                     onPressed: () => _handleQuickDemoLogin('patient'),
                                   ),
                                   ActionChip(
                                     avatar: const Icon(Icons.medical_services_rounded, size: 16, color: Colors.white),
-                                    label: const Text('Doctor: Dr. Rajesh', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12)),
+                                    label: Text(AppStrings.tr('demo_doctor_label', lang: lang), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12)),
                                     backgroundColor: AppColors.ayushGreen,
                                     onPressed: () => _handleQuickDemoLogin('doctor'),
                                   ),
                                   ActionChip(
                                     avatar: const Icon(Icons.admin_panel_settings_rounded, size: 16, color: Colors.white),
-                                    label: const Text('Admin Kiosk', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12)),
+                                    label: Text(AppStrings.tr('demo_admin_label', lang: lang), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12)),
                                     backgroundColor: Colors.purple.shade700,
                                     onPressed: () => _handleQuickDemoLogin('admin'),
                                   ),
@@ -404,7 +413,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             // Pointer Overlay on Sign In Button
             VoicePointerOverlay(
               isVisible: _showPointerOnSignIn,
-              label: 'Tap Sign In 👉',
+              label: AppStrings.tr('tap_sign_in_hint', lang: lang),
               targetAlignment: const Alignment(0, 0.45),
             ),
           ],

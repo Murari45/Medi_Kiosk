@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../app/di.dart';
 import '../../../../shared/constants/app_colors.dart';
+import '../../../../shared/constants/app_strings.dart';
 import '../../../../voice/services/tts_service.dart';
 import '../../../../shared/widgets/camera_scanner_dialog.dart';
 import '../../../../shared/widgets/portal_switcher_bar.dart';
@@ -19,7 +20,11 @@ class DocumentScannerScreen extends ConsumerStatefulWidget {
 class _DocumentScannerScreenState extends ConsumerState<DocumentScannerScreen> {
   void _speakGuidance() {
     final tts = getIt<TTSService>();
-    tts.speak('Use your device camera or upload a file to scan prescriptions and lab reports with on-device OCR.');
+    final lang = ref.read(authProvider).currentLanguage;
+    tts.speak(
+      AppStrings.getSpeechDescription('btn_upload', lang: lang),
+      langCode: lang,
+    );
   }
 
   void _openCameraModal() {
@@ -30,22 +35,49 @@ class _DocumentScannerScreenState extends ConsumerState<DocumentScannerScreen> {
   Widget build(BuildContext context) {
     final auth = ref.watch(authProvider);
     final docState = ref.watch(documentProvider);
+    final lang = auth.currentLanguage;
     final patientId = auth.currentUser?.id ?? 'usr_patient_1';
     final latestResult = docState.latestResult;
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Medical Document Scanner & OCR'),
+        title: Text(AppStrings.tr('scan_docs_ocr', lang: lang)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: () => context.pop(),
+          tooltip: AppStrings.tr('back', lang: lang),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/patient-dashboard');
+            }
+          },
         ),
         actions: [
           IconButton(
-            tooltip: 'Hear scanning instructions',
+            tooltip: AppStrings.tr('btn_listen', lang: lang),
             icon: const Icon(Icons.volume_up_rounded, color: AppColors.primary),
             onPressed: _speakGuidance,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0, left: 4.0),
+            child: FilledButton.tonalIcon(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.priorityP1Container,
+                foregroundColor: AppColors.priorityP1,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              ),
+              icon: const Icon(Icons.logout_rounded, size: 16),
+              label: Text(
+                AppStrings.tr('sign_out', lang: lang),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              ),
+              onPressed: () async {
+                await ref.read(authProvider.notifier).logout();
+                if (context.mounted) context.go('/auth');
+              },
+            ),
           ),
         ],
       ),
@@ -79,16 +111,16 @@ class _DocumentScannerScreenState extends ConsumerState<DocumentScannerScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Row(
+                            Row(
                               children: [
-                                Icon(Icons.document_scanner_rounded, color: AppColors.primary, size: 28),
-                                SizedBox(width: 12),
+                                const Icon(Icons.document_scanner_rounded, color: AppColors.primary, size: 28),
+                                const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('Scan Prescriptions & Lab Reports', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
-                                      Text('On-device OCR extracts medications, dosages, and abnormal lab metrics in real time.', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                                      Text(AppStrings.tr('scan_prescriptions_reports', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                                      Text(AppStrings.tr('ocr_realtime_sub', lang: lang), style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                     ],
                                   ),
                                 ),
@@ -103,7 +135,7 @@ class _DocumentScannerScreenState extends ConsumerState<DocumentScannerScreen> {
                                   child: ElevatedButton.icon(
                                     onPressed: docState.isScanning ? null : _openCameraModal,
                                     icon: const Icon(Icons.camera_alt_rounded, color: Colors.white),
-                                    label: const Text('Take Photo with Camera', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                    label: Text(AppStrings.tr('take_photo_camera', lang: lang), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: AppColors.primary,
                                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -118,7 +150,7 @@ class _DocumentScannerScreenState extends ConsumerState<DocumentScannerScreen> {
                                         ? null
                                         : () => ref.read(documentProvider.notifier).uploadFromFilePicker(patientId),
                                     icon: const Icon(Icons.upload_file_rounded),
-                                    label: const Text('Upload PDF / Image File', style: TextStyle(fontWeight: FontWeight.bold)),
+                                    label: Text(AppStrings.tr('upload_pdf_file', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold)),
                                     style: OutlinedButton.styleFrom(
                                       padding: const EdgeInsets.symmetric(vertical: 16),
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),

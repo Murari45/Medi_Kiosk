@@ -30,7 +30,7 @@ class OCRService {
 
     final fileNameLower = (customFileName ?? filePath ?? '').toLowerCase();
 
-    if (fileNameLower.contains('presc') || fileNameLower.contains('rx')) {
+    if (fileNameLower.contains('presc') || fileNameLower.contains('rx') || fileNameLower.contains('camera')) {
       docType = 'Prescription';
       text = '''
 CLINICAL PRESCRIPTION
@@ -55,7 +55,7 @@ Follow-up: 7 days in OPD.
       docType = 'Lab Report';
       text = '''
 COMPREHENSIVE DIAGNOSTIC LAB REPORT
-Patient ID: KIOSK-789
+Patient ID: AYUDWAR-789
 Tests:
 Hemoglobin: 10.4 g/dL
 Total Leukocyte (WBC): 12400 /cumm

@@ -27,11 +27,26 @@ class _VoicePointerOverlayState extends State<VoicePointerOverlay> with SingleTi
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
-    )..repeat(reverse: true);
+    );
+    if (widget.isVisible) {
+      _controller.repeat(reverse: true);
+    }
 
     _bounceAnimation = Tween<double>(begin: 0.0, end: 16.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
+  }
+
+  @override
+  void didUpdateWidget(VoicePointerOverlay oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isVisible != oldWidget.isVisible) {
+      if (widget.isVisible) {
+        _controller.repeat(reverse: true);
+      } else {
+        _controller.stop();
+      }
+    }
   }
 
   @override

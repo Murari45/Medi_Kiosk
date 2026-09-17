@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -31,9 +32,15 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
   void _playWelcomeVoice() async {
     if (_hasVoicedWelcome) return;
     _hasVoicedWelcome = true;
-    final tts = getIt<TTSService>();
-    final welcomeText = AppStrings.tr('welcome_voice', lang: _selectedLang);
-    await tts.speak(welcomeText, langCode: _selectedLang);
+    if (kIsWeb) {
+      // Web browsers enforce strict autoplay policy; voice guidance activates upon user tap
+      return;
+    }
+    try {
+      final tts = getIt<TTSService>();
+      final welcomeText = AppStrings.tr('welcome_voice', lang: _selectedLang);
+      await tts.speak(welcomeText, langCode: _selectedLang);
+    } catch (_) {}
   }
 
   void _onLanguageChanged(String langCode) async {

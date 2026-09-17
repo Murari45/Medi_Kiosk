@@ -15,7 +15,7 @@ void main() async {
 
   runApp(
     const ProviderScope(
-      child: MediKioskApp(),
+      child: AyuDwarApp(),
     ),
   );
 }

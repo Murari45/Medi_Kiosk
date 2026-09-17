@@ -76,7 +76,11 @@ class _CameraScannerDialogState extends ConsumerState<CameraScannerDialog> with 
     Navigator.of(context).pop();
 
     if (capturedBytes != null && capturedBytes.isNotEmpty) {
-      await ref.read(documentProvider.notifier).uploadFromFilePicker(patientId);
+      await ref.read(documentProvider.notifier).processCapturedBytes(
+        patientId: patientId,
+        bytes: capturedBytes,
+        fileName: 'Prescription_Camera_Live_Scan_${DateTime.now().millisecondsSinceEpoch}.jpg',
+      );
       NotificationService.showSuccess('Camera photo captured and processed via OCR!');
     } else {
       await ref.read(documentProvider.notifier).scanDocumentByName(
@@ -188,28 +192,32 @@ class _CameraScannerDialogState extends ConsumerState<CameraScannerDialog> with 
                         ),
 
                       // Animated Laser Scanner Line
-                      AnimatedBuilder(
-                        animation: _laserAnimation,
-                        builder: (context, child) {
-                          return Positioned(
-                            top: 240 * _laserAnimation.value,
-                            left: 16,
-                            right: 16,
-                            child: Container(
-                              height: 3,
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [Colors.transparent, Colors.cyanAccent, Colors.transparent],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.cyanAccent.withValues(alpha: 0.9),
-                                    blurRadius: 10,
-                                    spreadRadius: 2,
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          return AnimatedBuilder(
+                            animation: _laserAnimation,
+                            builder: (context, child) {
+                              return Positioned(
+                                top: constraints.maxHeight * _laserAnimation.value,
+                                left: 16,
+                                right: 16,
+                                child: Container(
+                                  height: 3,
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [Colors.transparent, Colors.cyanAccent, Colors.transparent],
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.cyanAccent.withValues(alpha: 0.9),
+                                        blurRadius: 10,
+                                        spreadRadius: 2,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
+                                ),
+                              );
+                            },
                           );
                         },
                       ),

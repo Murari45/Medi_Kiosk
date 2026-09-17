@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../shared/constants/app_colors.dart';
+import '../../../../shared/constants/app_strings.dart';
 import '../../../../shared/models/prescription_model.dart';
 import '../../../../shared/services/notification_service.dart';
 import '../../../../voice/widgets/audio_waveform_visualizer.dart';
@@ -71,30 +72,30 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
     NotificationService.showSuccess('Medication added to prescription.');
   }
 
-  void _showAddDrugDialog() {
+  void _showAddDrugDialog(String lang) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Add Medication to Prescription', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        title: Text(AppStrings.tr('add_medication_title', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextFormField(controller: _drugNameController, decoration: const InputDecoration(labelText: 'Drug Name (e.g. Paracetamol, Amoxicillin)')),
+              TextFormField(controller: _drugNameController, decoration: InputDecoration(labelText: AppStrings.tr('drug_name_label', lang: lang))),
               const SizedBox(height: 10),
-              TextFormField(controller: _dosageController, decoration: const InputDecoration(labelText: 'Dosage (e.g. 650mg, 10ml)')),
+              TextFormField(controller: _dosageController, decoration: InputDecoration(labelText: AppStrings.tr('dosage_label', lang: lang))),
               const SizedBox(height: 10),
-              TextFormField(controller: _freqController, decoration: const InputDecoration(labelText: 'Frequency (e.g. OD, BD, TDS)')),
+              TextFormField(controller: _freqController, decoration: InputDecoration(labelText: AppStrings.tr('frequency_label', lang: lang))),
               const SizedBox(height: 10),
-              TextFormField(controller: _durationController, decoration: const InputDecoration(labelText: 'Duration (e.g. 5 days)')),
+              TextFormField(controller: _durationController, decoration: InputDecoration(labelText: AppStrings.tr('duration_label', lang: lang))),
               const SizedBox(height: 10),
-              TextFormField(controller: _instController, decoration: const InputDecoration(labelText: 'Instructions (e.g. After food)')),
+              TextFormField(controller: _instController, decoration: InputDecoration(labelText: AppStrings.tr('instruction_label', lang: lang))),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          ElevatedButton(onPressed: _handleAddDrug, child: const Text('Add Drug')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppStrings.tr('btn_cancel', lang: lang))),
+          ElevatedButton(onPressed: _handleAddDrug, child: Text(AppStrings.tr('add_drug', lang: lang))),
         ],
       ),
     );
@@ -161,12 +162,14 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
       );
     }
 
+    final lang = ref.watch(authProvider).currentLanguage;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Row(
           children: [
-            Text('Consultation: ${patient?.name ?? "Patient"} (${session.tokenNumber})'),
+            Text('${AppStrings.tr('consultation_title', lang: lang)}: ${patient?.name ?? ""} (${session.tokenNumber})'),
             const SizedBox(width: 12),
             Chip(
               backgroundColor: session.priority == 'P1'
@@ -175,7 +178,7 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
                       ? AppColors.priorityP2Container
                       : AppColors.priorityP3Container,
               label: Text(
-                '${session.priority} TRIAGE',
+                '${session.priority} ${AppStrings.tr('triage_badge', lang: lang)}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 11,
@@ -191,7 +194,7 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
         ),
         actions: [
           IconButton.filledTonal(
-            tooltip: state.isReadingSummary ? 'Stop Voice Summary' : 'Read AI Summary Aloud',
+            tooltip: state.isReadingSummary ? AppStrings.tr('stop_voice_summary', lang: lang) : AppStrings.tr('read_summary_aloud', lang: lang),
             icon: Icon(state.isReadingSummary ? Icons.stop_rounded : Icons.volume_up_rounded, color: AppColors.primary),
             onPressed: () {
               if (state.isReadingSummary) {
@@ -205,13 +208,33 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
           ElevatedButton.icon(
             onPressed: _generateAndPrintPdf,
             icon: const Icon(Icons.picture_as_pdf_rounded, size: 18, color: Colors.white),
-            label: const Text('Print PDF Rx', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+            label: Text(AppStrings.tr('print_pdf_rx', lang: lang), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 10),
+          // Prominent Sign Out Button in AppBar
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: FilledButton.tonalIcon(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.priorityP1Container,
+                foregroundColor: AppColors.priorityP1,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              ),
+              icon: const Icon(Icons.logout_rounded, size: 16),
+              label: Text(
+                AppStrings.tr('sign_out', lang: lang),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              ),
+              onPressed: () async {
+                await ref.read(authProvider.notifier).logout();
+                if (context.mounted) context.go('/auth');
+              },
+            ),
+          ),
         ],
       ),
       body: SafeArea(
@@ -220,8 +243,7 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
             return SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minWidth: constraints.maxWidth - 48 > 0 ? constraints.maxWidth - 48 : 0,
+                constraints: const BoxConstraints(
                   maxWidth: 1200,
                 ),
                 child: Column(
@@ -253,14 +275,14 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
                         children: [
                           Text(patient?.name ?? 'Patient', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                           const SizedBox(height: 2),
-                          Text('ABHA ID: ${patient?.abhaId} • Phone: ${patient?.phone} • Blood: ${profile?.bloodType ?? "O+"} • Allergies: ${profile?.allergies ?? "None"}', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                          Text('ABHA ID: ${patient?.abhaId} • ${AppStrings.tr('phone_number', lang: lang)}: ${patient?.phone} • ${AppStrings.tr('blood_type', lang: lang)}: ${profile?.bloodType ?? "O+"} • ${AppStrings.tr('allergies', lang: lang)}: ${profile?.allergies ?? AppStrings.tr('none', lang: lang)}', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                         ],
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(8)),
-                      child: Text('Mode: ${session.mode.toUpperCase()}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                      child: Text('${AppStrings.tr('mode_label', lang: lang)}: ${session.mode == 'ayush' ? AppStrings.tr('ayush_title', lang: lang) : AppStrings.tr('allopathy_title', lang: lang)}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                     ),
                   ],
                 ),
@@ -273,10 +295,10 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('AI Clinical Pre-Intake Summary', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+                  Text(AppStrings.tr('three_tier_title', lang: lang), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
                   TextButton.icon(
                     icon: Icon(state.isReadingSummary ? Icons.volume_off_rounded : Icons.volume_up_rounded),
-                    label: Text(state.isReadingSummary ? 'Stop Audio' : 'Play Voice Summary'),
+                    label: Text(state.isReadingSummary ? AppStrings.tr('stop_audio', lang: lang) : AppStrings.tr('play_voice_summary', lang: lang)),
                     onPressed: () {
                       if (state.isReadingSummary) {
                         ref.read(consultationProvider.notifier).stopReadingSummary();
@@ -291,9 +313,9 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
 
               // Section 1: 100% CERTAIN
               _buildCertaintyBox(
-                title: '🟢 100% CERTAIN (AI Verified Clinical Facts)',
-                subtitle: 'The patient gave clear, confident responses to these parameters during pre-intake:',
-                items: summary?.certainItems ?? ['Clinical facts verified.'],
+                title: AppStrings.tr('tier1_title', lang: lang),
+                subtitle: AppStrings.tr('tier1_box_sub', lang: lang),
+                items: summary?.certainItems ?? [AppStrings.tr('verified_local', lang: lang)],
                 borderColor: AppColors.certainGreen,
                 bgColor: AppColors.certainGreenBg,
                 textColor: AppColors.certainGreen,
@@ -302,11 +324,11 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
 
               // Section 2: NOT SURE
               _buildCertaintyBox(
-                title: '🟡 NOT SURE (Patient Hesitated / Ambiguous)',
-                subtitle: 'The patient hesitated or used uncertainty markers ("maybe", "I think so"). Verify these:',
+                title: AppStrings.tr('tier2_title', lang: lang),
+                subtitle: AppStrings.tr('tier2_box_sub', lang: lang),
                 items: summary?.notSureItems.isNotEmpty == true
                     ? summary!.notSureItems
-                    : ['No significant hesitation detected in pre-intake.'],
+                    : [AppStrings.tr('none', lang: lang)],
                 borderColor: AppColors.notSureYellow,
                 bgColor: AppColors.notSureYellowBg,
                 textColor: AppColors.notSureYellow,
@@ -315,11 +337,11 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
 
               // Section 3: UNCLEAR
               _buildCertaintyBox(
-                title: '🔴 UNCLEAR (Requires Doctor Clarification)',
-                subtitle: 'Unanswered or speech was unrecognized. Please ask these questions directly:',
+                title: AppStrings.tr('tier3_title', lang: lang),
+                subtitle: AppStrings.tr('tier3_box_sub', lang: lang),
                 items: summary?.unclearItems.isNotEmpty == true
                     ? summary!.unclearItems
-                    : ['All clinical questions were successfully captured.'],
+                    : [AppStrings.tr('none', lang: lang)],
                 borderColor: AppColors.unclearRed,
                 bgColor: AppColors.unclearRedBg,
                 textColor: AppColors.unclearRed,
@@ -349,11 +371,11 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            Icon(Icons.edit_note_rounded, color: AppColors.primary, size: 24),
-                            SizedBox(width: 8),
-                            Text('Clinical Prescription & Doctor Assessment', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                            const Icon(Icons.edit_note_rounded, color: AppColors.primary, size: 24),
+                            const SizedBox(width: 8),
+                            Text(AppStrings.tr('doctor_prescription_title', lang: lang), style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                           ],
                         ),
                         // Voice Dictation Button
@@ -372,7 +394,7 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
                           ),
                           icon: Icon(state.isDictatingRx ? Icons.stop_rounded : Icons.mic_rounded, color: Colors.white, size: 16),
                           label: Text(
-                            state.isDictatingRx ? 'Stop Dictation' : 'Dictate Voice Rx',
+                            state.isDictatingRx ? AppStrings.tr('stop_dictation', lang: lang) : AppStrings.tr('dictate_voice_rx', lang: lang),
                             style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -380,18 +402,18 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
                     ),
                     if (state.isDictatingRx) ...[
                       const SizedBox(height: 12),
-                      AudioWaveformVisualizer(isRecording: true, barHeight: 35),
+                      const AudioWaveformVisualizer(isRecording: true, barHeight: 35),
                       const SizedBox(height: 6),
-                      Text('Dictating: "${state.currentDictation}"', style: const TextStyle(fontSize: 12, color: AppColors.micActive, fontWeight: FontWeight.bold)),
+                      Text('${AppStrings.tr('dictating_prefix', lang: lang)}: "${state.currentDictation}"', style: const TextStyle(fontSize: 12, color: AppColors.micActive, fontWeight: FontWeight.bold)),
                     ],
                     const Divider(height: 24),
 
                     // Diagnosis Input
-                    const Text('Clinical Diagnosis / Assessment', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                    Text(AppStrings.tr('clinical_diagnosis_label', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                     const SizedBox(height: 6),
                     TextFormField(
                       controller: _diagController,
-                      decoration: const InputDecoration(hintText: 'e.g., Acute Musculoskeletal Back Pain / Viral Bronchitis'),
+                      decoration: InputDecoration(hintText: AppStrings.tr('diagnosis_hint', lang: lang)),
                     ),
                     const SizedBox(height: 18),
 
@@ -399,11 +421,11 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Prescribed Medications (Rx)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                        Text(AppStrings.tr('prescribed_medications', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                         OutlinedButton.icon(
-                          onPressed: _showAddDrugDialog,
+                          onPressed: () => _showAddDrugDialog(lang),
                           icon: const Icon(Icons.add_rounded, size: 16),
-                          label: const Text('Add Drug Manually', style: TextStyle(fontSize: 12)),
+                          label: Text(AppStrings.tr('add_drug_manually', lang: lang), style: const TextStyle(fontSize: 12)),
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                             minimumSize: Size.zero,
@@ -415,9 +437,9 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
 
                     // Medications Table / Cards
                     if (state.prescribedMedications.isEmpty)
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        child: Text('No medications added. Use Voice Dictation or tap "Add Drug Manually".', style: TextStyle(color: AppColors.textMuted, fontSize: 13)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Text(AppStrings.tr('no_medications_added', lang: lang), style: const TextStyle(color: AppColors.textMuted, fontSize: 13)),
                       )
                     else
                       ...state.prescribedMedications.asMap().entries.map((entry) {
@@ -455,12 +477,12 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
                     const SizedBox(height: 18),
 
                     // Doctor Notes / Instructions
-                    const Text('Advice / Follow-Up Instructions', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                    Text(AppStrings.tr('advice_instructions_label', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                     const SizedBox(height: 6),
                     TextFormField(
                       controller: _notesController,
                       maxLines: 2,
-                      decoration: const InputDecoration(hintText: 'e.g., Maintain rest, drink warm fluids, review in OPD after 5 days if fever persists.'),
+                      decoration: InputDecoration(hintText: AppStrings.tr('notes_hint', lang: lang)),
                     ),
                   ],
                 ),
@@ -474,7 +496,7 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
                     child: OutlinedButton.icon(
                       onPressed: _generateAndPrintPdf,
                       icon: const Icon(Icons.print_rounded),
-                      label: const Text('Preview & Print Prescription PDF'),
+                      label: Text(AppStrings.tr('preview_print_pdf', lang: lang)),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -486,7 +508,7 @@ class _PatientDetailsConsultationScreenState extends ConsumerState<PatientDetail
                     child: ElevatedButton.icon(
                       onPressed: _handleSubmitConsultation,
                       icon: const Icon(Icons.done_all_rounded, color: Colors.white),
-                      label: const Text('Complete Consultation & Next Patient', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15)),
+                      label: Text(AppStrings.tr('complete_consultation_btn', lang: lang), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.certainGreen,
                         padding: const EdgeInsets.symmetric(vertical: 16),

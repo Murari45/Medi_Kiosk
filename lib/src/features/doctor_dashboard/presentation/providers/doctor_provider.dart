@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../app/di.dart';
 import '../../../../database/daos/clinical_session_dao.dart';
 import '../../../../shared/models/clinical_session_model.dart';
+import '../../../../shared/models/user_model.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 
 class DoctorState {
@@ -35,15 +36,16 @@ class DoctorState {
 class DoctorNotifier extends StateNotifier<DoctorState> {
   final ClinicalSessionDao _sessionDao = getIt<ClinicalSessionDao>();
 
-  DoctorNotifier() : super(DoctorState()) {
-    loadQueue();
-  }
+  DoctorNotifier() : super(DoctorState());
 
   Future<void> loadQueue() async {
+    if (state.isLoading) return;
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
       final waitingList = await _sessionDao.getDoctorQueue(status: 'waiting');
       final completedList = await _sessionDao.getDoctorQueue(status: 'completed');
+
+      if (!mounted) return;
 
       state = state.copyWith(
         activeQueue: waitingList,
@@ -51,6 +53,7 @@ class DoctorNotifier extends StateNotifier<DoctorState> {
         isLoading: false,
       );
     } catch (e) {
+      if (!mounted) return;
       state = state.copyWith(isLoading: false, errorMessage: 'Failed to load doctor queue: $e');
     }
   }
@@ -63,9 +66,14 @@ class DoctorNotifier extends StateNotifier<DoctorState> {
 
 final doctorProvider = StateNotifierProvider<DoctorNotifier, DoctorState>((ref) {
   final notifier = DoctorNotifier();
-  final auth = ref.watch(authProvider);
-  if (auth.currentUser != null && auth.currentUser!.role == 'doctor') {
-    notifier.loadQueue();
-  }
+  ref.listen<UserModel?>(
+    authProvider.select((s) => s.currentUser),
+    (previous, next) {
+      if (next != null && next.role == 'doctor' && (previous == null || previous.id != next.id)) {
+        notifier.loadQueue();
+      }
+    },
+    fireImmediately: true,
+  );
   return notifier;
 });

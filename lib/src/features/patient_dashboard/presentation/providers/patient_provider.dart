@@ -72,6 +72,8 @@ class PatientNotifier extends StateNotifier<PatientState> {
     final documents = await _documentDao.getDocumentsByPatientId(user.id);
     final prescriptions = await _prescriptionDao.getPrescriptionsByPatientId(user.id);
 
+    if (!mounted) return;
+
     state = state.copyWith(
       profile: profile ?? PatientProfileModel(userId: user.id),
       sessions: sessions,
@@ -132,9 +134,14 @@ class PatientNotifier extends StateNotifier<PatientState> {
 
 final patientProvider = StateNotifierProvider<PatientNotifier, PatientState>((ref) {
   final notifier = PatientNotifier();
-  final auth = ref.watch(authProvider);
-  if (auth.currentUser != null && auth.currentUser!.role == 'patient') {
-    notifier.loadPatientData(auth.currentUser!);
-  }
+  ref.listen<UserModel?>(
+    authProvider.select((s) => s.currentUser),
+    (previous, next) {
+      if (next != null && next.role == 'patient' && (previous == null || previous.id != next.id)) {
+        notifier.loadPatientData(next);
+      }
+    },
+    fireImmediately: true,
+  );
   return notifier;
 });

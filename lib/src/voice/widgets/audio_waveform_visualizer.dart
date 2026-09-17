@@ -28,7 +28,22 @@ class _AudioWaveformVisualizerState extends State<AudioWaveformVisualizer> with 
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 350),
-    )..repeat();
+    );
+    if (widget.isRecording) {
+      _controller.repeat();
+    }
+  }
+
+  @override
+  void didUpdateWidget(AudioWaveformVisualizer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isRecording != oldWidget.isRecording) {
+      if (widget.isRecording) {
+        _controller.repeat();
+      } else {
+        _controller.stop();
+      }
+    }
   }
 
   @override

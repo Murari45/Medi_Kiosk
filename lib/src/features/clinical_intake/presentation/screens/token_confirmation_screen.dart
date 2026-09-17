@@ -49,9 +49,23 @@ class _TokenConfirmationScreenState extends ConsumerState<TokenConfirmationScree
     final token = widget.triageResult.tokenNumber;
     final priority = widget.triageResult.priority;
 
-    final msg = lang == 'hi'
-        ? 'जांच पूरी हो गई है। आपका टोकन नंबर है $token, प्राथमिकता $priority। कृपया प्रतीक्षालय में प्रतीक्षा करें।'
-        : 'Pre-intake completed. Your token number is $token, priority $priority. Please proceed to the waiting area.';
+    final String msg;
+    switch (lang) {
+      case 'hi':
+        msg = 'जांच पूरी हो गई है। आपका टोकन नंबर है $token, प्राथमिकता $priority। कृपया प्रतीक्षालय में प्रतीक्षा करें।';
+        break;
+      case 'ta':
+        msg = 'பரிசோதனை முடிந்தது. உங்கள் டோக்கன் எண் $token, முன்னுரிமை $priority. தயவுசெய்து காத்திருப்பு பகுதிக்குச் செல்லுங்கள்.';
+        break;
+      case 'te':
+        msg = 'పరీక్ష పూర్తయింది. మీ టోకెన్ సంఖ్య $token, ప్రాధాన్యత $priority. దయచేసి వేచి ఉండే గదికి వెళ్లండి.';
+        break;
+      case 'bn':
+        msg = 'পরীক্ষা সম্পন্ন হয়েছে। আপনার টোকেন নম্বর $token, অগ্রাধিকার $priority। অনুগ্রহ করে অপেক্ষার জায়গায় যান।';
+        break;
+      default:
+        msg = 'Pre-intake completed. Your token number is $token, priority $priority. Please proceed to the waiting area.';
+    }
 
     await tts.speak(msg, langCode: lang);
   }
@@ -93,6 +107,22 @@ class _TokenConfirmationScreenState extends ConsumerState<TokenConfirmationScree
 
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(AppStrings.tr('hospital_name', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        actions: [
+          TextButton.icon(
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.priorityP1,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            ),
+            icon: const Icon(Icons.exit_to_app_rounded, size: 18),
+            label: Text(AppStrings.tr('sign_out', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold)),
+            onPressed: _completeAndLogout,
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -145,24 +175,24 @@ class _TokenConfirmationScreenState extends ConsumerState<TokenConfirmationScree
                     child: Column(
                       children: [
                         // Hospital Header
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.local_hospital_rounded, color: AppColors.primary, size: 20),
-                                SizedBox(width: 6),
-                                Text('MediKiosk Smart OPD', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                                const Icon(Icons.local_hospital_rounded, color: AppColors.primary, size: 20),
+                                const SizedBox(width: 6),
+                                Text(AppStrings.tr('hospital_name', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                               ],
                             ),
-                            Text('Smart India Hackathon 2026', style: TextStyle(fontSize: 11, color: AppColors.textMuted)),
+                            const Text('Smart India Hackathon 2026', style: TextStyle(fontSize: 11, color: AppColors.textMuted)),
                           ],
                         ),
                         const Divider(height: 28),
 
                         // Token Number Display
                         Text(
-                          'YOUR TOKEN NUMBER',
+                          AppStrings.tr('your_token_number', lang: lang),
                           style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2, color: Colors.blueGrey.shade600),
                         ),
                         const SizedBox(height: 6),
@@ -222,9 +252,9 @@ class _TokenConfirmationScreenState extends ConsumerState<TokenConfirmationScree
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Complaint: ${result.chiefComplaint}', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                              Text('${AppStrings.tr('complaint_label', lang: lang)}: ${result.chiefComplaint}', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                               const SizedBox(height: 4),
-                              Text('Triage Action: ${result.aiSummary.triageSummary}', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                              Text('${AppStrings.tr('triage_action', lang: lang)}: ${result.aiSummary.triageSummary}', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                             ],
                           ),
                         ),
@@ -238,17 +268,17 @@ class _TokenConfirmationScreenState extends ConsumerState<TokenConfirmationScree
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: AppColors.border),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.qr_code_2_rounded, size: 50, color: AppColors.textPrimary),
-                              SizedBox(width: 14),
+                              const Icon(Icons.qr_code_2_rounded, size: 50, color: AppColors.textPrimary),
+                              const SizedBox(width: 14),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Scan at Doctor\'s Station', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                                    Text('Digital ABHA Triage Token Synchronized with Local SQLite', style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+                                    Text(AppStrings.tr('scan_at_station', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                                    Text(AppStrings.tr('digital_token_synced', lang: lang), style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
                                   ],
                                 ),
                               ),
@@ -266,10 +296,10 @@ class _TokenConfirmationScreenState extends ConsumerState<TokenConfirmationScree
                       Expanded(
                         child: OutlinedButton.icon(
                           onPressed: () {
-                            NotificationService.showSuccess('Token Slip Sent to Kiosk Thermal Printer!');
+                            NotificationService.showSuccess(AppStrings.tr('print_token_slip', lang: lang));
                           },
                           icon: const Icon(Icons.print_rounded),
-                          label: const Text('Print Token Slip'),
+                          label: Text(AppStrings.tr('print_token_slip', lang: lang)),
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -282,7 +312,7 @@ class _TokenConfirmationScreenState extends ConsumerState<TokenConfirmationScree
                           onPressed: _completeAndLogout,
                           icon: const Icon(Icons.done_all_rounded, color: Colors.white),
                           label: Text(
-                            'Done ($_countdown s)',
+                            '${AppStrings.tr('done_btn', lang: lang)} ($_countdown s)',
                             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                           ),
                           style: ElevatedButton.styleFrom(
@@ -296,7 +326,7 @@ class _TokenConfirmationScreenState extends ConsumerState<TokenConfirmationScree
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Kiosk will automatically reset and clear session in $_countdown seconds.',
+                    AppStrings.tr('auto_reset_msg', lang: lang, args: ['$_countdown']),
                     style: const TextStyle(fontSize: 12, color: AppColors.textMuted),
                   ),
                 ],

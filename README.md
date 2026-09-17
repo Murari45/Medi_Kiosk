@@ -1,4 +1,4 @@
-# MediKiosk AI — Multilingual Voice-Enabled Clinical Pre-Intake & Triage Platform
+# AyuDwar — Multilingual Voice-Enabled Clinical Pre-Intake & Triage Platform
 
 > **Smart India Hackathon (SIH 2026) Official Submission**  
 > *A 100% Offline-First, Self-Contained, Voice-Guided Clinical Triage & OPD Pre-Intake Kiosk for Elderly and Multilingual Patients*
@@ -7,7 +7,7 @@
 
 ## 🌟 Executive Summary
 
-**MediKiosk AI** bridges the critical communication and triage gap in high-volume Indian hospital Out-Patient Departments (OPDs). Designed specifically for low-literacy and elderly patients, the kiosk provides real-time voice-guided clinical pre-intake across **5 Indic languages**, calculates algorithmic triage priority (**P1 Urgent, P2 Moderate, P3 Routine**), structures dual clinical protocols (**Allopathy SOCRATES** and **AYUSH Dashavidha Pariksha**), and delivers a **3-Tier AI Consultation Summary** (100% Certain, Not Sure, Unclear) directly into the doctor's consultation terminal with instant PDF prescription generation.
+**AyuDwar** bridges the critical communication and triage gap in high-volume Indian hospital Out-Patient Departments (OPDs). Designed specifically for low-literacy and elderly patients, the kiosk provides real-time voice-guided clinical pre-intake across **5 Indic languages**, calculates algorithmic triage priority (**P1 Urgent, P2 Moderate, P3 Routine**), structures dual clinical protocols (**Allopathy SOCRATES** and **AYUSH Dashavidha Pariksha**), and delivers a **3-Tier AI Consultation Summary** (100% Certain, Not Sure, Unclear) directly into the doctor's consultation terminal with instant PDF prescription generation.
 
 The application operates **100% locally with SQLite** (`sqflite` + `sqflite_common_ffi`), requiring zero external cloud dependencies for full functional execution, and features built-in **simulated ABHA/ABDM** integration.
 
@@ -17,7 +17,7 @@ The application operates **100% locally with SQLite** (`sqflite` + `sqflite_comm
 
 | Page | Screen Name | Key Functionalities |
 |---|---|---|
-| **Page 1** | **Language Selection Screen** | Supports English, Hindi (हिंदी), Tamil (தமிழ்), Telugu (తెలుగు), Bengali (বাংলা); Speaks *"Hello! Welcome to MediKiosk AI"* aloud; Interactive speaker buttons for every language; Animated pointer indicator; Smooth `GoRouter` transition. |
+| **Page 1** | **Language Selection Screen** | Supports English, Hindi (हिंदी), Tamil (தமிழ்), Telugu (తెలుగు), Bengali (বাংলা); Speaks *"Hello! Welcome to AyuDwar"* aloud; Interactive speaker buttons for every language; Animated pointer indicator; Smooth `GoRouter` transition. |
 | **Page 2** | **Role & Auth Screen** | 3 User Roles (Patient, Doctor, Admin); ABHA ID (`patient_XXXX@abdm`) & phone sign-in; Working speech synthesis on buttons; In-app registration with Aadhaar/Mobile, saving directly to SQLite; Secure JWT session persistence. |
 | **Page 3** | **Patient Dashboard** | Left sidebar navigation (Dashboard, Profile, Previous Summaries, Upload Docs, Upcoming Visits, Logout); Big action cards for **Allopathy** and **AYUSH** intake; Scanned docs list; Real-time editable health profile (blood type, allergies) saved to SQLite; Synchronized pointer + voice guidance. |
 | **Page 4** | **Clinical Intake Screen** | **Allopathy SOCRATES** (Site, Onset, Character, Radiation, Associated, Timing, Exacerbating, Severity 1-10) & **AYUSH Dashavidha Pariksha** (Prakriti, Vikriti, Sara, Samhanana, Pramana, Satmya, Satva, Ahara Shakti, Vyayama Shakti, Vaya); Voiced questions (`flutter_tts`); Real-time microphone listening (`speech_to_text`) with live audio waveform; Repeat fallback *"I didn't quite catch that, could you please repeat?"*; Hesitation/uncertainty detection; Instant token generation (e.g. `TK-P1-042`) and auto-logout kiosk cleanup. |

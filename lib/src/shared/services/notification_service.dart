@@ -42,7 +42,7 @@ class NotificationService {
     required String priority,
   }) {
     Fluttertoast.showToast(
-      msg: '📱 [SMS Sent to $recipientPhone]: MediKiosk Token $tokenNumber ($priority). Proceed to waiting lounge.',
+      msg: '📱 [SMS Sent to $recipientPhone]: AyuDwar Token $tokenNumber ($priority). Proceed to waiting lounge.',
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.TOP,
       backgroundColor: const Color(0xFF1E293B),

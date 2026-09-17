@@ -18,6 +18,7 @@ import '../../../../shared/models/user_model.dart';
 import '../../../../shared/services/medical_ner_service.dart';
 import '../../../../voice/services/stt_service.dart';
 import '../../../../voice/services/tts_service.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../doctor_dashboard/presentation/providers/doctor_provider.dart';
 import '../../../patient_dashboard/presentation/providers/patient_provider.dart';
 
@@ -140,34 +141,84 @@ class ConsultationNotifier extends StateNotifier<ConsultationState> {
     if (summary == null) return;
 
     state = state.copyWith(isReadingSummary: true);
+    final lang = _ref.read(authProvider).currentLanguage;
 
     final textToRead = StringBuffer();
-    textToRead.write('AI Pre-Intake Summary for ${state.patient?.name ?? "patient"}. ');
-    textToRead.write('Chief complaint: ${summary.chiefComplaint}. ');
-
-    if (summary.certainItems.isNotEmpty) {
-      textToRead.write('Certain findings: ');
-      textToRead.write(summary.certainItems.join('. '));
-      textToRead.write('. ');
+    switch (lang) {
+      case 'hi':
+        textToRead.write('मरीज ${state.patient?.name ?? ""} का एआई क्लिनिकल सारांश। ');
+        textToRead.write('मुख्य शिकायत: ${summary.chiefComplaint}। ');
+        if (summary.certainItems.isNotEmpty) {
+          textToRead.write('सत्यापित तथ्य: ${summary.certainItems.join("। ")}। ');
+        }
+        if (summary.notSureItems.isNotEmpty) {
+          textToRead.write('अनिश्चित तथ्य: ${summary.notSureItems.join("। ")}। ');
+        }
+        if (summary.unclearItems.isNotEmpty) {
+          textToRead.write('स्पष्टीकरण योग्य बिंदु: ${summary.unclearItems.join("। ")}। ');
+        }
+        textToRead.write('अनुशंसित कार्रवाई: ${summary.recommendedAction}');
+        break;
+      case 'ta':
+        textToRead.write('நோயாளி ${state.patient?.name ?? ""} க்கான AI மருத்துவ சுருக்கம். ');
+        textToRead.write('முதன்மை பிரச்சனை: ${summary.chiefComplaint}. ');
+        if (summary.certainItems.isNotEmpty) {
+          textToRead.write('உறுதிப்படுத்தப்பட்ட விவரங்கள்: ${summary.certainItems.join(". ")}. ');
+        }
+        if (summary.notSureItems.isNotEmpty) {
+          textToRead.write('தயக்கம் உள்ள விவரங்கள்: ${summary.notSureItems.join(". ")}. ');
+        }
+        if (summary.unclearItems.isNotEmpty) {
+          textToRead.write('தெளிவுபடுத்த வேண்டியவை: ${summary.unclearItems.join(". ")}. ');
+        }
+        textToRead.write('பரிந்துரைக்கப்பட்ட நடவடிக்கை: ${summary.recommendedAction}');
+        break;
+      case 'te':
+        textToRead.write('రోగి ${state.patient?.name ?? ""} కొరకు AI క్లినికల్ సారాంశం. ');
+        textToRead.write('ప్రధాన సమస్య: ${summary.chiefComplaint}. ');
+        if (summary.certainItems.isNotEmpty) {
+          textToRead.write('నిర్ధారిత అంశాలు: ${summary.certainItems.join(". ")}. ');
+        }
+        if (summary.notSureItems.isNotEmpty) {
+          textToRead.write('అనిశ్చిత అంశాలు: ${summary.notSureItems.join(". ")}. ');
+        }
+        if (summary.unclearItems.isNotEmpty) {
+          textToRead.write('స్పష్టత అవసరమైన అంశాలు: ${summary.unclearItems.join(". ")}. ');
+        }
+        textToRead.write('సిఫార్సు చేయబడిన చర్య: ${summary.recommendedAction}');
+        break;
+      case 'bn':
+        textToRead.write('রোগী ${state.patient?.name ?? ""} এর এআই ক্লিনিকাল সারাংশ। ');
+        textToRead.write('প্রধান অভিযোগ: ${summary.chiefComplaint}। ');
+        if (summary.certainItems.isNotEmpty) {
+          textToRead.write('নিশ্চিত তথ্য: ${summary.certainItems.join("। ")}। ');
+        }
+        if (summary.notSureItems.isNotEmpty) {
+          textToRead.write('অনিশ্চিত তথ্য: ${summary.notSureItems.join("। ")}। ');
+        }
+        if (summary.unclearItems.isNotEmpty) {
+          textToRead.write('স্পষ্টীকরণ প্রয়োজন এমন তথ্য: ${summary.unclearItems.join("। ")}। ');
+        }
+        textToRead.write('প্রস্তাবিত পদক্ষেপ: ${summary.recommendedAction}');
+        break;
+      default:
+        textToRead.write('AI Pre-Intake Summary for ${state.patient?.name ?? "patient"}. ');
+        textToRead.write('Chief complaint: ${summary.chiefComplaint}. ');
+        if (summary.certainItems.isNotEmpty) {
+          textToRead.write('Certain findings: ${summary.certainItems.join(". ")}. ');
+        }
+        if (summary.notSureItems.isNotEmpty) {
+          textToRead.write('Items with uncertainty: ${summary.notSureItems.join(". ")}. ');
+        }
+        if (summary.unclearItems.isNotEmpty) {
+          textToRead.write('Unclear items requiring clarification: ${summary.unclearItems.join(". ")}. ');
+        }
+        textToRead.write('Recommended action: ${summary.recommendedAction}');
     }
-
-    if (summary.notSureItems.isNotEmpty) {
-      textToRead.write('Items with uncertainty: ');
-      textToRead.write(summary.notSureItems.join('. '));
-      textToRead.write('. ');
-    }
-
-    if (summary.unclearItems.isNotEmpty) {
-      textToRead.write('Unclear items requiring clarification: ');
-      textToRead.write(summary.unclearItems.join('. '));
-      textToRead.write('. ');
-    }
-
-    textToRead.write('Recommended action: ${summary.recommendedAction}');
 
     await _tts.speak(
       textToRead.toString(),
-      langCode: 'en',
+      langCode: lang,
       onComplete: () {
         state = state.copyWith(isReadingSummary: false);
       },

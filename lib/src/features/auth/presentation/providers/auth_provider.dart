@@ -10,6 +10,7 @@ import '../../../../shared/models/audit_log_model.dart';
 import '../../../../shared/models/patient_profile_model.dart';
 import '../../../../shared/models/user_model.dart';
 import '../../../../shared/services/secure_storage_service.dart';
+import '../../../../voice/services/tts_service.dart';
 
 class AuthState {
   final UserModel? currentUser;
@@ -54,12 +55,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> _loadSavedLanguage() async {
     final lang = await _storage.getLanguage();
-    state = state.copyWith(currentLanguage: lang);
+    if (state.currentLanguage == 'en') {
+      state = state.copyWith(currentLanguage: lang);
+      getIt<TTSService>().setLanguage(lang);
+    }
   }
 
-  void setLanguage(String langCode) async {
-    await _storage.saveLanguage(langCode);
+  Future<void> setLanguage(String langCode) async {
     state = state.copyWith(currentLanguage: langCode);
+    await _storage.saveLanguage(langCode);
+    await getIt<TTSService>().setLanguage(langCode);
   }
 
   String _hashPassword(String password) {

@@ -60,27 +60,42 @@ class STTService {
     }
   }
 
+  Timer? _listenTimeoutTimer;
+
   Future<void> startListening({
     required Function(String recognizedWords, bool isFinal) onResult,
     Function(double soundLevel)? onSoundLevel,
     Duration listenFor = const Duration(seconds: 15),
     Duration pauseFor = const Duration(seconds: 4),
   }) async {
+    _listenTimeoutTimer?.cancel();
+
     if (!_isAvailable) {
       final initialized = await initialize();
       if (!initialized) {
-        // Fallback for desktop/simulated input
-        _status = STTStatus.listening;
+        // When microphone is not available or denied, avoid hanging in listening state
+        _status = STTStatus.idle;
+        onResult('', true);
         return;
       }
     }
 
     _status = STTStatus.listening;
+
+    // Safety timeout: guarantees intake progresses if user stays silent or browser STT drops stream
+    _listenTimeoutTimer = Timer(listenFor + const Duration(milliseconds: 500), () {
+      if (_status == STTStatus.listening) {
+        stopListening();
+        onResult('', true);
+      }
+    });
+
     try {
       await _speech.listen(
         onResult: (result) {
           onResult(result.recognizedWords, result.finalResult);
           if (result.finalResult) {
+            _listenTimeoutTimer?.cancel();
             _status = STTStatus.idle;
           }
         },
@@ -94,11 +109,14 @@ class STTService {
       );
     } catch (e) {
       debugPrint('STT listen error: $e');
+      _listenTimeoutTimer?.cancel();
       _status = STTStatus.error;
+      onResult('', true);
     }
   }
 
   Future<void> stopListening() async {
+    _listenTimeoutTimer?.cancel();
     if (_speech.isListening) {
       await _speech.stop();
     }
@@ -122,5 +140,58 @@ class STTService {
     }
 
     return 'certain';
+  }
+
+  /// Automatically identifies the language spoken by the patient from their voice transcript
+  static String detectSpokenLanguage(String text, [String fallbackLang = 'en']) {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty) return fallbackLang;
+
+    // 1. Script-based Unicode detection
+    if (RegExp(r'[\u0900-\u097F]').hasMatch(trimmed)) return 'hi'; // Devanagari (Hindi)
+    if (RegExp(r'[\u0B80-\u0BFF]').hasMatch(trimmed)) return 'ta'; // Tamil
+    if (RegExp(r'[\u0C00-\u0C7F]').hasMatch(trimmed)) return 'te'; // Telugu
+    if (RegExp(r'[\u0980-\u09FF]').hasMatch(trimmed)) return 'bn'; // Bengali
+
+    // 2. Phonetic / Transliteration keyword detection
+    final lower = ' ${trimmed.toLowerCase()} ';
+
+    const hindiWords = [
+      'dard', 'seene', 'pet', 'sar', 'sir', 'bukhar', 'chakkar', 'ulti', 'jalan',
+      'subah', 'raat', 'aaj', 'kal', 'bohot', 'bahut', 'thoda', 'zyada', 'kam',
+      'nahi', 'hai', 'tha', 'raha', 'rahi', 'hota', 'hoti', 'lagta', 'pata',
+      'kuch', 'bhi', 'kahan', 'kab', 'kaise', 'accha', 'theek', 'bura',
+      'vata', 'pitta', 'kapha', 'dosha', 'agni', 'khana', 'pachan', 'shuru',
+      'pareshani', 'takleef', 'kamzor', 'kamzori', 'sukoon', 'aaram'
+    ];
+    for (final kw in hindiWords) {
+      if (lower.contains(' $kw ')) return 'hi';
+    }
+
+    const tamilWords = [
+      'vali', 'thalai', 'vayiru', 'kaichal', 'marbu', 'illa', 'irukku',
+      'neram', 'nalaiku', 'romba', 'konjam', 'sari', 'theriyum', 'theriyadhu', 'epadi'
+    ];
+    for (final kw in tamilWords) {
+      if (lower.contains(' $kw ')) return 'ta';
+    }
+
+    const teluguWords = [
+      'noppi', 'tala', 'kadupu', 'jwaram', 'gunde', 'ledu', 'undi',
+      'chala', 'konchem', 'bavundi', 'telusu', 'teliyadu', 'eppudu'
+    ];
+    for (final kw in teluguWords) {
+      if (lower.contains(' $kw ')) return 'te';
+    }
+
+    const bengaliWords = [
+      'byatha', 'matha', 'pet', 'jwor', 'buke', 'nei', 'ache',
+      'khub', 'ektu', 'bhalo', 'jani', 'janina', 'kobe'
+    ];
+    for (final kw in bengaliWords) {
+      if (lower.contains(' $kw ')) return 'bn';
+    }
+
+    return fallbackLang;
   }
 }

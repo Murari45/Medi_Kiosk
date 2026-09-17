@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../app/di.dart';
 import '../../../../shared/constants/app_colors.dart';
+import '../../../../shared/constants/app_strings.dart';
 import '../../../../shared/models/clinical_session_model.dart';
 import '../../../../voice/services/tts_service.dart';
 import '../../../../shared/widgets/portal_switcher_bar.dart';
@@ -33,7 +34,8 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
 
   void _speakBrief(String text) {
     final tts = getIt<TTSService>();
-    tts.speak(text, langCode: 'en');
+    final lang = ref.read(authProvider).currentLanguage;
+    tts.speak(text, langCode: lang);
   }
 
   @override
@@ -41,11 +43,13 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
     final auth = ref.watch(authProvider);
     final doctorState = ref.watch(doctorProvider);
     final currentUser = auth.currentUser;
+    final lang = auth.currentLanguage;
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               padding: const EdgeInsets.all(6),
@@ -56,17 +60,22 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
               child: const Icon(Icons.medical_information_rounded, color: AppColors.ayushGreen, size: 20),
             ),
             const SizedBox(width: 10),
-            const Text('Doctor Clinical Portal (OPD Triage Station)'),
+            Flexible(
+              child: Text(
+                AppStrings.tr('role_doctor', lang: lang),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
         actions: [
           IconButton(
-            tooltip: 'Refresh Queue',
+            tooltip: AppStrings.tr('live_demo_sync', lang: lang),
             icon: const Icon(Icons.refresh_rounded),
             onPressed: () => ref.read(doctorProvider.notifier).loadQueue(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Chip(
               backgroundColor: AppColors.surfaceVariant,
               avatar: const Icon(Icons.verified_user_rounded, color: AppColors.primary, size: 16),
@@ -74,6 +83,25 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
                 currentUser?.name ?? 'Dr. Sharma, MD',
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
               ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: FilledButton.tonalIcon(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.priorityP1Container,
+                foregroundColor: AppColors.priorityP1,
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              ),
+              icon: const Icon(Icons.logout_rounded, size: 16),
+              label: Text(
+                AppStrings.tr('sign_out', lang: lang),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              ),
+              onPressed: () async {
+                await ref.read(authProvider.notifier).logout();
+                if (context.mounted) context.go('/auth');
+              },
             ),
           ),
         ],
@@ -86,14 +114,14 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
               child: Row(
                 children: [
                   // Left Sidebar
-                  _buildSidebar(),
+                  _buildSidebar(lang),
                   const VerticalDivider(width: 1, thickness: 1, color: AppColors.border),
 
                   // Main Content Area
                   Expanded(
                     child: doctorState.isLoading
                         ? const Center(child: CircularProgressIndicator())
-                        : _buildMainView(doctorState),
+                        : _buildMainView(doctorState, lang),
                   ),
                 ],
               ),
@@ -104,7 +132,7 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
     );
   }
 
-  Widget _buildSidebar() {
+  Widget _buildSidebar(String lang) {
     return Container(
       width: 250,
       color: AppColors.surface,
@@ -131,9 +159,9 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const Text(
-                        'OPD Room 104 • Active',
-                        style: TextStyle(fontSize: 11, color: AppColors.certainGreen, fontWeight: FontWeight.bold),
+                      Text(
+                        AppStrings.tr('doc_opd_active', lang: lang),
+                        style: const TextStyle(fontSize: 11, color: AppColors.certainGreen, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -147,23 +175,26 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
             child: ListView(
               padding: const EdgeInsets.symmetric(vertical: 10),
               children: [
-                _buildSidebarItem(0, Icons.queue_play_next_rounded, 'Live Triage Queue', 'Active waiting list sorted by P1, P2, P3'),
-                _buildSidebarItem(1, Icons.calendar_today_rounded, 'OPD Schedule', 'View doctor appointments & duty times'),
-                _buildSidebarItem(2, Icons.history_rounded, 'Previous Patients', 'View consulted patients and prescriptions'),
-                _buildSidebarItem(3, Icons.archive_rounded, 'Archived Records', 'Search archived clinical intakes'),
+                _buildSidebarItem(0, Icons.queue_play_next_rounded, AppStrings.tr('doc_sidebar_queue', lang: lang), AppStrings.tr('doc_sidebar_queue_sub', lang: lang)),
+                _buildSidebarItem(1, Icons.calendar_today_rounded, AppStrings.tr('doc_sidebar_schedule', lang: lang), AppStrings.tr('doc_sidebar_schedule_sub', lang: lang)),
+                _buildSidebarItem(2, Icons.history_rounded, AppStrings.tr('doc_sidebar_previous', lang: lang), AppStrings.tr('doc_sidebar_previous_sub', lang: lang)),
+                _buildSidebarItem(3, Icons.archive_rounded, AppStrings.tr('doc_sidebar_archived', lang: lang), AppStrings.tr('doc_sidebar_archived_sub', lang: lang)),
               ],
             ),
           ),
 
           // Logout
           const Divider(height: 1, color: AppColors.border),
-          ListTile(
-            leading: const Icon(Icons.logout_rounded, color: AppColors.priorityP1),
-            title: const Text('Sign Out', style: TextStyle(color: AppColors.priorityP1, fontWeight: FontWeight.w600, fontSize: 14)),
-            onTap: () async {
-              await ref.read(authProvider.notifier).logout();
-              if (mounted) context.go('/');
-            },
+          Material(
+            color: Colors.transparent,
+            child: ListTile(
+              leading: const Icon(Icons.logout_rounded, color: AppColors.priorityP1),
+              title: Text(AppStrings.tr('sign_out', lang: lang), style: const TextStyle(color: AppColors.priorityP1, fontWeight: FontWeight.w600, fontSize: 14)),
+              onTap: () async {
+                await ref.read(authProvider.notifier).logout();
+                if (mounted) context.go('/auth');
+              },
+            ),
           ),
           const SizedBox(height: 8),
         ],
@@ -179,37 +210,66 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
         color: isSelected ? AppColors.primaryContainer : Colors.transparent,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: ListTile(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        leading: Icon(icon, color: isSelected ? AppColors.primary : AppColors.textSecondary, size: 22),
-        title: Text(
-          title,
-          style: TextStyle(
-            color: isSelected ? AppColors.primaryDark : AppColors.textPrimary,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-            fontSize: 13.5,
+      child: Material(
+        color: Colors.transparent,
+        child: ListTile(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          leading: Icon(icon, color: isSelected ? AppColors.primary : AppColors.textSecondary, size: 22),
+          title: Text(
+            title,
+            style: TextStyle(
+              color: isSelected ? AppColors.primaryDark : AppColors.textPrimary,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+              fontSize: 13.5,
+            ),
           ),
+          onTap: () => setState(() => _selectedSidebarIndex = index),
         ),
-        onTap: () => setState(() => _selectedSidebarIndex = index),
       ),
     );
   }
 
-  Widget _buildMainView(DoctorState doctorState) {
+  Widget _buildMainView(DoctorState doctorState, String lang) {
+    if (doctorState.errorMessage != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.error_outline_rounded, color: AppColors.priorityP1, size: 48),
+              const SizedBox(height: 12),
+              Text(
+                doctorState.errorMessage!,
+                style: const TextStyle(color: AppColors.priorityP1, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton.icon(
+                onPressed: () => ref.read(doctorProvider.notifier).loadQueue(),
+                icon: const Icon(Icons.refresh_rounded),
+                label: Text(AppStrings.tr('btn_continue', lang: lang)),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     switch (_selectedSidebarIndex) {
       case 1:
-        return _buildScheduleView();
+        return _buildScheduleView(lang);
       case 2:
-        return _buildPreviousPatientsView(doctorState);
+        return _buildPreviousPatientsView(doctorState, lang);
       case 3:
-        return _buildArchivedView();
+        return _buildArchivedView(lang);
       case 0:
       default:
-        return _buildQueueView(doctorState);
+        return _buildQueueView(doctorState, lang);
     }
   }
 
-  Widget _buildQueueView(DoctorState doctorState) {
+  Widget _buildQueueView(DoctorState doctorState, String lang) {
     final queue = doctorState.activeQueue;
 
     return LayoutBuilder(
@@ -217,43 +277,78 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
         return SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: constraints.maxWidth - 48 > 0 ? constraints.maxWidth - 48 : 0,
+            constraints: const BoxConstraints(
               maxWidth: 1200,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Queue Metrics Header
-                Row(
-                  children: [
-                    _buildStatMetricCard('Waiting in Queue', '${queue.length}', Icons.people_alt_rounded, AppColors.primary),
-                    const SizedBox(width: 14),
-                    _buildStatMetricCard('Priority 1 (Urgent)', '${queue.where((s) => s.priority == 'P1').length}', Icons.emergency_rounded, AppColors.priorityP1),
-                    const SizedBox(width: 14),
-                    _buildStatMetricCard('Priority 2 (Moderate)', '${queue.where((s) => s.priority == 'P2').length}', Icons.timer_rounded, AppColors.priorityP2),
-                    const SizedBox(width: 14),
-                    _buildStatMetricCard('Priority 3 (Routine)', '${queue.where((s) => s.priority == 'P3').length}', Icons.check_circle_outline_rounded, AppColors.priorityP3),
-                  ],
+                // Responsive Queue Metrics Header
+                LayoutBuilder(
+                  builder: (context, box) {
+                    final isNarrow = box.maxWidth < 800;
+                    if (isNarrow) {
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(child: _buildStatMetricCard(AppStrings.tr('waiting_in_queue', lang: lang), '${queue.length}', Icons.people_alt_rounded, AppColors.primary)),
+                              const SizedBox(width: 12),
+                              Expanded(child: _buildStatMetricCard(AppStrings.tr('p1_urgent', lang: lang), '${queue.where((s) => s.priority == 'P1').length}', Icons.emergency_rounded, AppColors.priorityP1)),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            children: [
+                              Expanded(child: _buildStatMetricCard(AppStrings.tr('p2_moderate', lang: lang), '${queue.where((s) => s.priority == 'P2').length}', Icons.timer_rounded, AppColors.priorityP2)),
+                              const SizedBox(width: 12),
+                              Expanded(child: _buildStatMetricCard(AppStrings.tr('p3_routine', lang: lang), '${queue.where((s) => s.priority == 'P3').length}', Icons.check_circle_outline_rounded, AppColors.priorityP3)),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                    return Row(
+                      children: [
+                        Expanded(child: _buildStatMetricCard(AppStrings.tr('waiting_in_queue', lang: lang), '${queue.length}', Icons.people_alt_rounded, AppColors.primary)),
+                        const SizedBox(width: 12),
+                        Expanded(child: _buildStatMetricCard(AppStrings.tr('p1_urgent', lang: lang), '${queue.where((s) => s.priority == 'P1').length}', Icons.emergency_rounded, AppColors.priorityP1)),
+                        const SizedBox(width: 12),
+                        Expanded(child: _buildStatMetricCard(AppStrings.tr('p2_moderate', lang: lang), '${queue.where((s) => s.priority == 'P2').length}', Icons.timer_rounded, AppColors.priorityP2)),
+                        const SizedBox(width: 12),
+                        Expanded(child: _buildStatMetricCard(AppStrings.tr('p3_routine', lang: lang), '${queue.where((s) => s.priority == 'P3').length}', Icons.check_circle_outline_rounded, AppColors.priorityP3)),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: 28),
 
-                // Queue Table / Cards
+                // Queue Sub-Header (safe from horizontal overflow)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Upcoming Patient Pre-Intake Queue', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
-                        Text('Click on any patient to view the 3-Tier AI Summary & write Voice Prescription', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppStrings.tr('upcoming_intake_queue', lang: lang),
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            AppStrings.tr('click_patient_sub', lang: lang),
+                            style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                          ),
+                        ],
+                      ),
                     ),
+                    const SizedBox(width: 12),
                     OutlinedButton.icon(
                       icon: const Icon(Icons.volume_up_rounded, size: 18),
-                      label: const Text('Read Queue Status'),
+                      label: Text(AppStrings.tr('read_queue_status', lang: lang)),
                       onPressed: () {
-                        _speakBrief('There are currently ${queue.length} patients in the live triage queue. ${queue.where((s) => s.priority == "P1").length} require urgent attention.');
+                        _speakBrief(AppStrings.getSpeechDescription('doc_queue_status', lang: lang));
                       },
                     ),
                   ],
@@ -269,17 +364,17 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: AppColors.border),
                     ),
-                    child: const Column(
+                    child: Column(
                       children: [
-                        Icon(Icons.check_circle_rounded, size: 48, color: AppColors.certainGreen),
-                        SizedBox(height: 12),
-                        Text('No patients waiting in queue.', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                        Text('Patients who complete Kiosk pre-intake will appear here automatically in real time.', style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+                        const Icon(Icons.check_circle_rounded, size: 48, color: AppColors.certainGreen),
+                        const SizedBox(height: 12),
+                        Text(AppStrings.tr('no_patients_queue', lang: lang), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text(AppStrings.tr('no_patients_sub', lang: lang), style: const TextStyle(fontSize: 13, color: AppColors.textSecondary), textAlign: TextAlign.center),
                       ],
                     ),
                   )
                 else
-                  ...queue.map((session) => _buildPatientQueueCard(session)),
+                  ...queue.map((session) => _buildPatientQueueCard(session, lang)),
               ],
             ),
           ),
@@ -288,7 +383,7 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
     );
   }
 
-  Widget _buildPatientQueueCard(ClinicalSessionModel session) {
+  Widget _buildPatientQueueCard(ClinicalSessionModel session, String lang) {
     final isP1 = session.priority == 'P1';
     final isP2 = session.priority == 'P2';
 
@@ -343,7 +438,7 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      isP1 ? 'URGENT' : isP2 ? 'MODERATE' : 'ROUTINE',
+                      isP1 ? AppStrings.tr('urgent_badge', lang: lang) : isP2 ? AppStrings.tr('moderate_badge', lang: lang) : AppStrings.tr('routine_badge', lang: lang),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 9,
@@ -362,13 +457,15 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 8,
+                    runSpacing: 4,
                     children: [
                       Text(
-                        session.patientName ?? 'Ramesh Kumar',
+                        session.patientName ?? 'Patient',
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textPrimary),
                       ),
-                      const SizedBox(width: 10),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
@@ -376,7 +473,7 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
-                          session.mode.toUpperCase(),
+                          session.mode == 'ayush' ? AppStrings.tr('ayush_title', lang: lang) : AppStrings.tr('allopathy_title', lang: lang),
                           style: TextStyle(
                             fontSize: 10.5,
                             fontWeight: FontWeight.bold,
@@ -384,44 +481,42 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
                       Text(
-                        'Token: ${session.tokenNumber}',
+                        '${AppStrings.tr('token_label', lang: lang)}: ${session.tokenNumber}',
                         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.textSecondary),
                       ),
                     ],
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    'Chief Complaint: ${session.chiefComplaint ?? "Acute clinical pre-intake consultation"}',
+                    '${AppStrings.tr('chief_complaint_label', lang: lang)}: ${session.chiefComplaint ?? AppStrings.tr('general_triage', lang: lang)}',
                     style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 6),
-                  Row(
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 8,
+                    runSpacing: 4,
                     children: [
                       Text(
-                        'Pain Score: ${session.painScore}/10',
+                        '${AppStrings.tr('pain_score_label', lang: lang)}: ${session.painScore}/10',
                         style: TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.bold,
                           color: session.painScore >= 7 ? AppColors.priorityP1 : AppColors.priorityP2,
                         ),
                       ),
-                      const SizedBox(width: 8),
                       const Text('•', style: TextStyle(color: AppColors.textMuted)),
-                      const SizedBox(width: 8),
                       Text(
-                        'Registered: ${session.createdAt.toIso8601String().split("T").last.substring(0, 5)}',
+                        '${AppStrings.tr('registered_label', lang: lang)}: ${session.createdAt.toIso8601String().split("T").last.substring(0, 5)}',
                         style: const TextStyle(fontSize: 11.5, color: AppColors.textMuted),
                       ),
-                      const SizedBox(width: 8),
                       const Text('•', style: TextStyle(color: AppColors.textMuted)),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'AI 3-Tier Summary Ready',
-                        style: TextStyle(fontSize: 11.5, color: AppColors.certainGreen, fontWeight: FontWeight.bold),
+                      Text(
+                        AppStrings.tr('ai_summary_ready', lang: lang),
+                        style: const TextStyle(fontSize: 11.5, color: AppColors.certainGreen, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -430,9 +525,8 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
             ),
             const SizedBox(width: 16),
 
-            // 3. Right Action Button (Fixed 180px width)
+            // 3. Right Action Button (Responsive width)
             SizedBox(
-              width: 180,
               height: 44,
               child: ElevatedButton.icon(
                 onPressed: () => _openConsultation(session),
@@ -442,7 +536,7 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 icon: const Icon(Icons.assignment_ind_rounded, size: 18, color: Colors.white),
-                label: const Text('Open Consultation', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12.5)),
+                label: Text(AppStrings.tr('open_consultation', lang: lang), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12.5)),
               ),
             ),
           ],
@@ -452,55 +546,60 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
   }
 
   Widget _buildStatMetricCard(String label, String value, IconData icon, Color color) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.border),
-        ),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: color.withValues(alpha: 0.12),
-              child: Icon(icon, color: color, size: 22),
-            ),
-            const SizedBox(width: 12),
-            Column(
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            backgroundColor: color.withValues(alpha: 0.12),
+            child: Icon(icon, color: color, size: 22),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(value, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color)),
-                Text(label, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+                Text(
+                  label,
+                  style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildScheduleView() {
+  Widget _buildScheduleView(String lang) {
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: constraints.maxWidth - 48 > 0 ? constraints.maxWidth - 48 : 0,
+            constraints: const BoxConstraints(
               maxWidth: 1200,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text('OPD Shift Schedule & Duty Roster', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text(AppStrings.tr('opd_shift_schedule', lang: lang), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 16),
                 Card(
                   child: ListTile(
                     leading: const Icon(Icons.schedule_rounded, color: AppColors.primary),
-                    title: const Text('Morning OPD Clinic (Room 104)', style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: const Text('09:00 AM - 02:00 PM • 18 Pre-Intake Slots Available'),
-                    trailing: const Chip(label: Text('ACTIVE NOW'), backgroundColor: AppColors.certainGreenBg),
+                    title: Text(AppStrings.tr('morning_opd_clinic', lang: lang), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text(AppStrings.tr('morning_opd_time', lang: lang)),
+                    trailing: Chip(label: Text(AppStrings.tr('active_now', lang: lang)), backgroundColor: AppColors.certainGreenBg),
                   ),
                 ),
               ],
@@ -511,33 +610,32 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
     );
   }
 
-  Widget _buildPreviousPatientsView(DoctorState doctorState) {
+  Widget _buildPreviousPatientsView(DoctorState doctorState, String lang) {
     final completed = doctorState.completedSessions;
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: constraints.maxWidth - 48 > 0 ? constraints.maxWidth - 48 : 0,
+            constraints: const BoxConstraints(
               maxWidth: 1200,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text('Completed Consultations (Today)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text(AppStrings.tr('completed_consultations_today', lang: lang), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 16),
                 if (completed.isEmpty)
-                  const Center(child: Text('No consultations completed yet today.'))
+                  Center(child: Text(AppStrings.tr('no_consultations_today', lang: lang)))
                 else
                   ...completed.map((sess) => Card(
                         child: ListTile(
                           leading: const Icon(Icons.check_circle_rounded, color: AppColors.certainGreen),
                           title: Text(sess.patientName ?? 'Patient ${sess.patientId}', style: const TextStyle(fontWeight: FontWeight.bold)),
-                          subtitle: Text('${sess.mode.toUpperCase()} • Token: ${sess.tokenNumber} • Completed'),
+                          subtitle: Text('${sess.mode == 'ayush' ? AppStrings.tr('ayush_title', lang: lang) : AppStrings.tr('allopathy_title', lang: lang)} • ${AppStrings.tr('token_label', lang: lang)}: ${sess.tokenNumber} • ${AppStrings.tr('status_completed', lang: lang)}'),
                           trailing: TextButton.icon(
                             icon: const Icon(Icons.visibility_rounded, size: 16),
-                            label: const Text('View Summary'),
+                            label: Text(AppStrings.tr('view_summary', lang: lang)),
                             onPressed: () => _openConsultation(sess),
                           ),
                         ),
@@ -550,7 +648,7 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
     );
   }
 
-  Widget _buildArchivedView() {
-    return const Center(child: Text('Archived clinical consultations and records.'));
+  Widget _buildArchivedView(String lang) {
+    return Center(child: Text(AppStrings.tr('doc_sidebar_archived_sub', lang: lang)));
   }
 }

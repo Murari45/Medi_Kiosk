@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../shared/constants/app_colors.dart';
+import '../../../../shared/constants/app_strings.dart';
 import '../../../../shared/models/user_model.dart';
 import '../../../../shared/services/notification_service.dart';
 import '../../../../shared/widgets/portal_switcher_bar.dart';
@@ -132,29 +133,54 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
   Widget build(BuildContext context) {
     final adminState = ref.watch(adminProvider);
     final currentUser = ref.watch(authProvider).currentUser;
+    final lang = ref.watch(authProvider).currentLanguage;
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.admin_panel_settings_rounded, color: Colors.amber, size: 24),
-            SizedBox(width: 10),
-            Text('MediKiosk AI — Administration & Analytics Panel'),
+            const Icon(Icons.admin_panel_settings_rounded, color: Colors.amber, size: 24),
+            const SizedBox(width: 10),
+            Flexible(
+              child: Text(
+                AppStrings.tr('admin_panel_title', lang: lang),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
         actions: [
           IconButton(
-            tooltip: 'Refresh Analytics',
+            tooltip: AppStrings.tr('refresh_analytics', lang: lang),
             icon: const Icon(Icons.refresh_rounded),
             onPressed: () => ref.read(adminProvider.notifier).loadAdminData(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Chip(
               backgroundColor: AppColors.surfaceVariant,
               avatar: const Icon(Icons.shield_rounded, color: Colors.amber, size: 16),
               label: Text(currentUser?.name ?? 'Admin', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: FilledButton.tonalIcon(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.priorityP1Container,
+                foregroundColor: AppColors.priorityP1,
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              ),
+              icon: const Icon(Icons.logout_rounded, size: 16),
+              label: Text(
+                AppStrings.tr('sign_out', lang: lang),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              ),
+              onPressed: () async {
+                await ref.read(authProvider.notifier).logout();
+                if (context.mounted) context.go('/auth');
+              },
             ),
           ),
         ],
@@ -167,7 +193,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
               child: Row(
                 children: [
                   // Left Admin Sidebar
-                  _buildAdminSidebar(),
+                  _buildAdminSidebar(lang),
                   const VerticalDivider(width: 1, thickness: 1, color: AppColors.border),
 
                   // Main View
@@ -185,25 +211,25 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
     );
   }
 
-  Widget _buildAdminSidebar() {
+  Widget _buildAdminSidebar(String lang) {
     return Container(
       width: 240,
       color: AppColors.surface,
       child: Column(
         children: [
           const SizedBox(height: 12),
-          _buildSidebarTile(0, Icons.analytics_rounded, 'Analytics & Triage'),
-          _buildSidebarTile(1, Icons.manage_accounts_rounded, 'User Management'),
-          _buildSidebarTile(2, Icons.history_toggle_off_rounded, 'Audit Trail & Logs'),
-          _buildSidebarTile(3, Icons.settings_suggest_rounded, 'System & ABDM Config'),
+          _buildSidebarTile(0, Icons.analytics_rounded, AppStrings.tr('admin_tab_analytics', lang: lang)),
+          _buildSidebarTile(1, Icons.manage_accounts_rounded, AppStrings.tr('admin_tab_users', lang: lang)),
+          _buildSidebarTile(2, Icons.history_toggle_off_rounded, AppStrings.tr('admin_tab_audit', lang: lang)),
+          _buildSidebarTile(3, Icons.settings_suggest_rounded, AppStrings.tr('admin_tab_config', lang: lang)),
           const Spacer(),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.logout_rounded, color: AppColors.priorityP1),
-            title: const Text('Sign Out', style: TextStyle(color: AppColors.priorityP1, fontWeight: FontWeight.bold, fontSize: 14)),
+            title: Text(AppStrings.tr('sign_out', lang: lang), style: const TextStyle(color: AppColors.priorityP1, fontWeight: FontWeight.bold, fontSize: 14)),
             onTap: () async {
               await ref.read(authProvider.notifier).logout();
-              if (mounted) context.go('/');
+              if (mounted) context.go('/auth');
             },
           ),
           const SizedBox(height: 8),
@@ -261,8 +287,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
         return SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: constraints.maxWidth - 48 > 0 ? constraints.maxWidth - 48 : 0,
+            constraints: const BoxConstraints(
               maxWidth: 1200,
             ),
             child: Column(
@@ -480,8 +505,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
         return SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: constraints.maxWidth - 48 > 0 ? constraints.maxWidth - 48 : 0,
+            constraints: const BoxConstraints(
               maxWidth: 1200,
             ),
             child: Column(
@@ -599,8 +623,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
         return SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: constraints.maxWidth - 48 > 0 ? constraints.maxWidth - 48 : 0,
+            constraints: const BoxConstraints(
               maxWidth: 1200,
             ),
             child: Column(
